@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+
 @Component({
   selector: 'app-specialities',
   templateUrl: './specialities.component.html'
@@ -23,20 +24,14 @@ export class SpecialitiesComponent implements OnInit {
       0: {
         items: 1
       },
-      400: {
+      200: {
         items: 2
       },
-      740: {
+      240: {
         items: 3
       },
-      940: {
+      340: {
         items: 4
-      },
-      1140: {
-        items: 5
-      },
-      1340: {
-        items: 6
       }
     },
     nav: true

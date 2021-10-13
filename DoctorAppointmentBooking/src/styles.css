@@ -2374,6 +2374,7 @@ html.menu-opened body {
 	outline: none;
 	background-color: #0de0fe;
 }
+
 .section-specialities .owl-prev {
     font-size: 0;
     line-height: 0;
@@ -2392,10 +2393,13 @@ html.menu-opened body {
 .owl-nav .owl-prev:focus {
     outline: none;
 }
+
 .owl-nav .owl-prev:hover:before,
+
 .owl-nav .owl-prev:focus:before {
     opacity: 1;
 }
+
 .owl-nav .owl-prev:before {
 	display: none;
     font-family: 'slick';
@@ -2413,6 +2417,7 @@ html.menu-opened body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
 .section-specialities .owl-next{
     background-color: #0de0fe;
 }
@@ -2420,6 +2425,7 @@ html.menu-opened body {
 .slick-slide {
 	outline: none !important;
 }
+
 .owl-item .ng-star-inserted {
     font-size: 16px;
     font-weight: 500;
@@ -2433,8 +2439,9 @@ html.menu-opened body {
 	left: 0;
 	right: 0;
 	margin: 0 auto;
-	width: 80px;
+	width: 50px;
 }
+
 .owl-theme .owl-nav .owl-next:hover{
 	background-color: #0de0fe;
 }
@@ -2449,10 +2456,12 @@ html.menu-opened body {
     margin-right: 20px;
 	margin-top: 0px;
 }
+
 .specialities-slider .slick-dots {
     margin-top: 44px;
     position: unset;
 }
+
 .speicality-img {
 	position: relative;
 	height: 150px;
@@ -2461,6 +2470,7 @@ html.menu-opened body {
 	width: 150px;
 	background: #fff;
 }
+
 .speicality-img img {
 	position: absolute;
 	top: 50%;
@@ -2470,6 +2480,7 @@ html.menu-opened body {
 	right: 0;
 	margin: 0 auto;
 }
+
 .speicality-img span {
 	-webkit-box-align: center;
 	-ms-flex-align: center;
@@ -2488,6 +2499,7 @@ html.menu-opened body {
 	-webkit-justify-content: center;
 	-ms-flex-pack: center;
 }
+
 .speicality-img span i {
     font-size: 15px;
 	color:#0de0fe;
