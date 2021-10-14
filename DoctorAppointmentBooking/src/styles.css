@@ -2361,6 +2361,39 @@ html.menu-opened body {
     padding: 0;
     cursor: pointer;
 }
+
+.section-doctor .doctor-slider .owl-next,
+.section-doctor .doctor-slider  .owl-prev{
+	position: absolute;
+	font-size: 0;
+	top: -230px;
+	border-radius: 100%;
+	width: 40px;
+	height: 40px;
+    display: block;
+	line-height: 0;
+	padding: 0;
+	background: #fff;
+	box-shadow: 1px 6px 14px rgb(0 0 0 / 20%);
+	transform: translate(0, -50%);
+	
+	
+}
+.section-doctor .doctor-slider .owl-next i,
+.section-doctor .doctor-slider  .owl-prev i{
+    font-size: 20px;
+	line-height: 1;
+	padding: 10px;
+    opacity: .75;
+    color: #383838;
+	-webkit-font-smoothing: antialiased;
+}
+.section-doctor .doctor-slider .owl-next {
+        right: -25px;
+}
+.section-doctor .doctor-slider  .owl-prev {    
+	left: -5px;
+}
 .section-specialities .owl-next  {
     font-size: 0;
     line-height: 0;
@@ -2532,6 +2565,7 @@ html.menu-opened body {
     -o-transition:all .3s ease 0s;
     transition:all .3s ease 0s;
 	padding: 15px;
+	margin-left: 10px;
 }
 .doc-img {
     position: relative;
@@ -2680,6 +2714,7 @@ html.menu-opened body {
 .section-doctor .profile-widget {
     box-shadow: 2px 2px 13px rgba(0, 0, 0, 0.1);
     margin-bottom: 0;
+	margin-right: 10px;
 }
 .about-content p {
 	font-size: 14px;

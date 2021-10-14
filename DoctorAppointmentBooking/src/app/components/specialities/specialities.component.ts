@@ -27,8 +27,8 @@ export class SpecialitiesComponent implements OnInit {
     touchDrag: false,
     pullDrag: false,
     dots: false,
-    navSpeed: 700,
-    navText: ['', ''],
+    navSpeed: 500,
+    navText: ['',''],
     responsive: {
       0: {
         items: 1
@@ -41,6 +41,9 @@ export class SpecialitiesComponent implements OnInit {
       },
       340: {
         items: 4
+      },
+      440: {
+        items: 5
       }
     },
     nav: true

@@ -7,13 +7,21 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { BannerComponent } from './components/banner/banner.component';
 import { SpecialitiesComponent } from './components/specialities/specialities.component';
+import { PopularComponent } from './components/popular/popular.component';
+import { DoctorWidgetComponent } from './components/popular/doctor-widget/doctor-widget.component';
+import { MyPipeDate } from './common/my-pipe';
+//importService
 import {SpecialitiesService} from './components/specialities/specialities.service';
+import { DoctorPopularService } from './components/popular/popular.service';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     BannerComponent,
-    SpecialitiesComponent
+    SpecialitiesComponent,
+    PopularComponent,
+    DoctorWidgetComponent,
+    MyPipeDate
    
   ],
   imports: [
@@ -21,7 +29,9 @@ import {SpecialitiesService} from './components/specialities/specialities.servic
     BrowserAnimationsModule,
     CarouselModule 
   ],
-  providers: [SpecialitiesService],
+  providers:[
+    SpecialitiesService,
+    DoctorPopularService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
