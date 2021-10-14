@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { BannerComponent } from './components/banner/banner.component';
 import { SpecialitiesComponent } from './components/specialities/specialities.component';
-
+import {SpecialitiesService} from './components/specialities/specialities.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +21,7 @@ import { SpecialitiesComponent } from './components/specialities/specialities.co
     BrowserAnimationsModule,
     CarouselModule 
   ],
-  providers: [],
+  providers: [SpecialitiesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
