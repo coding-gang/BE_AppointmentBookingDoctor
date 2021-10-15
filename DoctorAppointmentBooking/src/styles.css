@@ -2594,9 +2594,7 @@ html.menu-opened body {
 	margin-left: 10px;
 
 }
-.ng-tns-c18-1{
-	width: 3113px;
-}
+
 .doc-img {
     position: relative;
     overflow: hidden;
@@ -2776,31 +2774,23 @@ html.menu-opened body {
 	background-color: #fff;
 	padding: 80px 0;
 }
-.feature-item img {
-    border-radius: 100%;
+.features-slider  .owl-item img {
+	border-radius: 100%;
     box-shadow: 1px 6px 14px rgba(0,0,0,0.2);
     height: 115px;
     object-fit: cover;
 	width: 115px;
+	transform: scale(1.20);
+}
+.features-slider  .owl-item img:hover {
+	transform: scale(1.30);
+	transition: 0.3s;
 }
 .feature-item p {
     font-weight: 500;
     margin: 20px 0 0;
 }
-.features-slider .slick-slide {
-	margin-right: 62px;
-}
-.features-slider .slick-center {
-    opacity: 1;
-    transform: scale(1.20);
-}
-.features-slider .slick-list {
-    padding: 16px 50px !important
-}
-.features-slider .slick-dots {
-    margin-top: 44px;
-    position: unset;
-}
+
 
 /*-----------------
 	16. Search

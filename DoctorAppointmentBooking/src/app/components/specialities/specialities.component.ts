@@ -14,13 +14,13 @@ export class SpecialitiesComponent implements OnInit {
 
   
   constructor(private specialitiesService:SpecialitiesService ) {
-      
+     
    }
 
   ngOnInit(): void {
     this.specialities = this.specialitiesService.getSpecialties() ;
   }
-  
+ 
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,

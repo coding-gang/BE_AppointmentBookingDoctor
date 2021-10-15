@@ -13,6 +13,8 @@ import { MyPipeDate } from './common/my-pipe';
 //importService
 import {SpecialitiesService} from './components/specialities/specialities.service';
 import { DoctorPopularService } from './components/popular/popular.service';
+import { AvailabeFeaturesComponent } from './components/availabe-features/availabe-features.component';
+import { FooterComponent } from './components/footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +23,9 @@ import { DoctorPopularService } from './components/popular/popular.service';
     SpecialitiesComponent,
     PopularComponent,
     DoctorWidgetComponent,
-    MyPipeDate
+    MyPipeDate,
+    AvailabeFeaturesComponent,
+    FooterComponent
    
   ],
   imports: [

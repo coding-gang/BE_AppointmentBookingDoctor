@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {  Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { DoctorPopularService } from './popular.service';
 import { IdoctorPopular } from './doctorPopular.model';
@@ -10,14 +10,12 @@ import { IdoctorPopular } from './doctorPopular.model';
 export class PopularComponent implements OnInit {
    
   doctorPopular:IdoctorPopular[] =[];
-
-  constructor(private doctorPopularService :DoctorPopularService) { }
+  constructor(private doctorPopularService :DoctorPopularService){}  
 
   ngOnInit(): void {
      this.doctorPopular =this.doctorPopularService.getPopularDoctor();
-     
   }
-   
+ 
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,

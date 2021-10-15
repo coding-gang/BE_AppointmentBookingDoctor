@@ -6,7 +6,9 @@ import { Component } from '@angular/core';
              <app-header></app-header>
              <app-banner></app-banner>
              <app-specialities></app-specialities>
-             <app-popular></app-popular>          
+             <app-popular></app-popular>       
+             <app-availabe-features></app-availabe-features>   
+             <app-footer></app-footer>
               </div>            
               `
 })
