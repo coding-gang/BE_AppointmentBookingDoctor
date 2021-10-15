@@ -33,8 +33,20 @@ export class PopularComponent implements OnInit {
       100: {
         items: 2
       },
-      140: {
+      500: {
         items: 3
+      },
+      940: {
+        items: 4
+      },
+      1140: {
+        items: 3
+      },
+      1340: {
+        items: 4
+      },
+      1540: {
+        items: 4
       }
     },
     nav: true

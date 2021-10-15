@@ -2394,7 +2394,7 @@ html.menu-opened body {
 .section-doctor .doctor-slider  .owl-prev {    
 	left: -5px;
 }
-.section-specialities .owl-next  {
+.section-specialities .owl-next   {
     font-size: 0;
     line-height: 0;
     display: block;
@@ -2407,7 +2407,31 @@ html.menu-opened body {
 	outline: none;
 	background-color: #0de0fe;
 }
+.owl-theme .owl-dots .owl-dot span{
 
+	background-color: #D6D6D6;
+	font-size: 0;
+    line-height: 0;
+    display: block;
+    width: 20px;
+    height: 5px;
+    padding: 0;
+    cursor: pointer;
+    color: transparent;
+    border: 0;
+    outline: none;
+}
+
+.col-md-9 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.owl-theme .owl-nav.disabled+.owl-dots {
+    margin-top: 40px;
+}
+.owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span {
+    background: #0de0fe;
+}
 .section-specialities .owl-prev {
     font-size: 0;
     line-height: 0;
@@ -2541,7 +2565,9 @@ html.menu-opened body {
 .section-doctor {
 	background-color: #f8f9fa;
 	padding: 80px 0;
+	
 }
+
 .section-doctor .section-header {
 	margin-bottom: 30px;
 }
@@ -2566,6 +2592,10 @@ html.menu-opened body {
     transition:all .3s ease 0s;
 	padding: 15px;
 	margin-left: 10px;
+
+}
+.ng-tns-c18-1{
+	width: 3113px;
 }
 .doc-img {
     position: relative;
@@ -5811,6 +5841,12 @@ html.menu-opened body {
 /*-----------------
 	38. Responsive
 -----------------------*/
+/* @media (max-width: 992px){
+	.col-lg-8 {
+		flex: 0 0 66.666667%;
+		max-width: 66.666667%;
+	}
+} */
 
 @media only screen and (min-width:768px) {
 	.avatar-xxl {
@@ -6814,4 +6850,5 @@ html.menu-opened body {
 	.fc-header-toolbar .fc-right {
 		margin-bottom: 10px;
 	}
+	
 }

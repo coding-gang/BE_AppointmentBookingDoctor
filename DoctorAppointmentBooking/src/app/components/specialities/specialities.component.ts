@@ -11,10 +11,10 @@ import { SpecialitiesService  } from './specialities.service';
 export class SpecialitiesComponent implements OnInit {
 
   specialities:ISpecialities[] =[] 
-   
+
   
   constructor(private specialitiesService:SpecialitiesService ) {
-   
+      
    }
 
   ngOnInit(): void {
@@ -22,31 +22,31 @@ export class SpecialitiesComponent implements OnInit {
   }
   
   customOptions: OwlOptions = {
-    loop: false,
+    loop: true,
     mouseDrag: true,
     touchDrag: false,
     pullDrag: false,
-    dots: false,
-    navSpeed: 500,
-    navText: ['',''],
+    dots: true,
+    center:true,
+    navSpeed: 600,
     responsive: {
       0: {
         items: 1
       },
-      200: {
+      400: {
         items: 2
       },
-      240: {
+      640: {
         items: 3
       },
-      340: {
-        items: 4
+      840: {
+        items: 5
       },
-      440: {
+      1140: {
         items: 5
       }
-    },
-    nav: true
+    
+    }
   }
 
 }

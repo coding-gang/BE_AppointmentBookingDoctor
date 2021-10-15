@@ -11,7 +11,6 @@ export class DoctorWidgetComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.doctor.name);
   }
 
 

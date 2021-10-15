@@ -24,7 +24,7 @@ const POPULAR_DOCTOR:IdoctorPopular[] = [
     },
     {
         id:2,
-        name:"Nguyễn Đình Phát Triển",
+        name:"Nguyễn Phát Triển",
         src:`${PATH}doctor-02.jpg`,
         specialitiesName:"Orthopedic",
         location:LOCATION,

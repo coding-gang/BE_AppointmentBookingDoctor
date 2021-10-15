@@ -8,7 +8,6 @@ export class MyPipeDate implements PipeTransform{
    thang:string ='' 
    dateFormat :string=''
        transform(date: Date ){
-           date = new Date(date);  // if orginal type was a string
            let month = date.getMonth();     
            this.thang = getMonth(month);
             this.dateFormat = `Ngày ${date.getUTCDate()} ${this.thang} Năm ${date.getFullYear()}`;
