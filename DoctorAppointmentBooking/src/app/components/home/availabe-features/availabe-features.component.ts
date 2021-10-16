@@ -3,7 +3,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 @Component({
   selector: 'app-availabe-features',
   templateUrl: './availabe-features.component.html'
- 
+
 })
 export class AvailabeFeaturesComponent implements OnInit {
 
@@ -35,7 +35,7 @@ export class AvailabeFeaturesComponent implements OnInit {
       940: {
         items: 5
       }
-    
+
     }
   }
 

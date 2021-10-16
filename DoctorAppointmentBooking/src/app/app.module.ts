@@ -1,20 +1,27 @@
 import { NgModule } from '@angular/core';
+import {APP_BASE_HREF} from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-//import { CarouselComponent } from 'ngx-owl-carousel-o/ngx-owl-carousel-o';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { BannerComponent } from './components/banner/banner.component';
-import { SpecialitiesComponent } from './components/specialities/specialities.component';
-import { PopularComponent } from './components/popular/popular.component';
-import { DoctorWidgetComponent } from './components/popular/doctor-widget/doctor-widget.component';
 import { MyPipeDate } from './common/my-pipe';
-//importService
-import {SpecialitiesService} from './components/specialities/specialities.service';
-import { DoctorPopularService } from './components/popular/popular.service';
-import { AvailabeFeaturesComponent } from './components/availabe-features/availabe-features.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { RouterModule } from '@angular/router';
+import { appRoutesHome } from './routes';
+//importService , component home
+import {
+  HeaderComponent,
+  BannerComponent,
+  SpecialitiesComponent,
+  PopularComponent,
+  DoctorWidgetComponent,
+  AvailabeFeaturesComponent,
+  FooterComponent,
+  SpecialitiesService,
+  DoctorPopularService
+} from './components/home/index';
+import { DoctorFileComponent } from './components/doctor-file/doctor-file.component';
+import { HomesComponent } from './components/home/homes-component/homes-component.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,17 +32,25 @@ import { FooterComponent } from './components/footer/footer.component';
     DoctorWidgetComponent,
     MyPipeDate,
     AvailabeFeaturesComponent,
-    FooterComponent
-   
+    FooterComponent,
+    DoctorFileComponent,
+    HomesComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    CarouselModule 
+    CarouselModule,
+    RouterModule.forRoot(appRoutesHome)
   ],
   providers:[
     SpecialitiesService,
-    DoctorPopularService],
-  bootstrap: [AppComponent]
+    DoctorPopularService,
+    {provide: APP_BASE_HREF, useValue: '/'}
+  ],
+  bootstrap: [
+    AppComponent
+  ],
+
+
 })
 export class AppModule { }
