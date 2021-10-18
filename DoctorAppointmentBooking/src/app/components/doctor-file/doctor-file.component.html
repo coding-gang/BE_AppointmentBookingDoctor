@@ -43,28 +43,14 @@
                 </div>
                 <div class="clinic-details">
                   <p class="doc-location"><i class="fas fa-map-marker-alt"></i> Newyork, USA - <a href="javascript:void(0);">Get Directions</a></p>
-                  <ul class="clinic-gallery">
-                    <li>
-                      <a href="assets/img/features/feature-01.jpg" data-fancybox="gallery">
-                        <img src="assets/img/features/feature-01.jpg" alt="Feature">
-                      </a>
-                    </li>
-                    <li>
-                      <a href="assets/img/features/feature-02.jpg" data-fancybox="gallery">
-                        <img  src="assets/img/features/feature-02.jpg" alt="Feature Image">
-                      </a>
-                    </li>
-                    <li>
-                      <a href="assets/img/features/feature-03.jpg" data-fancybox="gallery">
-                        <img src="assets/img/features/feature-03.jpg" alt="Feature">
-                      </a>
-                    </li>
-                    <li>
-                      <a href="assets/img/features/feature-04.jpg" data-fancybox="gallery">
-                        <img src="assets/img/features/feature-04.jpg" alt="Feature">
-                      </a>
-                    </li>
-                  </ul>
+                               <ul class="clinic-gallery">
+                                  <li *ngFor="let image of _albums; let i=index">
+                                    <a data-fancybox="gallery" >
+                                      <img [src]="image.src" (click)="open(i)" alt="image.caption"/>
+                                    </a>
+                                  </li>
+                               </ul>
+
                 </div>
                 <div class="clinic-services">
                   <span>Dental Fillings</span>

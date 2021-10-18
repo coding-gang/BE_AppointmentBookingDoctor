@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { MyPipeDate } from './common/my-pipe';
 import { RouterModule } from '@angular/router';
 import { appRoutesHome } from './routes';
+import { LightboxModule } from 'ngx-lightbox';
 //importService , component home
 import {
   HeaderComponent,
@@ -40,6 +41,7 @@ import { HomesComponent } from './components/home/homes-component/homes-componen
     BrowserModule,
     BrowserAnimationsModule,
     CarouselModule,
+    LightboxModule,
     RouterModule.forRoot(appRoutesHome)
   ],
   providers:[

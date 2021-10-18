@@ -32,7 +32,8 @@
             "styles": [
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
                "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
-	            "src/assets/css/bootstrap.min.css",
+               "node_modules/ngx-lightbox/lightbox.css",
+               "src/assets/css/bootstrap.min.css",
               "src/assets/plugins/fontawesome/css/all.min.css",
               "src/assets/plugins/fontawesome/css/fontawesome.min.css",
               "src/styles.css"
