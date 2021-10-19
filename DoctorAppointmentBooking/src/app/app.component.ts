@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
-             <app-header></app-header>
+             <app-header>
+             <a loginSignup class="nav-link header-login" href="login.html">login / Signup </a>
+              </app-header>
              <router-outlet></router-outlet>
 
              <router-outlet></router-outlet>

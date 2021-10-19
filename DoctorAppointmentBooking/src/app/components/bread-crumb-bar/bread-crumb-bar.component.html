@@ -1,4 +1,4 @@
-	<!-- Breadcrumb -->
+
   <div class="breadcrumb-bar">
     <div class="container-fluid">
       <div class="row align-items-center">
@@ -9,7 +9,13 @@
               <li class="breadcrumb-item active" aria-current="page">{{name}}</li>
             </ol>
           </nav>
-          <h2 class="breadcrumb-title">{{name | uppercase}}</h2>
+          <!-- <ng-container [ngTemplateOutlet]="nameDoctor" [ngTemplateOutletContext]="{name:name,color:'breadcrumb-title'}"></ng-container> -->
+          <!-- <ng-template *ngTemplateOutlet="nameDoctor, context:{name:name,color:'breadcrumb-title'}"></ng-template> -->
+             <ng-container #barContainer></ng-container>
+          <ng-template #nameDoctor let-nameLink ="name" let-colorLinkName ="color">
+            <h2 [ngClass]="colorLinkName">{{ nameLink | uppercase}}</h2>
+          </ng-template>
+
         </div>
       </div>
     </div>

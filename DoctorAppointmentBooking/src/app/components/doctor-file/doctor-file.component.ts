@@ -7,16 +7,14 @@ interface album{
   caption: string,
   thumb:string
 }
-
-
 @Component({
   selector: 'app-doctor-file',
   templateUrl: './doctor-file.component.html'
 })
 
-
 export class DoctorFileComponent implements OnInit {
   public _albums:Array<album> = [];
+  isBar = true;
   @Input() name:string ='';
 
   constructor(private _lightbox:Lightbox) {

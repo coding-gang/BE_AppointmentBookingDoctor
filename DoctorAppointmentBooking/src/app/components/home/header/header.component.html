@@ -80,9 +80,6 @@
                     <li>
                         <a href="admin/index.html" target="_blank">Admin</a>
                     </li>
-                    <li class="login-link">
-                        <a href="login.html">Login / Signup</a>
-                    </li>
                 </ul>
             </div>
             <ul class="nav header-navbar-rht">
@@ -95,9 +92,13 @@
                         <p class="contact-info-header"> +1 315 369 5943</p>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link header-login" href="login.html">login / Signup </a>
-                </li>
+                  <li class="nav-item">
+                    <ng-container *ngIf="!authenticated">
+                    <ng-content select="[loginSignup]"></ng-content>
+                  </ng-container>
+                    <ng-content></ng-content>
+                  </li>
+
             </ul>
         </nav>
     </header>

@@ -1,4 +1,10 @@
-   <app-bread-crumb-bar [name]="name"></app-bread-crumb-bar>
+
+   <ng-container *ngIf="isBar; else NoBar;">
+    <app-bread-crumb-bar [name]="name"></app-bread-crumb-bar>
+   </ng-container>
+
+   <ng-template #NoBar>
+   </ng-template>
   <!-- Page Content -->
   <div class="content">
     <div class="container">
