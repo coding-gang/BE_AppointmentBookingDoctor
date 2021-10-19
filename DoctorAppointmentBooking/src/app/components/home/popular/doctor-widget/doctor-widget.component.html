@@ -1,4 +1,5 @@
 
+
 <div class="profile-widget">
     <div class="doc-img">
         <a href="doctor-profile.html">
@@ -36,7 +37,7 @@
         </ul>
         <div class="row row-sm">
             <div class="col-6">
-                <a [routerLink]="['/doctor-profile']" class="btn view-btn">View Profile</a>
+                <a [routerLink]="['/doctor-profile',doctor.id]" class="btn view-btn">View Profile</a>
             </div>
             <div class="col-6">
                 <a href="booking.html" class="btn book-btn">Book Now</a>

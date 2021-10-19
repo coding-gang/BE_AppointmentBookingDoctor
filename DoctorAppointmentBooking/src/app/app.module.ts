@@ -8,6 +8,8 @@ import { MyPipeDate } from './common/my-pipe';
 import { RouterModule } from '@angular/router';
 import { appRoutesHome } from './routes';
 import { LightboxModule } from 'ngx-lightbox';
+// directive customer
+import { EventHoverDirective } from './directives/event.directive';
 //importService , component home
 import {
   HeaderComponent,
@@ -22,6 +24,9 @@ import {
 } from './components/home/index';
 import { DoctorFileComponent } from './components/doctor-file/doctor-file.component';
 import { HomesComponent } from './components/home/homes-component/homes-component.component';
+import { BookingComponent } from './components/booking/booking.component';
+import { BreadCrumbBarComponent } from './components/bread-crumb-bar/bread-crumb-bar.component';
+import { DoctorComponent } from './components/doctor/doctor.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +40,11 @@ import { HomesComponent } from './components/home/homes-component/homes-componen
     AvailabeFeaturesComponent,
     FooterComponent,
     DoctorFileComponent,
-    HomesComponent
+    HomesComponent,
+    BookingComponent,
+    BreadCrumbBarComponent,
+    DoctorComponent,
+    EventHoverDirective
   ],
   imports: [
     BrowserModule,

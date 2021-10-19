@@ -1,22 +1,4 @@
-
-	<!-- Breadcrumb -->
-  <div class="breadcrumb-bar">
-    <div class="container-fluid">
-      <div class="row align-items-center">
-        <div class="col-md-12 col-12">
-          <nav aria-label="breadcrumb" class="page-breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a [routerLink]="['/home']">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Doctor Profile</li>
-            </ol>
-          </nav>
-          <h2 class="breadcrumb-title">Doctor Profile</h2>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- /Breadcrumb -->
-
+   <app-bread-crumb-bar [name]="name"></app-bread-crumb-bar>
   <!-- Page Content -->
   <div class="content">
     <div class="container">
@@ -27,12 +9,12 @@
           <div class="doctor-widget">
             <div class="doc-info-left">
               <div class="doctor-img">
-                <img src="assets/img/doctors/doctor-thumb-02.jpg" class="img-fluid" alt="User Image">
+                <img src="../../../assets/img/doctors/doctor-02.jpg" class="img-fluid" alt="User Image">
               </div>
               <div class="doc-info-cont">
                 <h4 class="doc-name">Dr. Darren Elder</h4>
                 <p class="doc-speciality">BDS, MDS - Oral & Maxillofacial Surgery</p>
-                <p class="doc-department"><img src="assets/img/specialities/specialities-05.png" class="img-fluid" alt="Speciality">Dentist</p>
+                <p class="doc-department"><img src="../../../assets/img/specialities/specialities-05.png" class="img-fluid" alt="Speciality">Dentist</p>
                 <div class="rating">
                   <i class="fas fa-star filled"></i>
                   <i class="fas fa-star filled"></i>
@@ -43,13 +25,13 @@
                 </div>
                 <div class="clinic-details">
                   <p class="doc-location"><i class="fas fa-map-marker-alt"></i> Newyork, USA - <a href="javascript:void(0);">Get Directions</a></p>
-                               <ul class="clinic-gallery">
-                                  <li *ngFor="let image of _albums; let i=index">
-                                    <a data-fancybox="gallery" >
-                                      <img [src]="image.src" (click)="open(i)" alt="image.caption"/>
-                                    </a>
-                                  </li>
-                               </ul>
+                  <ul class="clinic-gallery">
+                    <li *ngFor="let image of _albums; let i=index">
+                      <a data-fancybox="gallery" >
+                        <img [eventHover] ="i" [src]="image.src"  alt="image.caption"/>
+                      </a>
+                    </li>
+                 </ul>
 
                 </div>
                 <div class="clinic-services">

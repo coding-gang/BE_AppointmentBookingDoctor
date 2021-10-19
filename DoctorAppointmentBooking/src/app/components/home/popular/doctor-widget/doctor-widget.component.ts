@@ -1,5 +1,6 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { IdoctorPopular } from '../doctorPopular.model';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-doctor-widget',
   templateUrl: './doctor-widget.component.html',
@@ -7,11 +8,13 @@ import { IdoctorPopular } from '../doctorPopular.model';
 })
 export class DoctorWidgetComponent implements OnInit {
   @Input() doctor:any;
-  
-  constructor() { }
+
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
   }
-
+  // goToDoctorProfile(){
+  //          this.router.navigate(['/doctor-profile/',this.doctor.id])
+  // }
 
 }
