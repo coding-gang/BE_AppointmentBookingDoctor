@@ -15,11 +15,12 @@
              <div class="col-lg-8">
               <owl-carousel-o class="doctor-slider slider" [options]="customOptions">
                       <ng-container  *ngFor="let doctor of doctorPopular">
-                        <ng-template  carouselSlide>
+                        <ng-template carouselSlide>
                             <app-doctor-widget [doctor]="doctor"></app-doctor-widget>
-                           </ng-template>
+                        </ng-template>
                        </ng-container>
                 </owl-carousel-o>
+
             </div>
        </div>
     </div>

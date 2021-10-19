@@ -1,21 +1,28 @@
-import {  Component, OnInit } from '@angular/core';
+import
+{AfterViewInit,
+Component,
+ComponentFactoryResolver,
+ComponentRef,
+OnInit,TemplateRef,ViewChild ,ViewContainerRef,Input }
+ from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { DoctorPopularService } from './popular.service';
 import { IdoctorPopular } from './doctorPopular.model';
+import { DoctorWidgetComponent } from '..';
 @Component({
   selector: 'app-popular',
   templateUrl: './popular.component.html'
 })
 
 export class PopularComponent implements OnInit {
-   
   doctorPopular:IdoctorPopular[] =[];
-  constructor(private doctorPopularService :DoctorPopularService){}  
 
-  ngOnInit(): void {
-     this.doctorPopular =this.doctorPopularService.getPopularDoctor();
+  constructor(private doctorPopularService :DoctorPopularService
+             ){}
+
+  async ngOnInit() {
+    this.doctorPopular =this.doctorPopularService.getPopularDoctor();
   }
- 
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
