@@ -4,10 +4,18 @@ const rateLimit =require('express-rate-limit');
 const app = express();
 const doctorRouter = require('./routes/doctorRoutes');
 
+
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
   }
-//limit request from client
+
+// Body parser ,reading data from Body into  req.body
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
+
+//limit request from client 1 hour
 const limit =rateLimit({
        max:100,
        windowMs: 60* 60*1000,
@@ -15,10 +23,8 @@ const limit =rateLimit({
 });
 app.use('/api',limit);
 
-// Body parser ,reading data from Body into  req.body
-app.use(express.urlencoded({ extended: true}))
+
 
 //Router
-app.use('/api',doctorRouter);
-
+app.use('/api/v1',doctorRouter);
 module.exports =app;
