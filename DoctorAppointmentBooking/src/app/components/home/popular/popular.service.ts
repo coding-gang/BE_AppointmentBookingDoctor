@@ -1,61 +1,42 @@
 import { Injectable } from "@angular/core";
 import { IdoctorPopular } from "./doctorPopular.model";
+import { HttpClient ,HttpHeaders} from "@angular/common/http";
+import { Observable } from "rxjs";
+import { catchError,map} from 'rxjs/operators'
+import { IDoctor } from "src/app/interface/doctor.model";
 const LOCATION = "Đà Lạt, Việt Nam";
 const PATH = "assets/img/doctors/";
+
+const POPULAR_DOCTOR:IdoctorPopular[] = [];
+
 @Injectable()
-
 export class DoctorPopularService{
-    constructor(){}
+    constructor(private http:HttpClient){}
 
-    getPopularDoctor():IdoctorPopular[]{
+    viewPopularDoctor(data:IDoctor):IdoctorPopular[]{
+        if(data.doctors.length>0){
+            const doctors =data.doctors;
+              let i =1;
+              doctors.forEach(el => {
+
+                  const doctor:IdoctorPopular = {
+                   id : el.doctorId,
+                   name: `${el.lastName} ${el.firstName}`,
+                   src:`${PATH}doctor-0${i}.jpg`,
+                   specialitiesName: el.speciallityName,
+                   location:LOCATION,
+                   available: new Date(),
+                   money : 200.000
+                  }
+                  i == 5 ? i=1 : i++
+                     POPULAR_DOCTOR.push(doctor);
+              })
+        }
         return POPULAR_DOCTOR;
+    }
+    getAllDoctors():Observable<IDoctor>{
+          return this.http.get<IDoctor>(`/api/v1/doctors`,{ responseType:'json'});
     }
 }
 
-const POPULAR_DOCTOR:IdoctorPopular[] = [
-    {
-        id:1,
-        name:"Nguyễn Mậu Tuấn",
-        src:`${PATH}doctor-01.jpg`,
-        specialitiesName:"Urology",
-        location:LOCATION,
-        available: new Date(),
-        money : 200.000 
-    },
-    {
-        id:2,
-        name:"Nguyễn Phát Triển",
-        src:`${PATH}doctor-02.jpg`,
-        specialitiesName:"Orthopedic",
-        location:LOCATION,
-        available: new Date(),
-        money : 300.000 
-    },
-    {
-        id:3,
-        name:"Huỳnh Thiên Tân",
-        src:`${PATH}doctor-03.jpg`,
-        specialitiesName:"Urology",
-        location:LOCATION,
-        available: new Date(),
-        money : 200.000 
-    },
-    {
-        id:4,
-        name:"Hà Quốc Huy",
-        src:`${PATH}doctor-04.jpg`,
-        specialitiesName:"Cardiologist",
-        location:LOCATION,
-        available: new Date(),
-        money : 500.000 
-    },
-    {
-        id:5,
-        name:"Phạm Lê Anh Quốc",
-        src:`${PATH}doctor-05.jpg`,
-        specialitiesName:"Dentist",
-        location:LOCATION,
-        available: new Date(),
-        money : 400.000 
-    }
-]
+

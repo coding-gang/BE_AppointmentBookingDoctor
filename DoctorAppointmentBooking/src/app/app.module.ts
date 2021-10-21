@@ -8,6 +8,7 @@ import { MyPipeDate } from './common/my-pipe';
 import { RouterModule } from '@angular/router';
 import { appRoutesHome } from './routes';
 import { LightboxModule } from 'ngx-lightbox';
+import { HttpClientModule } from '@angular/common/http';
 // directive customer
 import { EventHoverDirective } from './directives/event.directive';
 //importService , component home
@@ -51,7 +52,8 @@ import { DoctorComponent } from './components/doctor/doctor.component';
     BrowserAnimationsModule,
     CarouselModule,
     LightboxModule,
-    RouterModule.forRoot(appRoutesHome)
+    RouterModule.forRoot(appRoutesHome),
+    HttpClientModule
   ],
   providers:[
     SpecialitiesService,

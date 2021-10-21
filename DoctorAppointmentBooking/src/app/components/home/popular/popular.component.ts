@@ -9,6 +9,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { DoctorPopularService } from './popular.service';
 import { IdoctorPopular } from './doctorPopular.model';
 import { DoctorWidgetComponent } from '..';
+import { isNgTemplate } from '@angular/compiler';
 @Component({
   selector: 'app-popular',
   templateUrl: './popular.component.html'
@@ -17,12 +18,16 @@ import { DoctorWidgetComponent } from '..';
 export class PopularComponent implements OnInit {
   doctorPopular:IdoctorPopular[] =[];
 
-  constructor(private doctorPopularService :DoctorPopularService
-             ){}
+  constructor(private doctorPopularService :DoctorPopularService){}
 
-  async ngOnInit() {
-    this.doctorPopular =this.doctorPopularService.getPopularDoctor();
+   ngOnInit() {
+    this.ViewDoctorPopular();
   }
+    ViewDoctorPopular(){
+      this.doctorPopularService.getAllDoctors().subscribe(doc =>{
+        this.doctorPopular = this.doctorPopularService.viewPopularDoctor(doc);
+     })
+    }
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
