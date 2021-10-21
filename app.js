@@ -17,14 +17,13 @@ app.use(express.urlencoded({
 
 //limit request from client 1 hour
 const limit =rateLimit({
-       max:100,
-       windowMs: 60* 60*1000,
+       max:3,
+       windowMs: 60*1000,
        message:'Too many request from this IP,please try again in an hour'
 });
 app.use('/api',limit);
 
-
-
 //Router
 app.use('/api/v1',doctorRouter);
+
 module.exports =app;
