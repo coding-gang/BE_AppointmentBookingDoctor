@@ -5,7 +5,7 @@ exports.getAll = (req,res,next) =>{
     connectDb.query(sql,(error, results, fields) =>{
     if (error) throw error;
     const doctors =results[0];
-    res.status(200).json({status:'success',doctors:doctors});
+    res.status(200).json({status:"success",doctors:doctors});
 })
 }
 
@@ -15,7 +15,7 @@ exports.getById = (req,res)=>{
      connectDb.query(sql,id,(error, results, fields) =>{
         if (error) throw error;
         const doctor =results[0];
-        res.status(200).json({status:'success',doctor});
+        res.status(200).json({doctor});
     })
 }
 
