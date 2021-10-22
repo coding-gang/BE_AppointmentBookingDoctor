@@ -28,6 +28,7 @@ import { HomesComponent } from './components/home/homes-component/homes-componen
 import { BookingComponent } from './components/booking/booking.component';
 import { BreadCrumbBarComponent } from './components/bread-crumb-bar/bread-crumb-bar.component';
 import { DoctorComponent } from './components/doctor/doctor.component';
+import { AdminsModule } from './components/admins/admins.module';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { DoctorComponent } from './components/doctor/doctor.component';
     CarouselModule,
     LightboxModule,
     RouterModule.forRoot(appRoutesHome),
-    HttpClientModule
+    HttpClientModule,
+    AdminsModule
   ],
   providers:[
     SpecialitiesService,

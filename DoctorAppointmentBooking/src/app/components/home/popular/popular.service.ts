@@ -17,7 +17,9 @@ export class DoctorPopularService{
         if(data.doctors.length>0){
             const doctors =data.doctors;
               let i =1;
-              doctors.forEach(el => {
+              console.log(doctors);
+
+              doctors.slice(0,5).forEach(el => {
 
                   const doctor:IdoctorPopular = {
                    id : el.doctorId,

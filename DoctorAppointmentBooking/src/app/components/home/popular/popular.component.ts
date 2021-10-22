@@ -25,6 +25,8 @@ export class PopularComponent implements OnInit {
   }
     ViewDoctorPopular(){
       this.doctorPopularService.getAllDoctors().subscribe(doc =>{
+
+
         this.doctorPopular = this.doctorPopularService.viewPopularDoctor(doc);
      })
     }

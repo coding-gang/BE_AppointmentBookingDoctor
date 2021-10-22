@@ -6,8 +6,7 @@ import { Component, OnInit } from '@angular/core';
     <app-banner></app-banner>
     <app-specialities></app-specialities>
     <app-popular></app-popular>
-    <app-availabe-features>
-    </app-availabe-features>
+    <app-availabe-features></app-availabe-features>
   `
 })
 export class HomesComponent implements OnInit {
