@@ -3,7 +3,7 @@ import { Router,NavigationStart, Event as NavigationEvent } from '@angular/route
 @Component({
   selector: 'app-root',
   template: `
-   <div *ngIf="isAmin ==='admin';then admin else client"></div>
+   <ng-container *ngIf="isAmin ==='admin';then admin else client"></ng-container>
   <ng-template #client>
             <app-header>
              <a loginSignup class="nav-link header-login" href="login.html">login / Signup </a>
