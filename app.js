@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const rateLimit =require('express-rate-limit'); 
 const app = express();
 const doctorRouter = require('./routes/doctorRoutes');
-
+const specialitieRouter = require('./routes/specialitiesRouters');
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
@@ -24,7 +24,7 @@ const limit =rateLimit({
 app.use('/api',limit);
 
 
-
 //Router
 app.use('/api/v1',doctorRouter);
+app.use('/api/v1',specialitieRouter);
 module.exports =app;
