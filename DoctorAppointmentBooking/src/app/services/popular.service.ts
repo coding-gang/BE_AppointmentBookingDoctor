@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { IdoctorPopular } from "./doctorPopular.model";
-import { HttpClient ,HttpHeaders} from "@angular/common/http";
-import { Observable } from "rxjs";
-import { catchError,map} from 'rxjs/operators'
+import { IdoctorPopular } from "../components/home/popular/doctorPopular.model";
+import { HttpClient} from "@angular/common/http";
+import { from, Observable } from "rxjs";
+import {map} from 'rxjs/operators'
 import { IDoctor } from "src/app/interface/doctor.model";
 const LOCATION = "Đà Lạt, Việt Nam";
 const PATH = "assets/img/doctors/";
@@ -38,6 +38,25 @@ export class DoctorPopularService{
     }
     getAllDoctors():Observable<IDoctor>{
           return this.http.get<IDoctor>(`/api/v1/doctors`,{ responseType:'json'});
+    }
+
+    ViewTableList(doctors:IDoctor){
+      let i =0;
+       let docs:any[]=[];
+           from(doctors.doctors)
+           .pipe(
+             map(item => {
+              i == 5 ? i=1 : i++
+               return{
+                 id:item.doctorId,
+                 fullName: `${item.lastName} ${item.firstName}`,
+                 speciality: item.speciallityName,
+                 src:`${PATH}doctor-0${i}.jpg`,
+               }
+             })
+             ).subscribe(d=>  docs.push(d));
+          return docs;
+
     }
 }
 

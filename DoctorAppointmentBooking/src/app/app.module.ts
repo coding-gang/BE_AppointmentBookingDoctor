@@ -29,7 +29,6 @@ import { BookingComponent } from './components/booking/booking.component';
 import { BreadCrumbBarComponent } from './components/bread-crumb-bar/bread-crumb-bar.component';
 import { DoctorComponent } from './components/doctor/doctor.component';
 import { AdminsModule } from './components/admins/admins.module';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,12 +54,15 @@ import { AdminsModule } from './components/admins/admins.module';
     LightboxModule,
     RouterModule.forRoot(appRoutesHome),
     HttpClientModule,
-    AdminsModule
+    AdminsModule,
   ],
   providers:[
     SpecialitiesService,
     DoctorPopularService,
-    {provide: APP_BASE_HREF, useValue: '/'}
+    {
+      provide: APP_BASE_HREF,
+      useValue:'/'
+    }
   ],
   bootstrap: [
     AppComponent

@@ -1,0 +1,78 @@
+<div class="page-wrapper">
+  <div class="content container-fluid">
+
+<!-- Page Header -->
+<div class="page-header">
+<div class="row">
+<div class="col-sm-12">
+  <h3 class="page-title">List of Doctors</h3>
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/dashboard']" >Dashboard</a></li>
+    <li class="breadcrumb-item active">Doctor</li>
+  </ul>
+</div>
+</div>
+</div>
+<!-- /Page Header -->
+
+
+      <!-- <table class="datatable table table-hover table-center mb-0">
+        <thead>
+          <tr>
+            <th>Doctor Name</th>
+            <th>Speciality</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let doc of doctors; let i=index">
+            <tr>
+              <td>
+               <h2 class="table-avatar">
+                 <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" [src]="doc.src" alt="User Image"></a>
+                 <a [routerLink]="['/dashboard/doctor/',doc.id]">{{doc.fullName}}</a>
+               </h2>
+             </td>
+             <td>{{doc.speciality}}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table> -->
+      <div>
+        <ngx-datatable
+        #mydatatable
+        [ngClass]="tablestyles"
+        [columnMode]="ColumnMode.force"
+        [limit]="5"
+        [footerHeight]="50"
+        [headerHeight]="50"
+        rowHeight="auto"
+         [rows]="rows">
+        <ngx-datatable-column name="fullName">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span
+              title="Double click to edit"
+              (dblclick)="editing[rowIndex + '-fullName'] = true"
+              *ngIf="!editing[rowIndex + '-fullName']"
+            >
+              {{ value }}
+            </span>
+            <input
+              autofocus
+              (blur)="updateValue($event, 'fullName', rowIndex)"
+              *ngIf="editing[rowIndex + '-fullName']"
+              type="text"
+              [value]="value"
+            />
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="speciality">
+          <ng-template ngx-datatable-cell-template let-value="value">
+            {{ value }}
+          </ng-template>
+        </ngx-datatable-column>
+
+        </ngx-datatable>
+    </div>
+  </div>
+</div>
+

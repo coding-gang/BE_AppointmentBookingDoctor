@@ -6,7 +6,7 @@ ComponentRef,
 OnInit,TemplateRef,ViewChild ,ViewContainerRef,Input }
  from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { DoctorPopularService } from './popular.service';
+import { DoctorPopularService } from '../../../services/popular.service';
 import { IdoctorPopular } from './doctorPopular.model';
 import { DoctorWidgetComponent } from '..';
 import { isNgTemplate } from '@angular/compiler';

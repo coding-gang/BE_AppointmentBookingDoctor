@@ -1,9 +1,9 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit, Output  } from '@angular/core';
 import { Router,NavigationStart, Event as NavigationEvent } from '@angular/router';
 @Component({
   selector: 'app-root',
   template: `
-   <ng-container *ngIf="isAmin ==='admin';then admin else client"></ng-container>
+   <ng-container *ngIf="isAmin ==='dashboard';then dashboard else client"></ng-container>
   <ng-template #client>
             <app-header>
              <a loginSignup class="nav-link header-login" href="login.html">login / Signup </a>
@@ -12,21 +12,18 @@ import { Router,NavigationStart, Event as NavigationEvent } from '@angular/route
 
              <router-outlet></router-outlet>
              <app-footer></app-footer>
-             <h1>hi client</h1>
   </ng-template>
 
-  <ng-template #admin>
+  <ng-template #dashboard>
         <app-navbar-admin></app-navbar-admin>
         <app-sidebar-admin></app-sidebar-admin>
          <router-outlet></router-outlet>
-
   </ng-template>
               `
 })
 export class AppComponent implements OnInit {
   event$:any
   isAmin:string =''
-
   constructor(private router: Router) {
   }
   ngOnInit(){
@@ -39,7 +36,6 @@ export class AppComponent implements OnInit {
       (event: NavigationEvent) => {
         if(event instanceof NavigationStart) {
            this.isAmin =event.url.split('/')[1];
-           console.log(this.isAmin);
         }
       });
   }
