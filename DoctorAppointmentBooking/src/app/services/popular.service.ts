@@ -51,7 +51,7 @@ export class DoctorPopularService{
                  id:item.doctorId,
                  fullName: `${item.lastName} ${item.firstName}`,
                  speciality: item.speciallityName,
-                 src:`${PATH}doctor-0${i}.jpg`,
+                 avatar:`${PATH}doctor-0${i}.jpg`,
                }
              })
              ).subscribe(d=>  docs.push(d));

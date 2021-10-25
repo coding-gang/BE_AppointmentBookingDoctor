@@ -13,30 +13,6 @@
 </div>
 </div>
 </div>
-<!-- /Page Header -->
-
-
-      <!-- <table class="datatable table table-hover table-center mb-0">
-        <thead>
-          <tr>
-            <th>Doctor Name</th>
-            <th>Speciality</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ng-container *ngFor="let doc of doctors; let i=index">
-            <tr>
-              <td>
-               <h2 class="table-avatar">
-                 <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" [src]="doc.src" alt="User Image"></a>
-                 <a [routerLink]="['/dashboard/doctor/',doc.id]">{{doc.fullName}}</a>
-               </h2>
-             </td>
-             <td>{{doc.speciality}}</td>
-            </tr>
-          </ng-container>
-        </tbody>
-      </table> -->
       <div>
         <ngx-datatable
         #mydatatable
@@ -47,6 +23,13 @@
         [headerHeight]="50"
         rowHeight="auto"
          [rows]="rows">
+         <ngx-datatable-column name="avatar">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value">
+            <a [routerLink]="['/dashboard/doctor',rows[rowIndex].id]" class="avatar avatar-sm mr-2">
+              <img class="avatar-img rounded-circle" [src]="value"alt="User Image">
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
         <ngx-datatable-column name="fullName">
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span
@@ -54,7 +37,7 @@
               (dblclick)="editing[rowIndex + '-fullName'] = true"
               *ngIf="!editing[rowIndex + '-fullName']"
             >
-              {{ value }}
+             <a [routerLink]="['/dashboard/doctor',rows[rowIndex].id]">{{ value }}</a>
             </span>
             <input
               autofocus
@@ -70,7 +53,6 @@
             {{ value }}
           </ng-template>
         </ngx-datatable-column>
-
         </ngx-datatable>
     </div>
   </div>
