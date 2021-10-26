@@ -23,13 +23,12 @@ exports.getAll = (req,res) =>{
 exports.update = (req,res) =>{
     const specialityId = req.params.specialityId;
     let sql = "call Update_Specialities_Proc(?,?)";
-    const params = [specialityId];
+    const params = [];
     let speciality = {};
     speciality = req.body;
-    Object.values(speciality).forEach(val => params.push(val));
+    Object.values(speciality).forEach(val => {params.push(val)});
     connectDb.query(sql,params,(error,results,fields)=>{
         if(error) throw error;
-        console.log(results[0][0].result);
         res.status(204).send();
     })
 }
@@ -61,4 +60,19 @@ exports.isExistSpecialities = (req,res,next)=>{
          }
     })
 }
+exports.isExistNameSpec = (req,res,next) =>{
+    const speciallityName=req.body.speciallityName;
+    const sql = "select isExist_NameSpec_Func(?) as isExistName";
+    connectDb.query(sql,speciallityName,(error,result)=>{
+          console.log(result[0].isExistName);
+        if(error) throw error;
+        if(result[0].isExistName ===0) {
+            next();
+        }
+        else{
+            const err = new appError(409,"Không thể cập nhật dữ liệu");
+            res.status(err.statusCode).send(err.resError().error);
+        }
+    })
 
+}
