@@ -1,5 +1,5 @@
 const connectDb = require('../utils/connectionDB');
-
+const appError = require('../utils/appError');
 exports.getById = (req, res) => {
     const specialityId=   req.params.specialityId;
     const sql = "select * from specialities where specialityId=(?)";
@@ -61,3 +61,4 @@ exports.isExistSpecialities = (req,res,next)=>{
          }
     })
 }
+
