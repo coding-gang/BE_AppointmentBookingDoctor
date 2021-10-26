@@ -29,6 +29,7 @@ import { BookingComponent } from './components/booking/booking.component';
 import { BreadCrumbBarComponent } from './components/bread-crumb-bar/bread-crumb-bar.component';
 import { DoctorComponent } from './components/doctor/doctor.component';
 import { AdminsModule } from './components/admins/admins.module';
+import { BreadCrumbsService } from './services/breadCrumb.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +60,8 @@ import { AdminsModule } from './components/admins/admins.module';
   providers:[
     SpecialitiesService,
     DoctorPopularService,
+    BreadCrumbsService,
+
     {
       provide: APP_BASE_HREF,
       useValue:'/'

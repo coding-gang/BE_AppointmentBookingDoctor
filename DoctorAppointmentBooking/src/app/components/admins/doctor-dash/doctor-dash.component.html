@@ -1,60 +1,47 @@
-<div class="page-wrapper">
-  <div class="content container-fluid">
-
-<!-- Page Header -->
-<div class="page-header">
-<div class="row">
-<div class="col-sm-12">
-  <h3 class="page-title">List of Doctors</h3>
-  <ul class="breadcrumb">
-    <li class="breadcrumb-item"><a [routerLink]="['/dashboard']" >Dashboard</a></li>
-    <li class="breadcrumb-item active">Doctor</li>
-  </ul>
-</div>
-</div>
-</div>
-      <div>
-        <ngx-datatable
-        #mydatatable
-        [ngClass]="tablestyles"
-        [columnMode]="ColumnMode.force"
-        [limit]="5"
-        [footerHeight]="50"
-        [headerHeight]="50"
-        rowHeight="auto"
-         [rows]="rows">
-         <ngx-datatable-column name="avatar">
-          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value">
-            <a [routerLink]="['/dashboard/doctor',rows[rowIndex].id]" class="avatar avatar-sm mr-2">
-              <img class="avatar-img rounded-circle" [src]="value"alt="User Image">
-            </a>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="fullName">
-          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-            <span
-              title="Double click to edit"
-              (dblclick)="editing[rowIndex + '-fullName'] = true"
-              *ngIf="!editing[rowIndex + '-fullName']"
-            >
-             <a [routerLink]="['/dashboard/doctor',rows[rowIndex].id]">{{ value }}</a>
-            </span>
-            <input
-              autofocus
-              (blur)="updateValue($event, 'fullName', rowIndex)"
-              *ngIf="editing[rowIndex + '-fullName']"
-              type="text"
-              [value]="value"
-            />
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="speciality">
-          <ng-template ngx-datatable-cell-template let-value="value">
-            {{ value }}
-          </ng-template>
-        </ngx-datatable-column>
-        </ngx-datatable>
-    </div>
+<app-admin [namePage]="namePage" [nameComponent]="nameComponent">
+  <div ngProjectAs="button" class="col-sm-12 col">
+    <button (click) ="newDoctor()" class="float-right mt-2 mr-3 btn btn-dark">New doctor</button>
   </div>
+  <div compo>
+    <ngx-datatable
+    #mydatatable
+    [ngClass]="tablestyles"
+    [columnMode]="ColumnMode.force"
+    [limit]="5"
+    [footerHeight]="50"
+    [headerHeight]="50"
+    rowHeight="auto"
+     [rows]="rows">
+     <ngx-datatable-column name="avatar">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value">
+        <a [routerLink]="['/dashboard/doctor',rows[rowIndex].id]" class="avatar avatar-sm mr-2">
+          <img class="avatar-img rounded-circle" [src]="value" alt="User Image">
+        </a>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="fullName">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        <span
+          title="Double click to edit"
+          (dblclick)="editing[rowIndex + '-fullName'] = true"
+          *ngIf="!editing[rowIndex + '-fullName']"
+        >
+         <a [routerLink]="['/dashboard/doctor',rows[rowIndex].id]">{{ value }}</a>
+        </span>
+        <input
+          autofocus
+          (blur)="updateValue($event, 'fullName', rowIndex)"
+          *ngIf="editing[rowIndex + '-fullName']"
+          type="text"
+          [value]="value"
+        />
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="speciality">
+      <ng-template ngx-datatable-cell-template let-value="value">
+        {{ value }}
+      </ng-template>
+    </ngx-datatable-column>
+    </ngx-datatable>
 </div>
-
+</app-admin>

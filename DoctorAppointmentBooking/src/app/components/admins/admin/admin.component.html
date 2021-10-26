@@ -1,3 +1,42 @@
-<h1>Work</h1>
+<div class="page-wrapper">
+  <div class="content container-fluid">
+
+<div class="page-header">
+<div class="row">
+<div class="col-sm-12">
+  <h3 class="page-title">{{namePage}}</h3>
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Dashboard</a></li>
+    <ng-container *ngIf="BreadCrumbs.length>0">
+      <ng-container *ngFor="let item of BreadCrumbs;let i =index">
+        <ng-container *ngTemplateOutlet="BreadCrumbs.length-1 === i ? noactive : active ;context:{lable:item.lable,url:item.url}">
+
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-template #active let-lable="lable" let-url="url">
+      <li class="breadcrumb-item active">
+        <a [routerLink]="[url]">{{lable}}</a>
+      </li>
+    </ng-template>
+
+    <ng-template #noactive let-lable="lable" let-url="url">
+      <li class="breadcrumb-item">{{lable}}</li>
+    </ng-template>
+
+
+  </ul>
+</div>
+   <ng-content select="button"></ng-content>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+     <ng-content select="[compo]"></ng-content>
+</div>
+</div>
+</div>
+</div>
+
 
 

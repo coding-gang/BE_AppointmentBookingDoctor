@@ -5,14 +5,36 @@ import { NavbarAdminComponent } from './navbar-admin/navbar-admin.component';
 import { SidebarAdminComponent } from './sidebar-admin/sidebar-admin.component';
 import { Routes,RouterModule } from '@angular/router';
 import { DoctorDashComponent } from './doctor-dash/doctor-dash.component';
-import {NgxDatatableModule} from "@swimlane/ngx-datatable"
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import { CreateDoctorComponent } from './doctor-dash/create-doctor/create-doctor.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { BrowserModule } from '@angular/platform-browser';
+
 const routes: Routes =[
+
    {
-     path:'dashboard',component:AdminComponent
-   },
-    {
-      path:'dashboard/doctor',component:DoctorDashComponent
-    }
+     path:'dashboard',component:DashboardComponent,
+     children:[
+      {
+        path:'doctor',
+        children:[
+          {
+            path:'',component:DoctorDashComponent,data:{breadcrumb:"list doctor"},
+          },
+          {
+            path:'new',component: CreateDoctorComponent,
+            data:{
+              breadcrumb:"new doctor"
+            }
+          }
+        ]
+      },
+      {
+        path:'',redirectTo:'dashboard',pathMatch:'full'
+      }
+     ]
+   }
+
 ]
 @NgModule({
   declarations: [
@@ -20,9 +42,12 @@ const routes: Routes =[
     NavbarAdminComponent,
     SidebarAdminComponent,
     DoctorDashComponent,
+    CreateDoctorComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,
+    BrowserModule,
     RouterModule.forChild(routes),
     NgxDatatableModule
   ],
@@ -31,6 +56,8 @@ const routes: Routes =[
     NavbarAdminComponent,
     SidebarAdminComponent,
     DoctorDashComponent,
+    CreateDoctorComponent,
+    DashboardComponent
   ]
 })
 export class AdminsModule { }
