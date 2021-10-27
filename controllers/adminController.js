@@ -40,6 +40,24 @@ exports.update = (req,res) => {
       })
 }
 
+exports.insert = (req,res) =>{
+   ({userName, password, roleId}=req.body);
+   const params =[userName, password, roleId];
+   const sql = "call Add_Admin_Proc(?,?,?)";
+   connectDb.query(sql,params,(error)=>{
+       if(error) throw error;
+       res.status(204).send();
+   })
+}
+exports.deleteAdmin = (req,res) =>{
+    const param = req.params.adminId;
+    console.log(param);
+    const sql = "call Del_Admins_Proc(?)";
+    connectDb.query(sql,param,(error)=>{
+        if(error) throw error;
+        res.status(204).send();
+    })
+}
 exports.checkUpdateAdminValid= (req,res,next) => {
     const userName = req.body.userName;
     const idRole = req.body.roleId;
@@ -52,10 +70,22 @@ exports.checkUpdateAdminValid= (req,res,next) => {
         const [{isExistRole,...role},{isExistUserName,...admin}] = [...result[0],...result[1]];
         if(isExistRole !==0 &&  isExistUserName ===0) next();
         else{
-            const err =  new appError(409,"Cập nhật dữ liệu thất bại!");
+            const err =  new appError(409,"Kiểm ta lại dữ liệu!");
             res.status(err.statusCode).send(err.resError().error);
         }
     })
+}
 
-
+exports.checkExistAdmin = (req, res, next)  =>{
+    const param = req.params.adminId;
+    const sql = "select isExist_Admin_Func(?) as isExistAdmin";
+    connectDb.query(sql,param,(error,result)=>{
+        if(error) throw error;
+        [{isExistAdmin}] = [...result]
+        if(isExistAdmin===1) next();
+        else{
+             const err =  new appError(409,"Không tồn tại người dùng này!");
+            res.status(err.statusCode).send(err.resError().error);
+        }
+    })
 }
