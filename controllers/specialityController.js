@@ -23,7 +23,7 @@ exports.getAll = (req,res) =>{
 exports.update = (req,res) =>{
     const specialityId = req.params.specialityId;
     let sql = "call Update_Specialities_Proc(?,?)";
-    const params = [];
+    const params = [specialityId];
     let speciality = {};
     speciality = req.body;
     Object.values(speciality).forEach(val => {params.push(val)});
@@ -41,6 +41,15 @@ exports.delete = (req,res) => {
         console.log(result[0][0].result);
         res.status(204).send();
     })
+}
+exports.insert = (req,res) =>{
+    const sql = "call Add_Specialities_Proc(?)";
+    const data=req.body.speciallityName;
+    connectDb.query(sql,data,(error)=>{
+        if(error) throw error;
+        res.status(204).send();
+    })
+
 }
 
 exports.isExistSpecialities = (req,res,next)=>{
@@ -70,7 +79,7 @@ exports.isExistNameSpec = (req,res,next) =>{
             next();
         }
         else{
-            const err = new appError(409,"Không thể cập nhật dữ liệu");
+            const err = new appError(409,"Đã tồn tại chuyên ngành trong cơ sở dữ liệu");
             res.status(err.statusCode).send(err.resError().error);
         }
     })
