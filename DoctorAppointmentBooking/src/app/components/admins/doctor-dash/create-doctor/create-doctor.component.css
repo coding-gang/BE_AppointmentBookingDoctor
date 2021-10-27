@@ -1,0 +1,10 @@
+em{
+  color: red;
+  float:right;
+}
+.error input{
+  border-color: red;
+}
+/* .error ::-webkit-input-placeholder{color: red;}
+.error ::-moz-placeholder{color: red;}
+.error :-moz-placeholder{color: red;} */

@@ -8,7 +8,7 @@ import { DoctorDashComponent } from './doctor-dash/doctor-dash.component';
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import { CreateDoctorComponent } from './doctor-dash/create-doctor/create-doctor.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 const routes: Routes =[
 
    {
@@ -48,7 +48,8 @@ const routes: Routes =[
     CommonModule,
     RouterModule.forChild(routes),
     NgxDatatableModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports:[
     AdminComponent,
