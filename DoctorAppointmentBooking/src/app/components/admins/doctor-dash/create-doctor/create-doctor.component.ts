@@ -8,9 +8,18 @@ import {Component, OnInit} from '@angular/core';
 export class CreateDoctorComponent implements OnInit {
   namePage:string = 'New doctor';
   nameComponent:string ="New doctor";
+  firstName:any
+  lastName:any
+  phone:any
+  email:any
+  dob:any
+  address:any
+  gender:any
   constructor() {
    }
   ngOnInit(): void {
   }
-
+  addDoctor(formValues:any){
+         console.log(formValues);
+  }
 }

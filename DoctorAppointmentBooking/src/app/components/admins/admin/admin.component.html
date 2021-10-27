@@ -16,12 +16,12 @@
     </ng-container>
     <ng-template #active let-lable="lable" let-url="url">
       <li class="breadcrumb-item active">
-        <a [routerLink]="[url]">{{lable}}</a>
+        <a [routerLink]="[url]">{{lable | titlecase}}</a>
       </li>
     </ng-template>
 
     <ng-template #noactive let-lable="lable" let-url="url">
-      <li class="breadcrumb-item">{{lable}}</li>
+      <li class="breadcrumb-item">{{lable | titlecase}}</li>
     </ng-template>
 
 

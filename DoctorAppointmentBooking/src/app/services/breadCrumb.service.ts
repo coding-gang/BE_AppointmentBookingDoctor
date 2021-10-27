@@ -16,6 +16,12 @@ export class BreadCrumbsService{
       let lable = isExistRouteConfig ?
                   activatedRoute.routeConfig?.data?.breadcrumb :'';
       let url = isExistRouteConfig ? router.url :'';
+      const breadCrumbLengh  = url.split('/');
+      const dashboardBread =  2;// default dashborad index = 2
+      const breadCrumCurrent = breadCrumbLengh.length;//4
+         if((breadCrumCurrent - dashboardBread) === 1){
+             BreadCrumbs.pop();
+         }
       let indexExist =0;
       const isExist =  from(BreadCrumbs)
           .pipe(
