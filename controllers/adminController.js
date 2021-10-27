@@ -1,6 +1,6 @@
 const { query } = require('express');
 const connectDb = require('../utils/connectionDB');
-
+const appError = require('../utils/appError');
 exports.getAll = (req,res) =>{
     const sql = "select * from adminsView";
     connectDb.query(sql,(error,result)=>{
@@ -22,6 +22,7 @@ exports.getById = (req, res) => {
     const sql = "select * from adminsView where adminId =(?)";
     connectDb.query(sql,adminId,(error, result) =>{
         if(error) throw error;
+        console.log(result);
         res.status(200).json({status:"success",data:result})
     })
 }
@@ -39,3 +40,22 @@ exports.update = (req,res) => {
       })
 }
 
+exports.checkUpdateAdminValid= (req,res,next) => {
+    const userName = req.body.userName;
+    const idRole = req.body.roleId;
+    const isExistRoleFromAdminSql = "select isExist_RoleFromAdmin_Func(?) as isExistRole";
+    const isExistUsernameSql = "select isExist_UsernameFromAdmin_Func(?) as isExistUserName"
+    const sql = `${isExistRoleFromAdminSql}; ${isExistUsernameSql};`
+    connectDb.query(sql,[idRole,userName],(error,result)=>{
+        if(error ) throw error;
+        // Destructuring & rest
+        const [{isExistRole,...role},{isExistUserName,...admin}] = [...result[0],...result[1]];
+        if(isExistRole !==0 &&  isExistUserName ===0) next();
+        else{
+            const err =  new appError(409,"Cập nhật dữ liệu thất bại!");
+            res.status(err.statusCode).send(err.resError().error);
+        }
+    })
+
+
+}
