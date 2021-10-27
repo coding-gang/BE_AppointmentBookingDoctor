@@ -1,3 +1,4 @@
+const { add } = require('nodemon/lib/rules');
 const connectDb = require('../utils/connectionDB');
 
 exports.getAll = (req,res,next) =>{
@@ -23,14 +24,15 @@ exports.getById = (req,res)=>{
 exports.Add = (req,res)=>{
        const sql = "call Add_Doctor_Proc(?,?,?,?,?,?,?,?,?)";
        const doctor =  req.body;
+       doctor.DOB = doctor.DOB.split("/").reverse().join("-");
        console.log(doctor);
+       doctor.gender = doctor.gender ===1 ? true : false;
        const params = [];
        Object.values(doctor).forEach(el => params.push(el));
        connectDb.query(sql,params,(error,results,fields)=>{
         if (error) throw error;
        const message =results[0][0].result;
-       console.log(message);
-        res.status(201).json({status:message});
+        res.status(201).json({status:'success',message:message});
        })    
 }
 
