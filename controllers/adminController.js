@@ -5,7 +5,14 @@ exports.getAll = (req,res) =>{
     const sql = "select * from adminsView";
     connectDb.query(sql,(error,result)=>{
         if(error) throw error;
-        res.status(200).json({status:"success",data:result});
+        console.log(result[0].adminId);
+        const adminView =[];
+       Object.values(result).forEach(val => {
+           // Destructuring 
+        ({password,...rest} = val);
+            adminView.push(rest);
+       })
+        res.status(200).json({status:"success",data:adminView});
     })
 };
 
