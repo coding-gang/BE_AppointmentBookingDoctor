@@ -4,7 +4,7 @@ export interface IDoctor{​
     ​​​
     address: string
     ​​​
-    doctorId: 4
+    doctorId: number
     ​​​
     firstName: string
     ​​​

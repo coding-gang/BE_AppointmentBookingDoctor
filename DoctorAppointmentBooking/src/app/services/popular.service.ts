@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { IdoctorPopular } from "../components/home/popular/doctorPopular.model";
-import { HttpClient} from "@angular/common/http";
+import { HttpClient, HttpHeaders} from "@angular/common/http";
 import { from, Observable } from "rxjs";
 import {map} from 'rxjs/operators'
-import { IDoctor } from "src/app/interface/doctor.model";
+import { ICreateDoctor,IDoctor } from "../interface/Idoctor/index";
+import { IMessage } from "../interface/Imessage.model";
 const LOCATION = "Đà Lạt, Việt Nam";
 const PATH = "assets/img/doctors/";
 
@@ -57,6 +58,16 @@ export class DoctorPopularService{
              ).subscribe(d=>  docs.push(d));
           return docs;
 
+    }
+
+    AddDoctor(doctor:ICreateDoctor):Observable<IMessage>{
+
+      let headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": '*'
+        });
+          return this.http.post<IMessage>('http://localhost:3000/api/v1/doctor',
+                             doctor,{ headers: headers })
     }
 }
 

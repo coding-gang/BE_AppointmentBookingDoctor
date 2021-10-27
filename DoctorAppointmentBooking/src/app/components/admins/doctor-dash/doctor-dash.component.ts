@@ -1,6 +1,6 @@
 import { getLocaleFirstDayOfWeek } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { IDoctor } from 'src/app/interface/doctor.model';
+import { IDoctor } from 'src/app/interface/Idoctor/index';
 import { DoctorPopularService } from '../../home';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { Router} from '@angular/router';

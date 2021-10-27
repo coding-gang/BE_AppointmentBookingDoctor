@@ -1,5 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import { FormGroup ,  FormControl, Validators } from '@angular/forms';
+import {dateValidator,phoneValidator} from "../shared/index";
+import { DoctorPopularService } from 'src/app/services/popular.service';
+import {ICreateDoctor} from 'src/app/interface/Idoctor/index';
+import { IMessage } from 'src/app/interface/Imessage.model';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-create-doctor',
   templateUrl: './create-doctor.component.html',
@@ -11,33 +16,34 @@ export class CreateDoctorComponent implements OnInit {
   createDoctorForm!: FormGroup
  private firstName!: FormControl;
  private lastName!:FormControl;
- private phone!: FormControl;
+ public phone!: FormControl;
  private email!: FormControl;
- private dob!: FormControl;
+ private DOB!: FormControl;
  private address!: FormControl;
  private gender!:FormControl;
- lName:any
   mouseover:any
-
-  constructor() {
+  constructor(private doctorService:DoctorPopularService,private router:Router) {
    }
-
   ngOnInit(): void {
-      this.firstName =new FormControl("",Validators.required);
-      this.lastName =new FormControl("",Validators.required);
+    const validatorsName =[Validators.required,
+                          Validators.pattern('[a-zA-Z].*'),
+                          Validators.maxLength(10)]
+      this.firstName =new FormControl("",validatorsName);
+      this.lastName =new FormControl("",[Validators.required,Validators.pattern('[a-zA-Z].*'),
+                                        Validators.maxLength(20)]);
       this.address =new FormControl("",Validators.required);
-      this.phone =new FormControl("",Validators.required);
-      this.email =new FormControl("",Validators.required);
-      this.dob =new FormControl("",Validators.required);
+      this.phone =new FormControl("",[Validators.required,
+                                      phoneValidator(/^\d+$/)]);
+      this.email =new FormControl("",[Validators.required,Validators.email]);
+      this.DOB =new FormControl("",[Validators.required,dateValidator()]);
       this.gender =new FormControl("",Validators.required);
       this.createDoctorForm =new FormGroup({
         firstName:this.firstName,
         lastName :this.lastName,
-        address:this.address,
         phone:this.phone,
-        email:this.email,
-        dob:this.dob,
-        gender:this.gender
+        DOB:this.DOB,
+        gender:this.gender,
+        address:this.address
       }
 
       )
@@ -54,17 +60,22 @@ export class CreateDoctorComponent implements OnInit {
   validAdressCreateDoctor(){
     return this.address.valid || this.address.untouched
   }
-  validEmailCreateDoctor(){
-    return this.email.valid || this.email.untouched
-  }
   validGenderCreateDoctor(){
     return this.gender.valid || this.gender.untouched
   }
   validDoBCreateDoctor(){
-    return this.dob.valid || this.dob.untouched
+    return this.DOB.valid || this.DOB.untouched
   }
 
-  addDoctor(formValues:any){
-         console.log(formValues);
+  addDoctor(formValues:ICreateDoctor){
+
+      formValues.password ='123';
+      formValues.specialityId=2;
+      formValues.roleId=2;
+      this.doctorService.AddDoctor(formValues)
+       .subscribe((mes:IMessage) =>mes.status === 'success'
+                 ? this.router.navigateByUrl('/dashboard/doctor')
+                 : this.router.navigate([this.router.url]))
+
   }
 }
