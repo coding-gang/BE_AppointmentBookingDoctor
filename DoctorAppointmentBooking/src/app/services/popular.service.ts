@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { IdoctorPopular } from "../components/home/popular/doctorPopular.model";
 import { HttpClient, HttpHeaders} from "@angular/common/http";
-import { from, Observable } from "rxjs";
+import { from, Observable, of } from "rxjs";
 import {map} from 'rxjs/operators'
-import { ICreateDoctor,IDoctor } from "../interface/Idoctor/index";
+import { ICreateDoctor,IDoctor ,IDoctorProfile } from "../interface/Idoctor/index";
 import { IMessage } from "../interface/Imessage.model";
 const LOCATION = "Đà Lạt, Việt Nam";
 const PATH = "assets/img/doctors/";
@@ -67,7 +67,29 @@ export class DoctorPopularService{
         "Access-Control-Allow-Origin": '*'
         });
           return this.http.post<IMessage>('http://localhost:3000/api/v1/doctor',
-                             doctor,{ headers: headers })
+                             doctor)
+    }
+
+    getDoctorById(id:any):Observable<IDoctor>{
+        return this.http.get<IDoctor>(`http://localhost:3000/api/v1/doctor/${id}`);
+    }
+
+    viewDoctorProfile(doctor:IDoctor):Observable<IDoctorProfile>{
+                     let i =0;
+                    return  of(doctor.doctors[0]).pipe(
+                        map(item =>{
+                          i == 5 ? i=1 : i++
+                          const doctorProfile:IDoctorProfile={
+                            doctorId:item.doctorId,
+                            fullName: `${item.lastName} ${item.firstName}`,
+                            DOB: item.DOB,
+                            address:item.address,
+                            avatar:`${PATH}doctor-0${i}.jpg`,
+                            phone: item.phone
+                          }
+                          return doctorProfile
+                        })
+                      )
     }
 }
 

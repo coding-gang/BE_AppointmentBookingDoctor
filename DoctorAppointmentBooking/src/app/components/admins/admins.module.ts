@@ -9,6 +9,7 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import { CreateDoctorComponent } from './doctor-dash/create-doctor/create-doctor.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule , ReactiveFormsModule } from '@angular/forms';
+import { ViewDoctorComponent } from './doctor-dash/view-doctor/view-doctor.component';
 const routes: Routes =[
 
    {
@@ -18,13 +19,19 @@ const routes: Routes =[
         path:'doctor',
         children:[
           {
-            path:'',component:DoctorDashComponent,data:{breadcrumb:"list doctor"},
-          },
-          {
             path:'new',component: CreateDoctorComponent,
             data:{
               breadcrumb:"new doctor"
             }
+          },
+          {
+            path:':id',component:ViewDoctorComponent,
+            data:{
+              breadcrumb:"profile doctor"
+            }
+          },
+          {
+            path:'',component:DoctorDashComponent,data:{breadcrumb:"list doctor"},
           }
         ]
       },
@@ -42,7 +49,8 @@ const routes: Routes =[
     SidebarAdminComponent,
     DoctorDashComponent,
     CreateDoctorComponent,
-    DashboardComponent
+    DashboardComponent,
+    ViewDoctorComponent
   ],
   imports: [
     CommonModule,
@@ -57,7 +65,8 @@ const routes: Routes =[
     SidebarAdminComponent,
     DoctorDashComponent,
     CreateDoctorComponent,
-    DashboardComponent
+    DashboardComponent,
+    ViewDoctorComponent
   ]
 })
 export class AdminsModule { }

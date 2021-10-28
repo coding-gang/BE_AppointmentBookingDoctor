@@ -94,7 +94,7 @@
             </em>
             <em *ngIf="!validDoBCreateDoctor() &&
                         createDoctorForm.controls.DOB.errors?.dateVaidator">
-              Format date incorrect
+              Date format {{createDoctorForm.controls.DOB.errors?.dateVaidator}}
             </em>
           </div>
           <span (mouseenter)="mouseover=true" (mouseleave)="mouseover=false">
