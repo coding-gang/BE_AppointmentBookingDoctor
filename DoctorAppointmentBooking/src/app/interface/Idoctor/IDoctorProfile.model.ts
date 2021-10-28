@@ -7,6 +7,10 @@ export interface IDoctorProfile{
     doctorId: number
     ​​​
     fullName: string
+
+    firstName: string
+
+    lastName: string
     ​​​​​
     phone: string
 

@@ -5,6 +5,8 @@ import { from, Observable, of } from "rxjs";
 import {map} from 'rxjs/operators'
 import { ICreateDoctor,IDoctor ,IDoctorProfile } from "../interface/Idoctor/index";
 import { IMessage } from "../interface/Imessage.model";
+import * as moment from "moment";
+
 const LOCATION = "Đà Lạt, Việt Nam";
 const PATH = "assets/img/doctors/";
 
@@ -74,15 +76,21 @@ export class DoctorPopularService{
         return this.http.get<IDoctor>(`http://localhost:3000/api/v1/doctor/${id}`);
     }
 
+    updateDoctorById(id:any,doctor:any):Observable<IMessage>{
+      return this.http.put<IMessage>(`http://localhost:3000/api/v1/doctor/${id}`,doctor);
+  }
+
     viewDoctorProfile(doctor:IDoctor):Observable<IDoctorProfile>{
                      let i =0;
                     return  of(doctor.doctors[0]).pipe(
                         map(item =>{
                           i == 5 ? i=1 : i++
                           const doctorProfile:IDoctorProfile={
+                            firstName : item.firstName,
+                            lastName :item.lastName,
                             doctorId:item.doctorId,
                             fullName: `${item.lastName} ${item.firstName}`,
-                            DOB: item.DOB,
+                            DOB: moment(item.DOB).format('DD/MM/YYYY') ,
                             address:item.address,
                             avatar:`${PATH}doctor-0${i}.jpg`,
                             phone: item.phone
