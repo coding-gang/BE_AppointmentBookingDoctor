@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { appRoutesHome } from './routes';
 import { LightboxModule } from 'ngx-lightbox';
 import { HttpClientModule } from '@angular/common/http';
+import { DoctorListResolver } from './components/admins/doctor-dash/shared/doctor-list-resolve';
 // directive customer
 import { EventHoverDirective } from './directives/event.directive';
 //importService , component home
@@ -61,7 +62,7 @@ import { BreadCrumbsService } from './services/breadCrumb.service';
     SpecialitiesService,
     DoctorPopularService,
     BreadCrumbsService,
-
+    DoctorListResolver,
     {
       provide: APP_BASE_HREF,
       useValue:'/'

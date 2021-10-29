@@ -10,6 +10,8 @@ import { CreateDoctorComponent } from './doctor-dash/create-doctor/create-doctor
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 import { ViewDoctorComponent } from './doctor-dash/view-doctor/view-doctor.component';
+import { ModalconfirmDoctorComponent } from './doctor-dash/modalconfirm-doctor/modalconfirm-doctor.component';
+import { DoctorListResolver } from './doctor-dash/shared/doctor-list-resolve';
 const routes: Routes =[
 
    {
@@ -31,7 +33,9 @@ const routes: Routes =[
             }
           },
           {
-            path:'',component:DoctorDashComponent,data:{breadcrumb:"list doctor"},
+            path:'',component:DoctorDashComponent,
+            data:{breadcrumb:"list doctor"},
+            resolve:{Doctors:DoctorListResolver}
           }
         ]
       },
@@ -50,7 +54,8 @@ const routes: Routes =[
     DoctorDashComponent,
     CreateDoctorComponent,
     DashboardComponent,
-    ViewDoctorComponent
+    ViewDoctorComponent,
+    ModalconfirmDoctorComponent
   ],
   imports: [
     CommonModule,
@@ -66,7 +71,8 @@ const routes: Routes =[
     DoctorDashComponent,
     CreateDoctorComponent,
     DashboardComponent,
-    ViewDoctorComponent
-  ]
+    ViewDoctorComponent,
+    ModalconfirmDoctorComponent
+  ],
 })
 export class AdminsModule { }

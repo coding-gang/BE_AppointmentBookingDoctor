@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { IdoctorPopular } from "../components/home/popular/doctorPopular.model";
 import { HttpClient, HttpHeaders} from "@angular/common/http";
-import { from, Observable, of } from "rxjs";
+import { from, Observable, of, Subject } from "rxjs";
 import {map} from 'rxjs/operators'
 import { ICreateDoctor,IDoctor ,IDoctorProfile } from "../interface/Idoctor/index";
 import { IMessage } from "../interface/Imessage.model";
@@ -20,8 +20,6 @@ export class DoctorPopularService{
         if(data.doctors.length>0){
             const doctors =data.doctors;
               let i =1;
-              console.log(doctors);
-
               doctors.slice(0,5).forEach(el => {
 
                   const doctor:IdoctorPopular = {
@@ -39,6 +37,7 @@ export class DoctorPopularService{
         }
         return POPULAR_DOCTOR;
     }
+
     getAllDoctors():Observable<IDoctor>{
           return this.http.get<IDoctor>(`/api/v1/doctors`,{ responseType:'json'});
     }
@@ -46,9 +45,10 @@ export class DoctorPopularService{
     ViewTableList(doctors:IDoctor){
       let i =0;
        let docs:any[]=[];
-           from(doctors.doctors)
+        from(doctors.doctors)
            .pipe(
              map(item => {
+
               i == 5 ? i=1 : i++
                return{
                  id:item.doctorId,
@@ -58,7 +58,7 @@ export class DoctorPopularService{
                }
              })
              ).subscribe(d=>  docs.push(d));
-          return docs;
+         return docs;
 
     }
 
@@ -98,6 +98,10 @@ export class DoctorPopularService{
                           return doctorProfile
                         })
                       )
+    }
+
+    removeDoctor(id:any):Observable<IMessage>{
+        return this.http.delete<IMessage>(`http://localhost:3000/api/v1/doctor/${id}`);
     }
 }
 

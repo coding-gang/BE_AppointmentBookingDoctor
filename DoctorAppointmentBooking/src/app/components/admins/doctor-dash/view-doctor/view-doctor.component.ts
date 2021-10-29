@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild ,OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { DoctorPopularService } from 'src/app/services/popular.service';
 import { ActivatedRoute } from '@angular/router';
@@ -9,18 +9,18 @@ import {dateValidator,phoneValidator} from "../shared/index";
 import { IMessage } from 'src/app/interface/Imessage.model';
 import { Router } from '@angular/router';
 import { Route } from '@angular/compiler/src/core';
+import { ModalconfirmDoctorComponent } from '../modalconfirm-doctor/modalconfirm-doctor.component';
 @Component({
   selector: 'app-view-doctor',
   templateUrl: './view-doctor.component.html',
   styleUrls: ['./view-doctor.component.css']
 })
-export class ViewDoctorComponent implements OnInit ,AfterViewInit{
+export class ViewDoctorComponent implements OnInit ,AfterViewInit,OnChanges{
 
 namePage:string='Profile';
 nameComponent:string='Profile';
 firstName!:FormControl;
 lastName!:FormControl
- fullName!: FormControl;
  phone!: FormControl;
  DOB!: FormControl;
  address!: FormControl;
@@ -34,14 +34,17 @@ lastName!:FormControl
  isActiveAbout:boolean =true;
   isActiveEdit:boolean =false;
  idDoctor!:any;
-
-
+ testmess:string =""
   @ViewChild('modalchild')modalchild!:ElementRef
+  @ViewChild('modalRemove')modalRemove!:ModalconfirmDoctorComponent
   constructor(private doctorService:DoctorPopularService,
              private route:ActivatedRoute,private router:Router) {
-              this.initDoctorProfile();
-               }
 
+               }
+   ngOnChanges(){
+     console.log("change");
+
+   }
   ngOnInit(): void {
 
     const validatorsName =[Validators.required,
@@ -50,7 +53,6 @@ lastName!:FormControl
       this.firstName =new FormControl("",validatorsName);
       this.lastName =new FormControl("",[Validators.required,Validators.pattern('[a-zA-Z].*'),
                           Validators.maxLength(20)]);
-      this.fullName =new FormControl()
       this.address =new FormControl("",Validators.required);
       this.phone =new FormControl("",[Validators.required,
                         phoneValidator(/^\d+$/)]);
@@ -67,11 +69,11 @@ lastName!:FormControl
          address:this.address,
          specialityId:this.specialityId,
          roleId:this.roleId,
-         fullName:this.fullName,
+
        })
-
-
+       this.initDoctorProfile();
   }
+
   ngAfterViewInit(){
     fromEvent(this.modalchild.nativeElement,'click').pipe(
        map( (el:any) => el.target.className)
@@ -114,8 +116,7 @@ lastName!:FormControl
      doctor.subscribe(doc =>{
          this.doctorService.viewDoctorProfile(doc)?.subscribe(
               item => {
-                this.idDoctor =item.doctorId
-                this.fullName.setValue(item.fullName);
+                this.idDoctor =item.doctorId;
                 this.firstName.setValue(item.firstName);
                 this.lastName.setValue(item.lastName);
                 this.DOB.setValue(item.DOB);
@@ -145,9 +146,25 @@ lastName!:FormControl
      .subscribe((mes:IMessage) => {
 
        if( mes.status === 'success'){
-          this.router.navigateByUrl(this.router.url);
-        this.isActiveEdit = !this.isActiveEdit;
+          this.router.navigate(['/dashboard/doctor/',this.idDoctor]);
+          this.isActiveEdit = !this.isActiveEdit;
        }
       })
+  }
+
+  removeDoctor(event:string){
+
+     if(event === "save"){
+      this.doctorService.removeDoctor(this.idDoctor)
+      .subscribe((mes:IMessage) => {
+       if( mes.status === 'success'){
+          this.router.navigateByUrl('/dashboard/doctor');
+          this.isActiveEdit = !this.isActiveEdit;
+       }
+      });
+     }
+  }
+  callModalRemove(){
+    this.modalRemove.openModal();
   }
 }

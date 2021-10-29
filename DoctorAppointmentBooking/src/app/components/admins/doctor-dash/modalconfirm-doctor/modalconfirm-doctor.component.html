@@ -1,0 +1,16 @@
+<div class="modal fade" [ngClass]="isOpenModal ? 'show' : ''" id="delete_modal"
+style="padding-right: 12px;" [ngStyle]="{'display': isOpenModal ? 'block': 'none'}"
+ aria-hidden="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document" >
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="form-content p-2">
+          <h4 class="modal-title">Delete</h4>
+          <p class="mb-4">Are you sure want to delete?</p>
+          <button type="button" (click)="acptModal()" class="btn btn-primary">Save</button>
+          <button type="button" (click)="closeModal()" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

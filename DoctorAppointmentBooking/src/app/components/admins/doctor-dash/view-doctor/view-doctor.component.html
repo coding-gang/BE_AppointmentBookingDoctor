@@ -3,18 +3,24 @@
     <div  class="profile-header">
       <div class="row align-items-center">
         <div class="col-auto profile-image">
-          <a href="#">
+          <a>
             <img class="rounded-circle" alt="User Image" [src]="avatar">
           </a>
         </div>
         <div class="col ml-md-n2 profile-user-info">
-          <h4 class="user-name mb-0">{{fullName.value}}</h4>
+          <h4 class="user-name mb-0">{{lastName.value}} {{firstName.value}}</h4>
           <!-- <h6 class="text-muted">ryantaylor@admin.com</h6> -->
           <div class="user-Location"><i class="fa fa-map-marker"></i>{{localtion}}</div>
         </div>
+        <div class="col-auto profile-btn">
 
+          <a (click)="callModalRemove()" class="btn btn-danger">
+            Delete
+          </a>
+        </div>
       </div>
     </div>
+
     <div class="profile-menu">
       <ul class="nav nav-tabs nav-tabs-solid">
         <li class="nav-item">
@@ -41,7 +47,7 @@
                 </h5>
                 <div class="row">
                   <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Name</p>
-                  <p class="col-sm-10">{{fullName.value}}</p>
+                  <p class="col-sm-10">{{lastName.value}} {{firstName.value}}</p>
                 </div>
                 <div class="row">
                   <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Date of Birth</p>
@@ -172,6 +178,7 @@
       <!-- /Change Password Tab -->
 
     </div>
+    <app-modalconfirm-doctor (save)=removeDoctor($event) #modalRemove></app-modalconfirm-doctor>
   </ng-container>
 
 

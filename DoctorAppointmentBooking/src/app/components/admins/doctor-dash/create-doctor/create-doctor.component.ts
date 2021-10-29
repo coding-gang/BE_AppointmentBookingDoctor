@@ -75,7 +75,7 @@ export class CreateDoctorComponent implements OnInit {
       this.doctorService.AddDoctor(formValues)
        .subscribe((mes:IMessage) =>mes.status === 'success'
                  ? this.router.navigateByUrl('/dashboard/doctor')
-                 : this.router.navigate([this.router.url]))
+                 : this.router.navigateByUrl(this.router.url))
 
   }
 }

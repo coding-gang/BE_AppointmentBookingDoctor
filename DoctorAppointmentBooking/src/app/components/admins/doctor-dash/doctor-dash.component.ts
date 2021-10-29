@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { IDoctor } from 'src/app/interface/Idoctor/index';
 import { DoctorPopularService } from '../../home';
 import { ColumnMode } from '@swimlane/ngx-datatable';
-import { Router} from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 
 
 @Component({
@@ -20,16 +20,14 @@ export class DoctorDashComponent implements OnInit {
   editing:any = {};
   ColumnMode =ColumnMode;
   tablestyles:any ="bootstrap"
-  constructor(private doctorService:DoctorPopularService,
+  constructor(private doctorService:DoctorPopularService, private route:ActivatedRoute,
               private router:Router) {
-    this.doctorService.getAllDoctors()
-    .subscribe(doc =>
-      {
-       this.rows = this.doctorService.ViewTableList(doc)
-       })
+
 
       }
   ngOnInit(): void {
+  const doctors =  this.route.snapshot.data['Doctors'];
+  this.rows =this.doctorService.ViewTableList(doctors);
   }
   updateValue(event:any, cell:any, rowIndex:any) {
     console.log('inline editing rowIndex', rowIndex);
