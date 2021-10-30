@@ -37,7 +37,7 @@ exports.update = (req,res) => {
       connectDb.query(sql,params,(error,result)=>{
           if(error) throw error;
           console.log(result);
-          res.status(204).send();
+          res.status(200).send({massage:"Cập nhật dữ liệu thành công"});
       })
 }
 
@@ -47,7 +47,7 @@ exports.insert = (req,res) =>{
    const sql = "call Add_Admin_Proc(?,?,?)";
    connectDb.query(sql,params,(error)=>{
        if(error) throw error;
-       res.status(204).send();
+       res.status(200).send({massage:"Thêm dữ liệu thành công"});
    })
 }
 exports.deleteAdmin = (req,res) =>{
@@ -56,7 +56,7 @@ exports.deleteAdmin = (req,res) =>{
     const sql = "call Del_Admins_Proc(?)";
     connectDb.query(sql,param,(error)=>{
         if(error) throw error;
-        res.status(204).send();
+        res.status(200).send({massage:"Xoá dữ liệu thành công thành công"});
     })
 }
 exports.checkUpdateAdminValid= (req,res,next) => {

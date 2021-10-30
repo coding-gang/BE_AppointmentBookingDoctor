@@ -29,7 +29,7 @@ exports.update = (req,res) =>{
     Object.values(speciality).forEach(val => {params.push(val)});
     connectDb.query(sql,params,(error,results,fields)=>{
         if(error) throw error;
-        res.status(204).send();
+        res.status(200).send({message:"Cập nhật chuyên ngành thành công"});
     })
 }
 
@@ -39,7 +39,7 @@ exports.delete = (req,res) => {
     connectDb.query(sql,specialityId,(error,result)=>{
         if(error) throw error;
         console.log(result[0][0].result);
-        res.status(204).send();
+        res.status(200).send({massage:"Xoá chuyên ngành thành công"});
     })
 }
 exports.insert = (req,res) =>{
@@ -47,7 +47,7 @@ exports.insert = (req,res) =>{
     const data=req.body.speciallityName;
     connectDb.query(sql,data,(error)=>{
         if(error) throw error;
-        res.status(204).send();
+        res.status(200).send({massage:"Thêm chuyên ngành thành công"});
     })
 
 }

@@ -30,7 +30,7 @@ exports.update = (req,res)=>{
     let sql ="call Update_Doctor_Proc(?,?,?,?,?,?,?,?,?)";
     connectDb.query(sql,params,(error, results, fields) =>{
         if (error) throw error;
-        res.status(204).send();
+        res.status(200).send({message:"Cập nhật dữ liệu thành công"});
     })
 }
 
@@ -41,7 +41,7 @@ exports.delete = (req,res)=>{
         if (error) throw error;
         const message =results[0][0].result;
         console.log(message);
-        res.status(204).send();
+        res.status(200).send({massage:"Xoá dữ liệu thành công"});
     })
 }
 
