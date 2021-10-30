@@ -21,7 +21,6 @@ import {
   DoctorWidgetComponent,
   AvailabeFeaturesComponent,
   FooterComponent,
-  SpecialitiesService,
   DoctorPopularService
 } from './components/home/index';
 import { DoctorFileComponent } from './components/doctor-file/doctor-file.component';
@@ -31,6 +30,7 @@ import { BreadCrumbBarComponent } from './components/bread-crumb-bar/bread-crumb
 import { DoctorComponent } from './components/doctor/doctor.component';
 import { AdminsModule } from './components/admins/admins.module';
 import { BreadCrumbsService } from './services/breadCrumb.service';
+import { SpecialitiesService } from './services/specialities.service';
 @NgModule({
   declarations: [
     AppComponent,

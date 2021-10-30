@@ -6,14 +6,14 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-9">
-                    <owl-carousel-o class="specialities-slider"   [options]="customOptions">
+                    <owl-carousel-o class="specialities-slider" [options]="customOptions">
                              <<ng-container  *ngFor="let item of specialities">
-                                <ng-template class="speicality-item text-center" carouselSlide [id]="item.id">
+                                <ng-template class="speicality-item text-center" carouselSlide [id]="item.specialityId.toString()">
                                     <div class="speicality-img">
-                                        <img [src]="item.src" class="img-fluid" alt="Speciality">
+                                        <img [src]="item.avatar" class="img-fluid" alt="Speciality">
                                         <span><i class="fa fa-circle" aria-hidden="true"></i></span>
                                     </div>
-                                    <p>{{item.specialitity}}</p>
+                                    <p>{{item.speciallityName}}</p>
                             </ng-template>
                              </ng-container>
                       </owl-carousel-o>

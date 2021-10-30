@@ -12,6 +12,7 @@ import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 import { ViewDoctorComponent } from './doctor-dash/view-doctor/view-doctor.component';
 import { ModalconfirmDoctorComponent } from './doctor-dash/modalconfirm-doctor/modalconfirm-doctor.component';
 import { DoctorListResolver } from './doctor-dash/shared/doctor-list-resolve';
+import { SpecialitiesComponent } from './specialities/specialities.component';
 const routes: Routes =[
 
    {
@@ -40,6 +41,12 @@ const routes: Routes =[
         ]
       },
       {
+        path:'specialities',component:SpecialitiesComponent,
+        data:{
+          breadcrumb:"Specialities"
+        }
+      },
+      {
         path:'',redirectTo:'dashboard',pathMatch:'full'
       }
      ]
@@ -55,7 +62,8 @@ const routes: Routes =[
     CreateDoctorComponent,
     DashboardComponent,
     ViewDoctorComponent,
-    ModalconfirmDoctorComponent
+    ModalconfirmDoctorComponent,
+    SpecialitiesComponent
   ],
   imports: [
     CommonModule,

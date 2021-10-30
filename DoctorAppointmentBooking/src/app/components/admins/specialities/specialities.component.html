@@ -1,0 +1,64 @@
+
+<app-admin [namePage]="namePage" [nameComponent]="nameComponent">
+ <div ngProjectAs="button" class="col-sm-12 col">
+    <button class="float-right mt-2 mr-3 btn btn-dark">Add</button>
+  </div>
+  <div compo>
+    <ngx-datatable
+    #mydatatable
+    [ngClass]="tablestyles"
+    [columnMode]="ColumnMode.force"
+    [limit]="5"
+    [footerHeight]="50"
+    [headerHeight]="50"
+    rowHeight="auto"
+     [rows]="rows">
+     <ngx-datatable-column name="specialityId">
+      <ng-template ngx-datatable-cell-template let-value="value">
+        {{ value }}
+      </ng-template>
+    </ngx-datatable-column>
+     <!-- <ngx-datatable-column name="avatar">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value">
+        <a [routerLink]="['/dashboard/doctor',rows[rowIndex].id]" class="avatar avatar-sm mr-2">
+          <img class="avatar-img rounded-circle" [src]="value" alt="User Image">
+        </a>
+      </ng-template>
+    </ngx-datatable-column> -->
+    <ngx-datatable-column name="speciallityName">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        <span
+          title="Double click to edit"
+          (dblclick)="editing[rowIndex + '-speciallityName'] = true"
+          *ngIf="!editing[rowIndex + '-speciallityName']"
+        >
+          <h4 class="table-avatar">
+            <a class="avatar mr-3">
+              <img [src]="rows[rowIndex].avatar" alt="speciality">
+            </a>
+            <a [routerLink]="['/dashboard/doctor',rows[rowIndex].id]">{{ value }}</a>
+          </h4>
+        </span>
+        <input
+          autofocus
+          (blur)="updateValue($event, 'speciallityName', rowIndex)"
+          *ngIf="editing[rowIndex + '-speciallityName']"
+          type="text"
+          [value]="value"
+        />
+      </ng-template>
+    </ngx-datatable-column>
+
+     <ngx-datatable-column>
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex">
+          <a class="btn btn-sm bg-success-light mr-2" data-toggle="modal" href="#edit_specialities_details">
+												<i class="fe fe-pencil"></i> Edit
+					</a>
+					<a  data-toggle="modal" href="#delete_modal" class="btn btn-sm bg-danger-light">
+								<i class="fe fe-trash"></i> Delete
+					</a>
+      </ng-template>
+    </ngx-datatable-column>
+    </ngx-datatable>
+</div>
+</app-admin>

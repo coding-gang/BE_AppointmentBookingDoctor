@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { ISpecialities } from './specialities.model';
-import { SpecialitiesService  } from './specialities.service';
+import { ISpeciality } from 'src/app/interface/ISpecialities/index';
+import { SpecialitiesService } from 'src/app/services/specialities.service';
 
 @Component({
   selector: 'app-specialities',
@@ -10,17 +10,19 @@ import { SpecialitiesService  } from './specialities.service';
 })
 export class SpecialitiesComponent implements OnInit {
 
-  specialities:ISpecialities[] =[]
-
+  specialities:ISpeciality[] =[]
 
   constructor(private specialitiesService:SpecialitiesService ) {
 
    }
 
   ngOnInit(): void {
-    this.specialities = this.specialitiesService.getSpecialties() ;
+    this.initSpecialties();
   }
-
+   initSpecialties(){
+       this.specialitiesService.getSpecialties()
+       .subscribe(data => this.specialities = this.specialitiesService.viewSpecialties(data.specialities))
+   }
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
