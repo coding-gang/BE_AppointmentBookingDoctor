@@ -5,6 +5,7 @@ exports.getAll = (req,res) =>{
     const sql = "select * from adminsView";
     connectDb.query(sql,(error,result)=>{
         if(error) throw error;
+        console.log(str.length);
         console.log(result[0].adminId);
         const adminView =[];
        Object.values(result).forEach(val => {
