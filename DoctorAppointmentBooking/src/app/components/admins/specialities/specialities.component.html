@@ -55,7 +55,7 @@
          (click)="editModalSpeciality(rows[rowIndex].specialityId)">
 												<i class="fe fe-pencil"></i> Edit
 					</a>
-					<a  data-toggle="modal" href="#delete_modal" class="btn btn-sm bg-danger-light">
+					<a  data-toggle="modal" (click)="setIdDeleteAndOpenDelModal(rows[rowIndex].specialityId)" class="btn btn-sm bg-danger-light">
 								<i class="fe fe-trash"></i> Delete
 					</a>
       </ng-template>
@@ -63,6 +63,7 @@
     </ngx-datatable>
     <app-add-speciality (successAdd)="eventFromModal($event)" #modalAdd></app-add-speciality>
      <app-update-specialities #modalEdit (successEdit)="eventFromEdit($event)"></app-update-specialities>
-  </div>
+    <app-modalconfirm-doctor #modalDelete (save)="deleteModalSpeciality($event)"></app-modalconfirm-doctor>
+    </div>
 
 </app-admin>

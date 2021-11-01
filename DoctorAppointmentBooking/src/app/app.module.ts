@@ -11,6 +11,7 @@ import { LightboxModule } from 'ngx-lightbox';
 import { HttpClientModule } from '@angular/common/http';
 import { DoctorListResolver } from './components/admins/doctor-dash/shared/doctor-list-resolve';
 // directive customer
+import { HandlerError } from './components/admins/shared/handlerError.service';
 import { EventHoverDirective } from './directives/event.directive';
 //importService , component home
 import {
@@ -63,6 +64,7 @@ import { SpecialitiesService } from './services/specialities.service';
     DoctorPopularService,
     BreadCrumbsService,
     DoctorListResolver,
+    HandlerError,
     {
       provide: APP_BASE_HREF,
       useValue:'/'

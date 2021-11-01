@@ -15,6 +15,7 @@ import { DoctorListResolver } from './doctor-dash/shared/doctor-list-resolve';
 import { SpecialitiesComponent } from './specialities/specialities.component';
 import { AddSpecialityComponent } from './specialities/add-speciality/add-speciality.component';
 import { UpdateSpecialitiesComponent } from './specialities/update-specialities/update-specialities.component';
+import { DeleteSpecialityComponent } from './specialities/delete-speciality/delete-speciality.component';
 const routes: Routes =[
 
    {
@@ -67,7 +68,8 @@ const routes: Routes =[
     ModalconfirmDoctorComponent,
     SpecialitiesComponent,
     AddSpecialityComponent,
-    UpdateSpecialitiesComponent
+    UpdateSpecialitiesComponent,
+    DeleteSpecialityComponent
   ],
   imports: [
     CommonModule,

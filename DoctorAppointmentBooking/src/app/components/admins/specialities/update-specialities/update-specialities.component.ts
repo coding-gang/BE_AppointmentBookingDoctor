@@ -41,8 +41,6 @@ export class UpdateSpecialitiesComponent implements OnInit {
 
        if(item.specialities.length >0){
          this.id =id
-         console.log(item.specialities[0].speciallityName);
-
            this.speciallityName = item.specialities[0].speciallityName
        }else{
          console.log("no result")
