@@ -3,9 +3,14 @@ const morgan = require('morgan');
 const rateLimit =require('express-rate-limit'); 
 const app = express();
 const doctorRouter = require('./routes/doctorRoutes');
+
 const cors = require('cors');
 
 app.use(cors());
+
+const specialitieRouter = require('./routes/specialitiesRouters');
+const adminRouter = require('./routes/adminRouter');
+
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
@@ -29,5 +34,11 @@ app.use(express.urlencoded({
 
 //Router
 app.use('/api/v1',doctorRouter);
+
+
+//Router
+app.use('/api/v1',doctorRouter);
+app.use('/api/v1',specialitieRouter);
+app.use('/api/v1',adminRouter);
 
 module.exports =app;

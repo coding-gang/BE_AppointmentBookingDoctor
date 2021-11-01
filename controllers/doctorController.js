@@ -64,4 +64,3 @@ exports.delete = (req,res)=>{
         res.status(200).json({status:'success',message:message});
     })
 }
-
