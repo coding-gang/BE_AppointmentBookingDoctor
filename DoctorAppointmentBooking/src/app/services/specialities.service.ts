@@ -4,6 +4,7 @@ import {ISpeciality, ISepecialites } from "../interface/ISpecialities/index";
 
 import { from, Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
+import { IMessage } from "../interface/Imessage.model";
 
 const PATH = "assets/admin/img/specialities/specialities-";
 const specialities:ISpeciality[]  =[];
@@ -25,7 +26,17 @@ export class SpecialitiesService{
                 avatar:`${PATH}0${i}.png`
              }
             })
-          ).subscribe(s => { console.log(s) ;specialities.push(s)})
+          ).subscribe(s => {specialities.push(s)})
           return specialities
+  }
+  addSpeciality(data:any):Observable<IMessage>{
+        return this.http.post<IMessage>('/api/v1/specialities',data);
+  }
+
+  getSpecialityById(id:number):Observable<ISepecialites>{
+    return this.http.get<ISepecialites>(`/api/v1/speciality/${id}`,);
+  }
+  updateSpecialityById(id:number,data:any):Observable<IMessage>{
+    return this.http.put<IMessage>(`/api/v1/speciality/${id}`,data);
   }
 }

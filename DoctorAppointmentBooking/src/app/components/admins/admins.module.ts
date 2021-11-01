@@ -13,6 +13,8 @@ import { ViewDoctorComponent } from './doctor-dash/view-doctor/view-doctor.compo
 import { ModalconfirmDoctorComponent } from './doctor-dash/modalconfirm-doctor/modalconfirm-doctor.component';
 import { DoctorListResolver } from './doctor-dash/shared/doctor-list-resolve';
 import { SpecialitiesComponent } from './specialities/specialities.component';
+import { AddSpecialityComponent } from './specialities/add-speciality/add-speciality.component';
+import { UpdateSpecialitiesComponent } from './specialities/update-specialities/update-specialities.component';
 const routes: Routes =[
 
    {
@@ -63,7 +65,9 @@ const routes: Routes =[
     DashboardComponent,
     ViewDoctorComponent,
     ModalconfirmDoctorComponent,
-    SpecialitiesComponent
+    SpecialitiesComponent,
+    AddSpecialityComponent,
+    UpdateSpecialitiesComponent
   ],
   imports: [
     CommonModule,
@@ -80,7 +84,9 @@ const routes: Routes =[
     CreateDoctorComponent,
     DashboardComponent,
     ViewDoctorComponent,
-    ModalconfirmDoctorComponent
+    ModalconfirmDoctorComponent,
+    AddSpecialityComponent,
+    UpdateSpecialitiesComponent
   ],
 })
 export class AdminsModule { }
