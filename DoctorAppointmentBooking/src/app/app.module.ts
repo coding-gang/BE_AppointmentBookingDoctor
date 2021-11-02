@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule ,CUSTOM_ELEMENTS_SCHEMA,} from '@angular/core';
 import {APP_BASE_HREF} from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,8 +8,10 @@ import { MyPipeDate } from './common/my-pipe';
 import { RouterModule } from '@angular/router';
 import { appRoutesHome } from './routes';
 import { LightboxModule } from 'ngx-lightbox';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DoctorListResolver } from './components/admins/doctor-dash/shared/doctor-list-resolve';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoaderInterceptor } from './interceptors/loader-interceptor';
 // directive customer
 import { HandlerError } from './components/admins/shared/handlerError.service';
 import { EventHoverDirective } from './directives/event.directive';
@@ -58,7 +60,9 @@ import { SpecialitiesService } from './services/specialities.service';
     RouterModule.forRoot(appRoutesHome),
     HttpClientModule,
     AdminsModule,
+    NgxSpinnerModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers:[
     SpecialitiesService,
     DoctorPopularService,
@@ -68,7 +72,8 @@ import { SpecialitiesService } from './services/specialities.service';
     {
       provide: APP_BASE_HREF,
       useValue:'/'
-    }
+    },
+    {provide:HTTP_INTERCEPTORS,useClass:LoaderInterceptor,multi:true}
   ],
   bootstrap: [
     AppComponent

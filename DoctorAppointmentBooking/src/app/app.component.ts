@@ -19,6 +19,7 @@ import { Router,NavigationStart, Event as NavigationEvent } from '@angular/route
         <app-sidebar-admin></app-sidebar-admin>
          <router-outlet></router-outlet>
   </ng-template>
+  <ngx-spinner></ngx-spinner>
               `
 })
 export class AppComponent implements OnInit {
