@@ -13,7 +13,6 @@ import { DoctorListResolver } from './components/admins/doctor-dash/shared/docto
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoaderInterceptor } from './interceptors/loader-interceptor';
 // directive customer
-import { HandlerError } from './components/admins/shared/handlerError.service';
 import { EventHoverDirective } from './directives/event.directive';
 //importService , component home
 import {
@@ -34,6 +33,7 @@ import { DoctorComponent } from './components/doctor/doctor.component';
 import { AdminsModule } from './components/admins/admins.module';
 import { BreadCrumbsService } from './services/breadCrumb.service';
 import { SpecialitiesService } from './services/specialities.service';
+import { ErrorInterceptor } from './interceptors/Error-interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,12 +68,12 @@ import { SpecialitiesService } from './services/specialities.service';
     DoctorPopularService,
     BreadCrumbsService,
     DoctorListResolver,
-    HandlerError,
     {
       provide: APP_BASE_HREF,
       useValue:'/'
     },
-    {provide:HTTP_INTERCEPTORS,useClass:LoaderInterceptor,multi:true}
+    {provide:HTTP_INTERCEPTORS,useClass:LoaderInterceptor,multi:true},
+    {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true}
   ],
   bootstrap: [
     AppComponent

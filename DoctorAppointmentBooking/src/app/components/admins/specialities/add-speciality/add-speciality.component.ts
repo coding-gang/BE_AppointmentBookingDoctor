@@ -5,7 +5,6 @@ import { fromEvent } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { IMessage } from 'src/app/interface/Imessage.model';
 import { SpecialitiesService } from 'src/app/services/specialities.service';
-import { HandlerError } from '../../shared/handlerError.service';
 @Component({
   selector: 'app-add-speciality',
   templateUrl: './add-speciality.component.html',
@@ -18,8 +17,7 @@ export class AddSpecialityComponent implements OnInit {
  @Output() successAdd = new EventEmitter<IMessage>()
   @ViewChild('modalchild')modalchild!:ElementRef
   speciallityName:string=''
-  constructor(private specialityService:SpecialitiesService,
-     private handleError:HandlerError) { }
+  constructor(private specialityService:SpecialitiesService) { }
 
   ngOnInit(): void {
   }
@@ -38,7 +36,7 @@ export class AddSpecialityComponent implements OnInit {
 
   }
   addSpecialities(frm:FormGroup){
-  this.specialityService.addSpeciality(frm).pipe(catchError(this.handleError.Handler()))
+  this.specialityService.addSpeciality(frm)
   .subscribe((mes:IMessage) =>this.successAdd.emit(mes))
    }
 }

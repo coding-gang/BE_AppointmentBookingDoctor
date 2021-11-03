@@ -7,7 +7,6 @@ import { SpecialitiesService } from 'src/app/services/specialities.service';
 import { AddSpecialityComponent } from './add-speciality/add-speciality.component';
 import { UpdateSpecialitiesComponent } from './update-specialities/update-specialities.component';
 import { ModalconfirmDoctorComponent } from '../doctor-dash/modalconfirm-doctor/modalconfirm-doctor.component';
-import { HandlerError } from '../shared/handlerError.service';
 @Component({
   selector: 'app-specialities',
   templateUrl: './specialities.component.html',
@@ -27,7 +26,7 @@ export class SpecialitiesComponent implements OnInit {
   @ViewChild('modalDelete')modalDelete!:ModalconfirmDoctorComponent
   @ViewChild('mydatatable')mydatatable!:DatatableComponent
 
-  constructor(private specService:SpecialitiesService,private handlerErr:HandlerError) { }
+  constructor(private specService:SpecialitiesService) { }
 
   ngOnInit(): void {
    this.initRowsTable();
@@ -84,10 +83,9 @@ export class SpecialitiesComponent implements OnInit {
       if(status === "save"){
            if(this.idSpeciality){
             this.specService.deleteSpecialityById(this.idSpeciality).pipe(
-              catchError(this.handlerErr.Handler())
                ).subscribe((mess) =>{ mess.status === 'success' ?
               this.deleteRowsById(this.idSpeciality)
-              .subscribe((r) => this.rows = [...r]) : console.log(mess.message)
+              .subscribe((r) => this.rows = [...r]) : console.log('Error')
             })
             this.modalDelete.closeModal();
       }
