@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -8,9 +8,11 @@ import { SpecialitiesService } from 'src/app/services/specialities.service';
 @Component({
   selector: 'app-update-specialities',
   templateUrl: './update-specialities.component.html',
-  styleUrls: ['./update-specialities.component.css']
+  styleUrls: ['./update-specialities.component.css'],
+
 })
 export class UpdateSpecialitiesComponent implements OnInit {
+  @Input() test:string=''
   isOpenModal:boolean=false
   mouseover:any
   id!:number
@@ -20,7 +22,10 @@ export class UpdateSpecialitiesComponent implements OnInit {
   constructor(private specialityService:SpecialitiesService) { }
 
   ngOnInit(): void {
+    console.log("hi");
+
   }
+
   openModal(){
     this.isOpenModal =true;
    }

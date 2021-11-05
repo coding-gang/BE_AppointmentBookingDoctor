@@ -12,6 +12,7 @@ const specialities:ISpeciality[]  =[];
 @Injectable()
 export class SpecialitiesService{
   constructor(private http:HttpClient){}
+
   getSpecialties():Observable<ISepecialites>{
     return this.http.get<ISepecialites>('/api/v1/specialities');
   }

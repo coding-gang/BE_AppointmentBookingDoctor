@@ -2,20 +2,22 @@ import { HttpHandler, HttpInterceptor, HttpRequest,HttpEvent,  HttpErrorResponse
 import { Observable, throwError } from "rxjs"
 import { catchError} from "rxjs/operators";
 import { Injectable } from "@angular/core";
-
+import { ToastrService } from "ngx-toastr";
+import { IMessage } from "../interface/Imessage.model";
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor{
-    constructor(){}
+    constructor(private toash:ToastrService){}
     intercept(req:HttpRequest<any>,next:HttpHandler): Observable<HttpEvent<any>> {
                         return next.handle(req).pipe(
                          catchError((err):Observable<any>=>{
                            if(err instanceof HttpErrorResponse){
                             const error =err.error;
-                            const message:any ={
+                            const message:IMessage ={
                                status:error.status,
                                message:error.message
                              }
-                          return throwError(message);
+                             this.toash.error(message.message,message.status)
+                          return throwError(message.status);
                            }
                            return next.handle(req)
                       })

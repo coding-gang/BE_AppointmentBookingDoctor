@@ -12,6 +12,7 @@ import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DoctorListResolver } from './components/admins/doctor-dash/shared/doctor-list-resolve';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoaderInterceptor } from './interceptors/loader-interceptor';
+import { ToastrModule } from 'ngx-toastr';
 // directive customer
 import { EventHoverDirective } from './directives/event.directive';
 //importService , component home
@@ -60,7 +61,13 @@ import { ErrorInterceptor } from './interceptors/Error-interceptor';
     RouterModule.forRoot(appRoutesHome),
     HttpClientModule,
     AdminsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      progressBar:true
+    })
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers:[

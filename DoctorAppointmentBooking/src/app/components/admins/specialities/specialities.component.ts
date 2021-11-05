@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { ColumnMode,DatatableComponent } from '@swimlane/ngx-datatable';
 import { from, Observable, of } from 'rxjs';
 import { catchError, filter, find, map, tap, toArray } from 'rxjs/operators';
@@ -7,13 +7,14 @@ import { SpecialitiesService } from 'src/app/services/specialities.service';
 import { AddSpecialityComponent } from './add-speciality/add-speciality.component';
 import { UpdateSpecialitiesComponent } from './update-specialities/update-specialities.component';
 import { ModalconfirmDoctorComponent } from '../doctor-dash/modalconfirm-doctor/modalconfirm-doctor.component';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-specialities',
   templateUrl: './specialities.component.html',
   styleUrls: ['./specialities.component.css']
 })
 export class SpecialitiesComponent implements OnInit {
-
+  test:string=''
   namePage = "Specialities";
   nameComponent = "Specialities";
   rows:any[] =[];
@@ -26,7 +27,8 @@ export class SpecialitiesComponent implements OnInit {
   @ViewChild('modalDelete')modalDelete!:ModalconfirmDoctorComponent
   @ViewChild('mydatatable')mydatatable!:DatatableComponent
 
-  constructor(private specService:SpecialitiesService) { }
+  constructor(private specService:SpecialitiesService,
+              private toash:ToastrService) { }
 
   ngOnInit(): void {
    this.initRowsTable();
@@ -75,6 +77,7 @@ export class SpecialitiesComponent implements OnInit {
       ).subscribe((rs)=>{
         rs.speciallityName = message.speciality?.speciallityName
         this.rows =[...this.rows]
+        this.toash.success(message.message,message.status)
       })
     }
   }

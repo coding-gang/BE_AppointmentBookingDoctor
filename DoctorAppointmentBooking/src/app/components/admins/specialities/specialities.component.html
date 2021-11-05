@@ -18,13 +18,6 @@
         {{ value }}
       </ng-template>
     </ngx-datatable-column>
-     <!-- <ngx-datatable-column name="avatar">
-      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value">
-        <a [routerLink]="['/dashboard/doctor',rows[rowIndex].id]" class="avatar avatar-sm mr-2">
-          <img class="avatar-img rounded-circle" [src]="value" alt="User Image">
-        </a>
-      </ng-template>
-    </ngx-datatable-column> -->
     <ngx-datatable-column name="speciallityName">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         <span
@@ -62,8 +55,7 @@
     </ngx-datatable-column>
     </ngx-datatable>
     <app-add-speciality (successAdd)="eventFromModal($event)" #modalAdd></app-add-speciality>
-     <app-update-specialities #modalEdit (successEdit)="eventFromEdit($event)"></app-update-specialities>
+     <app-update-specialities [test]=test #modalEdit (successEdit)="eventFromEdit($event)"></app-update-specialities>
     <app-modalconfirm-doctor #modalDelete (save)="deleteModalSpeciality($event)"></app-modalconfirm-doctor>
     </div>
-
 </app-admin>

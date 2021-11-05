@@ -9,8 +9,8 @@
     <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Dashboard</a></li>
     <ng-container *ngIf="BreadCrumbs.length>0">
       <ng-container *ngFor="let item of BreadCrumbs;let i =index">
-        <ng-container *ngTemplateOutlet="BreadCrumbs.length-1 === i ? noactive : active ;context:{lable:item.lable,url:item.url}">
-
+        <ng-container *ngTemplateOutlet="BreadCrumbs.length-1 === i ? noactive :
+                       active; context : {lable:item.lable,url:item.url}">
         </ng-container>
       </ng-container>
     </ng-container>
@@ -23,8 +23,6 @@
     <ng-template #noactive let-lable="lable" let-url="url">
       <li class="breadcrumb-item">{{lable | titlecase}}</li>
     </ng-template>
-
-
   </ul>
 </div>
    <ng-content select="button"></ng-content>

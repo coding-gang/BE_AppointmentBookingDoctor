@@ -19,6 +19,7 @@ import { Router,NavigationStart, Event as NavigationEvent } from '@angular/route
         <app-sidebar-admin></app-sidebar-admin>
          <router-outlet></router-outlet>
   </ng-template>
+
   <ngx-spinner
   bdColor="rgba(51,51,51,0.8)"
   size="medium"
@@ -33,10 +34,11 @@ export class AppComponent implements OnInit {
   isAmin:string =''
   constructor(private router: Router) {
   }
+
   ngOnInit(){
     this.isAdminRouteOutlet();
-
   }
+
   isAdminRouteOutlet(){
     this.event$ =this.router.events
     .subscribe(
@@ -46,5 +48,4 @@ export class AppComponent implements OnInit {
         }
       });
   }
-
 }
