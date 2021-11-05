@@ -22,8 +22,6 @@ export class UpdateSpecialitiesComponent implements OnInit {
   constructor(private specialityService:SpecialitiesService) { }
 
   ngOnInit(): void {
-    console.log("hi");
-
   }
 
   openModal(){

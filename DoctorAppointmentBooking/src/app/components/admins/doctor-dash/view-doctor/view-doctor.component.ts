@@ -8,7 +8,6 @@ import {ICreateDoctor, IDoctorProfile} from 'src/app/interface/Idoctor/index';
 import {dateValidator,phoneValidator} from "../shared/index";
 import { IMessage } from 'src/app/interface/Imessage.model';
 import { Router } from '@angular/router';
-import { Route } from '@angular/compiler/src/core';
 import { ModalconfirmDoctorComponent } from '../modalconfirm-doctor/modalconfirm-doctor.component';
 @Component({
   selector: 'app-view-doctor',

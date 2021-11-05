@@ -1,0 +1,51 @@
+
+<app-admin [namePage]="namePage" [nameComponent]="nameComponent">
+
+  <div compo>
+    <ngx-datatable
+    #mydatatable
+    [ngClass]="tablestyles"
+    [columnMode]="ColumnMode.force"
+    [limit]="5"
+    [footerHeight]="50"
+    [headerHeight]="50"
+    rowHeight="auto"
+     [rows]="rows">
+     <ngx-datatable-column name="adminId">
+      <ng-template ngx-datatable-cell-template let-value="value">
+        {{ value }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="userName">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        <span
+          title="Double click to edit"
+          (dblclick)="editing[rowIndex + '-userName'] = true"
+          *ngIf="!editing[rowIndex + '-userName']"
+        >
+         <a [routerLink]="['/dashboard/admins',rows[rowIndex].adminId]">{{ value }}</a>
+        </span>
+        <input
+          autofocus
+          (blur)="updateValue($event, 'userName', rowIndex)"
+          *ngIf="editing[rowIndex + '-userName']"
+          type="text"
+          [value]="value"
+        />
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="nameRole">
+      <ng-template ngx-datatable-cell-template let-value="value">
+        {{ value }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    </ngx-datatable>
+</div>
+</app-admin>
+
+
+
+

@@ -35,6 +35,7 @@ import { AdminsModule } from './components/admins/admins.module';
 import { BreadCrumbsService } from './services/breadCrumb.service';
 import { SpecialitiesService } from './services/specialities.service';
 import { ErrorInterceptor } from './interceptors/Error-interceptor';
+import { AdminService } from './services/admins.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,6 +76,7 @@ import { ErrorInterceptor } from './interceptors/Error-interceptor';
     DoctorPopularService,
     BreadCrumbsService,
     DoctorListResolver,
+    AdminService,
     {
       provide: APP_BASE_HREF,
       useValue:'/'

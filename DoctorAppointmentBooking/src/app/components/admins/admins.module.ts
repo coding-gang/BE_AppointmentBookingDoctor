@@ -16,6 +16,10 @@ import { SpecialitiesComponent } from './specialities/specialities.component';
 import { AddSpecialityComponent } from './specialities/add-speciality/add-speciality.component';
 import { UpdateSpecialitiesComponent } from './specialities/update-specialities/update-specialities.component';
 import { DeleteSpecialityComponent } from './specialities/delete-speciality/delete-speciality.component';
+import { ListAdminComponent } from './admin/list-admin/list-admin.component';
+import { ViewAdminComponent } from './admin/view-admin/view-admin.component';
+
+
 const routes: Routes =[
 
    {
@@ -51,6 +55,24 @@ const routes: Routes =[
         }
       },
       {
+        path:'admins',
+        children:[
+          {
+            path:':id',component:ViewAdminComponent,
+            data:{
+              breadcrumb:"Profile admin"
+            }
+          },
+          {
+            path:'',component:ListAdminComponent,
+            data:{
+              breadcrumb:"List admins"
+            }
+          }
+
+        ]
+      },
+      {
         path:'',redirectTo:'dashboard',pathMatch:'full'
       }
      ]
@@ -70,7 +92,9 @@ const routes: Routes =[
     SpecialitiesComponent,
     AddSpecialityComponent,
     UpdateSpecialitiesComponent,
-    DeleteSpecialityComponent
+    DeleteSpecialityComponent,
+    ListAdminComponent,
+    ViewAdminComponent
   ],
   imports: [
     CommonModule,
@@ -89,7 +113,9 @@ const routes: Routes =[
     ViewDoctorComponent,
     ModalconfirmDoctorComponent,
     AddSpecialityComponent,
-    UpdateSpecialitiesComponent
+    UpdateSpecialitiesComponent,
+    ListAdminComponent,
+    ViewAdminComponent
   ],
 })
 export class AdminsModule { }

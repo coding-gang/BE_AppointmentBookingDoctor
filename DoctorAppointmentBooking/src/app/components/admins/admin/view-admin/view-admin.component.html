@@ -1,0 +1,104 @@
+<app-admin  [namePage]="namePage" [nameComponent]="nameComponent">
+  <ng-container compo>
+
+    <div class="profile-menu">
+      <ul class="nav nav-tabs nav-tabs-solid">
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="isActiveAbout ? 'active' : ''" data-toggle="tab"  (click)="activeTab()">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="!isActiveAbout ? 'active' : ''" data-toggle="tab" (click)="activeTabPass()"> Password</a>
+        </li>
+      </ul>
+    </div>
+    <div class="tab-content profile-tab-cont">
+
+      <!-- Personal Details Tab -->
+      <div class="tab-pane fade show active" [ngClass]="{'show active':isActiveAbout}" id="per_details_tab">
+
+        <!-- Personal Details -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title d-flex justify-content-between">
+                  <span>Admin Details</span>
+                  <a class="edit-link" data-toggle="modal" (click)="editAdmin()" ><i class="fa fa-edit mr-1"></i>Edit</a>
+                </h5>
+                <div class="row">
+                  <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">User Name</p>
+                  <p class="col-sm-10">{{admin.userName}}</p>
+                </div>
+                <div class="row">
+                  <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Role</p>
+                  <p class="col-sm-10">{{admin.nameRole}}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Edit Details Modal -->
+            <div #modalchild class="modal fade" [ngClass]="isActiveEdit ? 'show' :''"
+              [style.display]="displayShow()" [ngStyle]="{'padding-right':'12px'}"
+             id="edit_personal_details" aria-hidden="true"
+             role="dialog">
+              <div class="modal-dialog modal-dialog-centered" role="document" >
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Admin edit</h5>
+                    <button type="button" (click)="offModal()" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form #viewForm = "ngForm" (ngSubmit)="saveChange(viewForm.value)" autocomplete="off" novalidate>
+                      <div class="row form-row">
+                        <div class="col-12 col-sm-6">
+                          <div class="form-group">
+                            <label>User Name</label>
+                            <input [(ngModel)]="admin.userName" id ="userName" name="userName" type="text" class="form-control" required>
+                          </div>
+                        </div>
+                      </div>
+                      <button type="submit" [disabled]="viewForm.invalid" class="btn btn-primary btn-block">Save Changes</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div id="password_tab" class="tab-pane fade "[ngClass]="{'show active':!isActiveAbout}">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Change Password</h5>
+            <div class="row">
+              <div class="col-md-10 col-lg-6">
+                <form>
+                  <div class="form-group">
+                    <label>Old Password</label>
+                    <input type="password" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label>New Password</label>
+                    <input type="password" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" class="form-control">
+                  </div>
+                  <button class="btn btn-primary" type="submit">Save Changes</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+
+</app-admin>

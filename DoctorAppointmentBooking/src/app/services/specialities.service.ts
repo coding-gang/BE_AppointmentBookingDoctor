@@ -8,7 +8,7 @@ import { IMessage } from "../interface/Imessage.model";
 
 
 const PATH = "assets/admin/img/specialities/specialities-";
-const specialities:ISpeciality[]  =[];
+
 @Injectable()
 export class SpecialitiesService{
   constructor(private http:HttpClient){}
@@ -19,6 +19,7 @@ export class SpecialitiesService{
 
   viewSpecialties(specs:ISpeciality[]){
     let i =0;
+    const specialities:ISpeciality[]  =[];
           from(specs).pipe(
             map(spec =>{
               i == 5 ? i=1 : i++
