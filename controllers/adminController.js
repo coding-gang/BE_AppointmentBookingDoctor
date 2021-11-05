@@ -77,9 +77,9 @@ exports.checkUpdateAdminValid= (req,res,next) => {
 }
 
 exports.checkExistAdmin = (req, res, next)  =>{
-    const param = req.params.adminId;
+    const id = req.params.adminId;
     const sql = "select isExist_Admin_Func(?) as isExistAdmin";
-    connectDb.query(sql,param,(error,result)=>{
+    connectDb.query(sql,id,(error,result)=>{
         if(error) throw error;
         [{isExistAdmin}] = [...result]
         if(isExistAdmin===1) next();

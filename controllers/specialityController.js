@@ -104,7 +104,7 @@ exports.isExistNameSpec = (req,res,next) =>{
             next();
         }
         else{
-            const err = new appError(409,"Đã tồn tại chuyên ngành trong cơ sở dữ liệu");
+            const err = new appError(409,`Đã tồn tại chuyên ngành: ${speciallityName}`);
             res.status(err.statusCode).send(err.resError().error);
         }
     })
