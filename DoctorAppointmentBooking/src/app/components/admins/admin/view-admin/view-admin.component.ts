@@ -27,13 +27,11 @@ export class ViewAdminComponent implements OnInit ,AfterViewInit {
   ngAfterViewInit(){
     fromEvent(this.modalchild.nativeElement,'click').pipe(
       map( (el:any) => el.target.className)
-   )
-   .subscribe(el => el === 'modal fade show' ? this.isActiveEdit = false : this.isActiveEdit)
+   ).subscribe(el => el === 'modal fade show' ? this.isActiveEdit = false : this.isActiveEdit)
   }
     activeTab(){
       this.isActiveAbout = true
   }
-
 
   activeTabPass(){
   this.isActiveAbout =false

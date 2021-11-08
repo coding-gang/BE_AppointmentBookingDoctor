@@ -9,10 +9,9 @@ import {ValidationErrors, Validator, NG_VALIDATORS, AbstractControl } from "@ang
 })
 
 export class PasswordDirective implements Validator{
- @Input() confirmPass:string=""
+ @Input() confirmPass!:string
 
   validate(control:AbstractControl):ValidationErrors | null{
-    console.log(this.confirmPass)
-  return checkPassConfirmValidator(this.confirmPass)(control);
+      return checkPassConfirmValidator(this.confirmPass)(control);
   }
 }

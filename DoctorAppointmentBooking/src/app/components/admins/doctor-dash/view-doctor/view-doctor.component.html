@@ -165,34 +165,38 @@
                        required
                    </em>
                   </div>
-                  <div class="form-group" [ngClass]="{'error':updatePassFrm.controls.newPass?.invalid &&
-                  updatePassFrm.controls.newPass?.touched}">
-                    <label>New Password</label>
-                    <input (ngModel)="newPass" name="newPass"  type="password" class="form-control" #newPass="ngModel"
-                     required >
-                    <em *ngIf="updatePassFrm.controls.newPass?.errors?.required &&
-                    updatePassFrm.controls.newPass?.touched">
-                      required
-                   </em>
-                   <em *ngIf="!updatePassFrm.controls.newPass?.errors?.required
-                   && updatePassFrm.controls.newPass?.touched && updatePassFrm.controls.newPass.errors?.errConfirmPass" >
-                 {{updatePassFrm.controls.newPass.errors?.errConfirmPass}}
-                    </em>
-                  </div>
-                  <div class="form-group"  [ngClass]="{'error':confirmPass?.invalid &&
+                  <div ngModelGroup="passwordGroup">
+                    <div class="form-group" [ngClass]="{'error':updatePassFrm.controls.newPass?.invalid &&
+                    updatePassFrm.controls.newPass?.touched}">
+                      <label>New Password</label>
+                      <input name="newPass" (input)="confirmPass.control.updateValueAndValidity()" [(ngModel)]="newPass"
+                        type="password" class="form-control" required >
+                      <em *ngIf="updatePassFrm.controls.newPass?.errors?.required &&
+                      updatePassFrm.controls.newPass?.touched">
+                        required
+                     </em>
+                     <em *ngIf="!updatePassFrm.controls.newPass?.errors?.required
+                     && updatePassFrm.controls.newPass?.touched && updatePassFrm.controls.newPass.errors?.errConfirmPass" >
+                       {{updatePassFrm.controls.newPass.errors?.errConfirmPass}}
+                      </em>
+                    </div>
+                    <div class="form-group"  [ngClass]="{'error':confirmPass?.invalid &&
                     confirmPass?.touched}">
                     <label>Confirm Password</label>
-                    <input (ngModel)="confirmPass" name="confirmPass"
-                     type="password" class="form-control" required [confirmPass]="newPass.value"   #confirmPass ="ngModel">
+                    <input name="confirmPass" confirmPass="newPass" required (ngModel)="confirmPass"
+                     type="password" class="form-control" #confirmPass ="ngModel">
                     <em *ngIf="confirmPass.errors?.required &&
                     confirmPass?.touched" >
                  required
               </em>
-               <em *ngIf="(!confirmPass.errors?.required)
-                          && (confirmPass?.touched && confirmPass.errors?.errConfirmPass)" >
+               <em *ngIf="!confirmPass.errors?.required
+                          && confirmPass?.touched && confirmPass.errors?.errConfirmPass" >
                           {{confirmPass.errors?.errConfirmPass}}
               </em>
                   </div>
+                  </div>
+
+
                   <button class="btn btn-primary" [disabled]="updatePassFrm.invalid" type="submit">Save Changes</button>
                 </form>
               </div>

@@ -18,6 +18,7 @@ export class AdminComponent implements OnInit {
   constructor(private breadCrumbService:BreadCrumbsService,
               private router:Router,
               private activatedRoute:ActivatedRoute){}
+
   ngOnInit(): void {
    this.BreadCrumbs = this.breadCrumbService.InitBreadCrumb(this.router,this.activatedRoute);
   }

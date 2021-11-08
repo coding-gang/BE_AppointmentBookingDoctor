@@ -16,12 +16,12 @@ import { ModalconfirmDoctorComponent } from '../modalconfirm-doctor/modalconfirm
 })
 export class ViewDoctorComponent implements OnInit ,AfterViewInit{
 oldPass:string='';
-newPass:string='';
+newPass:string ='';
 confirmPass:string ='';
 namePage:string='Profile';
 nameComponent:string='Profile';
 firstName!:FormControl;
-lastName!:FormControl
+lastName!:FormControl;
  phone!: FormControl;
  DOB!: FormControl;
  address!: FormControl;
@@ -33,16 +33,13 @@ lastName!:FormControl
  localtion:string ="Viet Nam,Dalat"
  avatar:string =''
  isActiveAbout:boolean =true;
-  isActiveEdit:boolean =false;
+ isActiveEdit:boolean =false;
  idDoctor!:any;
  testmess:string =""
   @ViewChild('modalchild')modalchild!:ElementRef
   @ViewChild('modalRemove')modalRemove!:ModalconfirmDoctorComponent
   constructor(private doctorService:DoctorPopularService,
-             private route:ActivatedRoute,private router:Router) {
-
-               }
-
+             private route:ActivatedRoute,private router:Router) {}
   ngOnInit(): void {
 
     const validatorsName =[Validators.required,
@@ -125,16 +122,18 @@ lastName!:FormControl
          );
     })
   }
+
   editDoctor(){
     this.isActiveEdit =true;
-
   }
+
   displayShow(){
         if(this.isActiveEdit)
         return "block";
         else
           return "none"
   }
+
   offModal(){
     this.isActiveEdit =false;
   }
@@ -142,7 +141,6 @@ lastName!:FormControl
   saveChange(formChange:ICreateDoctor){
      this.doctorService.updateDoctorById(this.idDoctor,formChange)
      .subscribe((mes:IMessage) => {
-
        if( mes.status === 'success'){
           this.router.navigate(['/dashboard/doctor/',this.idDoctor]);
           this.isActiveEdit = !this.isActiveEdit;
@@ -162,6 +160,7 @@ lastName!:FormControl
       });
      }
   }
+
   callModalRemove(){
     this.modalRemove.openModal();
   }
