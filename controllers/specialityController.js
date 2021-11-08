@@ -9,6 +9,7 @@ exports.getById = (req, res) => {
         res.status(200).json({specialities:result});
     })
 }
+
 exports.getAll = (req,res) =>{
     let sql = "select * from specialities";
     console.log(sql);
@@ -16,9 +17,7 @@ exports.getAll = (req,res) =>{
     if (error) throw error;
     const specialities =results;
     res.status(200).json({status:"success",specialities:specialities});
-})
-
-}
+})}
 
 exports.update = (req,res) =>{
     const specialityId = req.params.specialityId;
@@ -45,20 +44,19 @@ exports.update = (req,res) =>{
            );
     })
 }
-
 exports.delete = (req,res) => {
     const specialityId = req.params.specialityId;
     const sql = "call Del_Specialities_Proc(?)";
     connectDb.query(sql,specialityId,(error,result)=>{
         if(error) throw error;
-        console.log(result[0][0].result);
-        res.status(204).send();
+        const message = result[0][0].message;
+        res.status(200).json({status:'success',message:message});
     })
 }
+
 exports.insert = (req,res) =>{
     const sql = "call Add_Specialities_Proc(?)";
     const data=req.body.speciallityName;
-    console.log(data);
     connectDb.query(sql,data,(error,results)=>{
         if(error) throw error;
         const message =results[0][0].message;
@@ -74,7 +72,6 @@ exports.insert = (req,res) =>{
            }
            );
     })
-
 }
 
 exports.isExistSpecialities = (req,res,next)=>{
@@ -94,17 +91,17 @@ exports.isExistSpecialities = (req,res,next)=>{
          }
     })
 }
+
 exports.isExistNameSpec = (req,res,next) =>{
     const speciallityName=req.body.speciallityName;
     const sql = "select isExist_NameSpec_Func(?) as isExistName";
     connectDb.query(sql,speciallityName,(error,result)=>{
-          console.log(result[0].isExistName);
         if(error) throw error;
         if(result[0].isExistName ===0) {
             next();
         }
         else{
-            const err = new appError(409,`Đã tồn tại chuyên ngành: ${speciallityName}`);
+            const err = new appError(409,"Đã tồn tại chuyên ngành trong cơ sở dữ liệu");
             res.status(err.statusCode).send(err.resError().error);
         }
     })
