@@ -73,7 +73,7 @@ exports.delete = (req,res)=>{
 exports.updatePass = async (req,res) => {
     const id = req.params.doctorId;
     const newpass = req.body.newPass;
-    console.log(newpass);
+    
     const encrypt = new encryptPass(newpass);
     const newPassEncrypth= await encrypt.encryptFunc();
     const sql = "call Update_Password_Doctor_Proc(?,?)";
@@ -91,15 +91,22 @@ exports.checkExistPass = async (req,res,next) => {
         const appErr = new appError(409,"Mật khẩu mới trùng mật cũ");
     res.status(appErr.statusCode).send(appErr.resError().error);
     }
-    const passDB = await decryptFromDB(id);
+    else {
+        const passDB = await decryptFromDB(id);
+      console.log(passDB.length);
     const compareSync = new decryptPass(oldPass,passDB);
+    console.log(compareSync.encryptText,compareSync.hash);
      const isPassword = await compareSync.decryptFunc();
+   
     if(isPassword){
         next();
     }else{
         const appErr = new appError(409,"Nhập sai mật khẩu");
         res.status(appErr.statusCode).send(appErr.resError().error);
     }  
+
+    }
+    
 }
    
    const decryptFromDB = (id) =>{
@@ -111,6 +118,7 @@ exports.checkExistPass = async (req,res,next) => {
         })
    })
 }
+
 
 exports.checkExistUserName = (req,res,next) =>{
     const mail = req.body.mail;
