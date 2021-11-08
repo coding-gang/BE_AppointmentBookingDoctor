@@ -18,7 +18,7 @@ import { UpdateSpecialitiesComponent } from './specialities/update-specialities/
 import { DeleteSpecialityComponent } from './specialities/delete-speciality/delete-speciality.component';
 import { ListAdminComponent } from './admin/list-admin/list-admin.component';
 import { ViewAdminComponent } from './admin/view-admin/view-admin.component';
-
+import { PasswordDirective } from 'src/app/directives/validator/passConfirm.directive';
 
 const routes: Routes =[
 
@@ -94,7 +94,8 @@ const routes: Routes =[
     UpdateSpecialitiesComponent,
     DeleteSpecialityComponent,
     ListAdminComponent,
-    ViewAdminComponent
+    ViewAdminComponent,
+    PasswordDirective
   ],
   imports: [
     CommonModule,
@@ -115,7 +116,8 @@ const routes: Routes =[
     AddSpecialityComponent,
     UpdateSpecialitiesComponent,
     ListAdminComponent,
-    ViewAdminComponent
+    ViewAdminComponent,
+    PasswordDirective
   ],
 })
 export class AdminsModule { }

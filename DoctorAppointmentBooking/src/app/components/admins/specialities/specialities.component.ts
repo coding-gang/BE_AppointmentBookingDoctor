@@ -80,7 +80,9 @@ export class SpecialitiesComponent implements OnInit {
         this.toash.success(message.message,message.status)
       })
     }
+
   }
+
 
   deleteModalSpeciality(status:string){
       if(status === "save"){

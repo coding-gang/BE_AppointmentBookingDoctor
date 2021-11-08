@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild ,OnChanges } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { DoctorPopularService } from 'src/app/services/popular.service';
 import { ActivatedRoute } from '@angular/router';
@@ -14,8 +14,10 @@ import { ModalconfirmDoctorComponent } from '../modalconfirm-doctor/modalconfirm
   templateUrl: './view-doctor.component.html',
   styleUrls: ['./view-doctor.component.css']
 })
-export class ViewDoctorComponent implements OnInit ,AfterViewInit,OnChanges{
-
+export class ViewDoctorComponent implements OnInit ,AfterViewInit{
+oldPass:string='';
+newPass:string='';
+confirmPass:string ='';
 namePage:string='Profile';
 nameComponent:string='Profile';
 firstName!:FormControl;
@@ -40,10 +42,7 @@ lastName!:FormControl
              private route:ActivatedRoute,private router:Router) {
 
                }
-   ngOnChanges(){
-     console.log("change");
 
-   }
   ngOnInit(): void {
 
     const validatorsName =[Validators.required,
@@ -165,5 +164,9 @@ lastName!:FormControl
   }
   callModalRemove(){
     this.modalRemove.openModal();
+  }
+
+  updatePass(frmUpdatePass:FormGroup){
+    this.doctorService.updatePass(this.idDoctor,frmUpdatePass).subscribe();
   }
 }

@@ -103,6 +103,10 @@ export class DoctorPopularService{
     removeDoctor(id:any):Observable<IMessage>{
         return this.http.delete<IMessage>(`http://localhost:3000/api/v1/doctor/${id}`);
     }
+
+    updatePass(id:any,passwordUpdate:any):Observable<IMessage>{
+      return this,this.http.put<IMessage>(`api/v1/doctor/update-password/${id}`,passwordUpdate);
+    }
 }
 
 
