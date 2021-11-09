@@ -1,9 +1,7 @@
-const { query } = require('express');
 const connectDb = require('../utils/connectionDB');
 const appError = require('../utils/appError');
 const encryptPassword = require('../utils/encrypt');
 const decryptPassword = require('../utils/decrypt');
-const { password } = require('../config');
 exports.getAll = (req,res) =>{
     const sql = "select * from adminsView";
     connectDb.query(sql,(error,result)=>{
