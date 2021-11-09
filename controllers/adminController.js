@@ -40,7 +40,7 @@ exports.update = (req,res) => {
       connectDb.query(sql,params,(error,result)=>{
           if(error) throw error;
 
-          res.status(200).send({status:'success',message:"Cập nhật thành công"});
+          res.status(200).json({status:'success',message:"Cập nhật thành công"});
       })
 }
 
@@ -81,7 +81,7 @@ exports.checkUpdateAdminValid= (req,res,next) => {
         if(result[0].isExistUserName === 0) next();
         else{
             const err =  new appError(409,"Kiểm ta lại dữ liệu!");
-            res.status(err.statusCode).send(err.resError().error);
+            res.status(err.statusCode).json(err.resError().error);
         }
     })
 }
@@ -95,7 +95,7 @@ exports.checkExistAdmin = (req, res, next)  =>{
         if(isExistAdmin===1) next();
         else{
              const err =  new appError(409,"Không tồn tại người dùng này!");
-            res.status(err.statusCode).send(err.resError().error);
+            res.status(err.statusCode).json(err.resError().error);
         }
     })
 }
