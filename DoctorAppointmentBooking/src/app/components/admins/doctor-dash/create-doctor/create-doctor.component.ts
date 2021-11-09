@@ -58,7 +58,7 @@ private roleId!:FormControl;
         password: this.password,
         specialityId:this.specialityId,
         roleId:this.roleId,
-        email:this.email
+        mail:this.email
       }
 
       )

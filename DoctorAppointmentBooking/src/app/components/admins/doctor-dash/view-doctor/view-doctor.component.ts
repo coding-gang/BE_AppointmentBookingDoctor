@@ -166,6 +166,7 @@ lastName!:FormControl;
   }
 
   updatePass(frmUpdatePass:FormGroup){
+    console.log(frmUpdatePass)
     this.doctorService.updatePass(this.idDoctor,frmUpdatePass).subscribe();
   }
 }

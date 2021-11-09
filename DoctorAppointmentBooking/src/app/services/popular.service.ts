@@ -39,7 +39,7 @@ export class DoctorPopularService{
     }
 
     getAllDoctors():Observable<IDoctor>{
-          return this.http.get<IDoctor>(`/api/v1/doctors`,{ responseType:'json'});
+          return this.http.get<IDoctor>(`api/v1/doctors`,{ responseType:'json'});
     }
 
     ViewTableList(doctors:IDoctor){
@@ -68,16 +68,16 @@ export class DoctorPopularService{
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": '*'
         });
-          return this.http.post<IMessage>('http://localhost:3000/api/v1/doctor',
+          return this.http.post<IMessage>('api/v1/doctor',
                              doctor)
     }
 
     getDoctorById(id:any):Observable<IDoctor>{
-        return this.http.get<IDoctor>(`http://localhost:3000/api/v1/doctor/${id}`);
+        return this.http.get<IDoctor>(`api/v1/doctor/${id}`);
     }
 
     updateDoctorById(id:any,doctor:any):Observable<IMessage>{
-      return this.http.put<IMessage>(`http://localhost:3000/api/v1/doctor/${id}`,doctor);
+      return this.http.put<IMessage>(`api/v1/doctor/${id}`,doctor);
   }
 
     viewDoctorProfile(doctor:IDoctor):Observable<IDoctorProfile>{
@@ -101,7 +101,7 @@ export class DoctorPopularService{
     }
 
     removeDoctor(id:any):Observable<IMessage>{
-        return this.http.delete<IMessage>(`http://localhost:3000/api/v1/doctor/${id}`);
+        return this.http.delete<IMessage>(`api/v1/doctor/${id}`);
     }
 
     updatePass(id:any,passwordUpdate:any):Observable<IMessage>{

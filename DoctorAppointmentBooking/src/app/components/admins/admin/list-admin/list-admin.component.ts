@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { AdminService } from 'src/app/services/admins.service';
 
@@ -16,7 +17,7 @@ export class ListAdminComponent implements OnInit {
   editing:any = {};
   ColumnMode =ColumnMode;
   tablestyles:any ="bootstrap"
-  constructor(private admins:AdminService) { }
+  constructor(private admins:AdminService,private router:Router) { }
 
   ngOnInit(): void {
    this.getAllAdmins();
@@ -36,7 +37,9 @@ export class ListAdminComponent implements OnInit {
         this.rows= this.admins.viewAdmin(data);
       });
   }
-
+  addAdmin(){
+    this.router.navigate(['/dashboard/admins/new'])
+  }
 
 
 }

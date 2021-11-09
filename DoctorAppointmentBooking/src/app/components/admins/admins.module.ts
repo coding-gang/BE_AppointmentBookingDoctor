@@ -19,6 +19,7 @@ import { DeleteSpecialityComponent } from './specialities/delete-speciality/dele
 import { ListAdminComponent } from './admin/list-admin/list-admin.component';
 import { ViewAdminComponent } from './admin/view-admin/view-admin.component';
 import { PasswordDirective } from 'src/app/directives/validator/passConfirm.directive';
+import { AddAdminComponent } from './admin/add-admin/add-admin.component';
 
 const routes: Routes =[
 
@@ -58,6 +59,12 @@ const routes: Routes =[
         path:'admins',
         children:[
           {
+            path:'new',component: AddAdminComponent,
+            data:{
+              breadcrumb:"new admin"
+            }
+          },
+          {
             path:':id',component:ViewAdminComponent,
             data:{
               breadcrumb:"Profile admin"
@@ -95,7 +102,8 @@ const routes: Routes =[
     DeleteSpecialityComponent,
     ListAdminComponent,
     ViewAdminComponent,
-    PasswordDirective
+    PasswordDirective,
+    AddAdminComponent
   ],
   imports: [
     CommonModule,
@@ -117,7 +125,8 @@ const routes: Routes =[
     UpdateSpecialitiesComponent,
     ListAdminComponent,
     ViewAdminComponent,
-    PasswordDirective
+    PasswordDirective,
+    AddAdminComponent
   ],
 })
 export class AdminsModule { }

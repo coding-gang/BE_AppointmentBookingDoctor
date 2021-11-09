@@ -52,7 +52,7 @@ export class ViewAdminComponent implements OnInit ,AfterViewInit {
   saveChange(formValue:FormGroup){
     this.router.paramMap.pipe(
       map(param => param.get('id')),
-      switchMap(id=> this.adminService.addAdminById(id,formValue))
+      switchMap(id=> this.adminService.updateAdminById(id,formValue))
     ).subscribe(res=>res.status == 'success'
      ? this.isActiveEdit= false : this.isActiveEdit)
   }
@@ -62,7 +62,6 @@ export class ViewAdminComponent implements OnInit ,AfterViewInit {
          map(param => param.get('id')),
          switchMap((id) => this.adminService.getAllAdminById(id))
        )
-
        admin.subscribe(ad =>{
           this.admin = this.adminService.viewAdmin(ad)[0];
         });
