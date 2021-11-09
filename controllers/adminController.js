@@ -33,26 +33,26 @@ exports.update = (req,res) => {
       const adminId = req.params.adminId;
       const params = [adminId];
       const admins = req.body;
-      Object.values(admins).forEach(val => params.push(val));
-      connectDb.query(sql,params,(error,result)=>{
-          if(error) throw error;
-          console.log(result);
-          const message = result[0][0].message;
-          res.status(200).send({status:'success',message});
-      })
+      console.log(admins);
+    //   connectDb.query(sql,params,(error,result)=>{
+    //       if(error) throw error;
+    //       console.log(result);
+    //       const message = result[0][0].message;
+    //       res.status(200).send({status:'success',message});
+    //   })
 }
 
 exports.insert = async  (req,res) =>{
    ( {userName,pass, roleId}= req.body);
    const encrypt = new encryptPassword(pass);
    const passEncrypted= await encrypt.encryptFunc();
-   console.log(passEncrypted.length);
-   const params =[userName, password, roleId];
-   const sql = "call Add_Admin_Proc(?,?,?)";
-   connectDb.query(sql,params,(error)=>{
-       if(error) throw error;
-       res.status(200).send({status:'success',message:`Thêm ${userName} thành công!`});
-   })
+   console.log(passEncrypted);
+//    const params =[userName, '', roleId];
+//    const sql = "call Add_Admin_Proc(?,?,?)";
+//    connectDb.query(sql,params,(error)=>{
+//        if(error) throw error;
+//        res.status(200).send({status:'success',message:`Thêm ${userName} thành công!`});
+//    })
 
 }
 
