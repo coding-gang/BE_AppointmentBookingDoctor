@@ -1,7 +1,9 @@
 const { query } = require('express');
 const connectDb = require('../utils/connectionDB');
 const appError = require('../utils/appError');
-
+const encryptPassword = require('../utils/encrypt');
+const decryptPassword = require('../utils/decrypt');
+const { password } = require('../config');
 exports.getAll = (req,res) =>{
     const sql = "select * from adminsView";
     connectDb.query(sql,(error,result)=>{
@@ -40,14 +42,18 @@ exports.update = (req,res) => {
       })
 }
 
-exports.insert = (req,res) =>{
-   ({userName, password, roleId}=req.body);
+exports.insert = async  (req,res) =>{
+   ( {userName,pass, roleId}= req.body);
+   const encrypt = new encryptPassword(pass);
+   const passEncrypted= await encrypt.encryptFunc();
+   console.log(passEncrypted.length);
    const params =[userName, password, roleId];
    const sql = "call Add_Admin_Proc(?,?,?)";
    connectDb.query(sql,params,(error)=>{
        if(error) throw error;
-       res.status(204).send();
+       res.status(200).send({status:'success',message:`Thêm ${userName} thành công!`});
    })
+
 }
 
 exports.deleteAdmin = (req,res) =>{
@@ -62,7 +68,7 @@ exports.deleteAdmin = (req,res) =>{
 
 exports.checkUpdateAdminValid= (req,res,next) => {
     const userName = req.body.userName;
-    const idRole = req.body.roleId;
+    console.log(userName);
     const isExistUsernameSql = "select isExist_UsernameFromAdmin_Func(?) as isExistUserName"
     const sql = `${isExistUsernameSql};`
     connectDb.query(sql,userName,(error,result)=>{

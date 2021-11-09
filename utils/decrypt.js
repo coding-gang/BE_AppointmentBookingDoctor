@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const { LONG } = require('mysql/lib/protocol/constants/types');
 
  class decrypt{
     constructor(encryptText,hash){
