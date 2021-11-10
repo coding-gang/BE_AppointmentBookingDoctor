@@ -3,13 +3,14 @@ const morgan = require('morgan');
 const rateLimit =require('express-rate-limit'); 
 const app = express();
 const doctorRouter = require('./routes/doctorRoutes');
-
+const passport =require('passport');
 const cors = require('cors');
-
-app.use(cors());
-
 const specialitieRouter = require('./routes/specialitiesRouters');
 const adminRouter = require('./routes/adminRouter');
+
+app.use(cors());
+require('./passport')(passport)
+app.use(passport.initialize())
 
 
 if (process.env.NODE_ENV === 'development') {
