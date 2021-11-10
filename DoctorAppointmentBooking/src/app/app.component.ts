@@ -1,12 +1,17 @@
-import { Component, OnInit, Output  } from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, DoCheck, OnInit, Output} from '@angular/core';
 import { Router,NavigationStart, Event as NavigationEvent } from '@angular/router';
+import {AuthService} from "./services/auth.service";
 @Component({
   selector: 'app-root',
   template: `
-   <ng-container *ngIf="isAmin ==='dashboard';then dashboard else client"></ng-container>
+   <ng-container *ngIf="isAmin ==='dashboard';then dashboard  else notAdmin"></ng-container>
+   <ng-template #notAdmin>
+     <ng-contaner *ngIf="isAmin === 'home';then client else login"></ng-contaner>
+   </ng-template>
   <ng-template #client>
-            <app-header>
-             <a loginSignup class="nav-link header-login" href="login.html">login / Signup </a>
+            <app-header [authenticated]="authenticated">
+             <a loginSignup class="nav-link header-login" [routerLink]="['/login']">login / Signup </a>
+              <a logout class="nav-link header-login" [ngStyle]="{ cursor: 'pointer'}" (click)="logout()">logout</a>
               </app-header>
              <router-outlet></router-outlet>
 
@@ -19,6 +24,10 @@ import { Router,NavigationStart, Event as NavigationEvent } from '@angular/route
         <app-sidebar-admin></app-sidebar-admin>
          <router-outlet></router-outlet>
   </ng-template>
+  <ng-template #login>
+    <app-login></app-login>
+  </ng-template>
+
 
   <ngx-spinner
   bdColor="rgba(51,51,51,0.8)"
@@ -29,14 +38,19 @@ import { Router,NavigationStart, Event as NavigationEvent } from '@angular/route
 </ngx-spinner>
               `
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit,DoCheck {
   event$:any
   isAmin:string =''
-  constructor(private router: Router) {
+  authenticated:boolean=false
+  constructor(private router: Router,private auth:AuthService) {
   }
 
   ngOnInit(){
     this.isAdminRouteOutlet();
+    this.isAuthenticated();
+  }
+ ngDoCheck() {
+   this.isAuthenticated();
   }
 
   isAdminRouteOutlet(){
@@ -47,5 +61,16 @@ export class AppComponent implements OnInit {
            this.isAmin =event.url.split('/')[1];
         }
       });
+  }
+  isAuthenticated(){
+    if(this.auth.Authenticated()){
+      this.authenticated =true
+    } else{
+      this.authenticated =false
+    }
+  }
+  logout(){
+      this.auth.logOut();
+      this.authenticated =false;
   }
 }

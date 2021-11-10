@@ -13,6 +13,8 @@ import { DoctorListResolver } from './components/admins/doctor-dash/shared/docto
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoaderInterceptor } from './interceptors/loader-interceptor';
 import { ToastrModule } from 'ngx-toastr';
+import  {JwtModule} from "@auth0/angular-jwt";
+import {AuthService} from "./services/auth.service";
 // directive customer
 import { EventHoverDirective } from './directives/event.directive';
 //importService , component home
@@ -36,6 +38,11 @@ import { BreadCrumbsService } from './services/breadCrumb.service';
 import { SpecialitiesService } from './services/specialities.service';
 import { ErrorInterceptor } from './interceptors/Error-interceptor';
 import { AdminService } from './services/admins.service';
+import { LoginComponent } from './components/login/login.component';
+import {FormsModule} from "@angular/forms";
+import  {AuthGuardService} from "./services/auth-guard.service";
+import {AdminGuardService} from "./services/admin-guard.service";
+import  {AuthDashBoardGuardService} from "./services/authDashBoard-guard.service";
 
 @NgModule({
   declarations: [
@@ -53,7 +60,8 @@ import { AdminService } from './services/admins.service';
     BookingComponent,
     BreadCrumbBarComponent,
     DoctorComponent,
-    EventHoverDirective
+    EventHoverDirective,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -68,8 +76,14 @@ import { AdminService } from './services/admins.service';
       timeOut: 2000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-      progressBar:true
-    })
+      progressBar: true
+    }),
+    // JwtModule.forRoot({
+    //   config: {
+    //     allowedDomains: ["localhost:3000"]
+    //   }
+    // }),
+    FormsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers:[
@@ -78,6 +92,10 @@ import { AdminService } from './services/admins.service';
     BreadCrumbsService,
     DoctorListResolver,
     AdminService,
+    AuthService,
+    AuthGuardService,
+    AdminGuardService,
+    AuthDashBoardGuardService,
     {
       provide: APP_BASE_HREF,
       useValue:'/'

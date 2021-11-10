@@ -3,10 +3,15 @@ import { DoctorFileComponent } from './components/doctor-file/doctor-file.compon
 import { HomesComponent } from './components/home/homes-component/homes-component.component';
 import { BookingComponent } from './components/booking/booking.component';
 import { DoctorComponent } from './components/doctor/doctor.component';
+import {LoginComponent} from "./components/login/login.component";
+
+
 export const appRoutesHome:Routes = [
   {
+    path:'login',component:LoginComponent
+  },
+  {
     path:'dashboard',loadChildren: './admins/admins.modules#AdminsModule'
-
   },
   {
       path:'home',component:HomesComponent,
@@ -25,7 +30,5 @@ export const appRoutesHome:Routes = [
     path:'',redirectTo:'home',pathMatch:'full'
   },
   { path: '**', redirectTo: 'home'}
-
-
 
 ]
