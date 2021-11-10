@@ -1,7 +1,9 @@
 const connectDb = require('../utils/connectionDB');
 const appError = require('../utils/appError');
-const encryptPassword = require('../utils/encrypt');
-const decryptPassword = require('../utils/decrypt');
+
+const encryptPass = require('../utils/encrypt');
+const decryptPass = require('../utils/decrypt');
+
 exports.getAll = (req,res) =>{
     const sql = "select * from adminsView";
     connectDb.query(sql,(error,result)=>{
@@ -29,28 +31,33 @@ exports.getById = (req, res) => {
 exports.update = (req,res) => {
     const sql = "call Update_Amind_Proc(?,?)";
       const adminId = req.params.adminId;
-      const params = [adminId];
+      console.log(typeof adminId);
+      const params = [parseInt(adminId)];
       const admins = req.body;
-      console.log(admins);
-    //   connectDb.query(sql,params,(error,result)=>{
-    //       if(error) throw error;
-    //       console.log(result);
-    //       const message = result[0][0].message;
-    //       res.status(200).send({status:'success',message});
-    //   })
+      Object.values(admins).forEach(val => params.push(val));
+      console.log(params);
+
+      connectDb.query(sql,params,(error,result)=>{
+          if(error) throw error;
+
+          res.status(200).json({status:'success',message:"Cập nhật thành công"});
+      })
 }
 
-exports.insert = async  (req,res) =>{
-   ( {userName,pass, roleId}= req.body);
-   const encrypt = new encryptPassword(pass);
-   const passEncrypted= await encrypt.encryptFunc();
-   console.log(passEncrypted);
-//    const params =[userName, '', roleId];
-//    const sql = "call Add_Admin_Proc(?,?,?)";
-//    connectDb.query(sql,params,(error)=>{
-//        if(error) throw error;
-//        res.status(200).send({status:'success',message:`Thêm ${userName} thành công!`});
-//    })
+exports.insert = async (req,res) =>{
+   ({userName, pass, roleId}=req.body);
+    const encrypt = new encryptPass(pass)
+    const passEnrypt = await encrypt.encryptFunc();
+    pass = passEnrypt;
+    console.log(pass);
+   const params =[userName, pass, roleId];
+   const sql = "call Add_Admin_Proc(?,?,?)";
+   connectDb.query(sql,params,(error,rs)=>{
+       if(error) throw error;
+       [{...admin}] = [...rs[0]];
+       console.log(admin);
+       res.status(200).json({status:"success",message:`Thêm ${userName} thành công!`, admin});
+   })
 
 }
 
@@ -60,7 +67,7 @@ exports.deleteAdmin = (req,res) =>{
     const sql = "call Del_Admins_Proc(?)";
     connectDb.query(sql,param,(error)=>{
         if(error) throw error;
-        res.status(204).send();
+        res.status(200).json({status:success,message:"Xoá dữ liệu thành công"});
     })
 }
 
@@ -72,10 +79,10 @@ exports.checkUpdateAdminValid= (req,res,next) => {
     connectDb.query(sql,userName,(error,result)=>{
         if(error ) throw error;
         // Destructuring & rest
-        if(result[0].isExistUserName ===0) next();
+        if(result[0].isExistUserName === 0) next();
         else{
             const err =  new appError(409,"Kiểm ta lại dữ liệu!");
-            res.status(err.statusCode).send(err.resError().error);
+            res.status(err.statusCode).json(err.resError().error);
         }
     })
 }
@@ -89,7 +96,56 @@ exports.checkExistAdmin = (req, res, next)  =>{
         if(isExistAdmin===1) next();
         else{
              const err =  new appError(409,"Không tồn tại người dùng này!");
-            res.status(err.statusCode).send(err.resError().error);
+            res.status(err.statusCode).json(err.resError().error);
         }
     })
+}
+
+exports.updatePass = async (req,res) => {
+    const id = req.params.doctorId;
+    const newpass = req.body.newPass;
+    
+    const encrypt = new encryptPass(newpass);
+    const newPassEncrypth= await encrypt.encryptFunc();
+    const sql = "call Update_Password_Admin_Proc(?,?)";
+    connectDb.query(sql,[newPassEncrypth,id],(error)=>{
+        if(error) throw error;
+        res.status(200).json({status:"success",message:"Cập nhật mật khẩu thành công"});
+    })
+}
+
+exports.checkExistPass = async (req,res,next) => {
+    const id = req.params.doctorId;
+    const newPass = req.body.newPass;
+    const oldPass = req.body.oldPass;
+    if(oldPass === newPass) {
+        const appErr = new appError(409,"Mật khẩu mới trùng mật cũ");
+    res.status(appErr.statusCode).send(appErr.resError().error);
+    }
+    else {
+        const passDB = await decryptFromDB(id);
+      console.log(passDB.length);
+    const compareSync = new decryptPass(oldPass,passDB);
+    console.log(compareSync.encryptText,compareSync.hash);
+     const isPassword = await compareSync.decryptFunc();
+   
+    if(isPassword){
+        next();
+    }else{
+        const appErr = new appError(409,"Nhập sai mật khẩu");
+        res.status(appErr.statusCode).send(appErr.resError().error);
+    }  
+
+    }
+    
+}
+   
+   const decryptFromDB = (id) =>{
+       return new Promise((resolve,reject)=>{
+        const sql = "select getPassWord_Admin_Func(?) as result";
+   connectDb.query(sql,id,(err,rs)=>{
+    if(err) throw err; 
+           resolve(rs[0].result);
+        })
+   })
 }
