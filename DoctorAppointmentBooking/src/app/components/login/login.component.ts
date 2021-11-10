@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
-import {Subscription} from "rxjs";
+import {Subject, Subscription} from "rxjs";
 import {Router} from "@angular/router";
 
 
@@ -9,9 +9,10 @@ import {Router} from "@angular/router";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit  {
   nameOrEmail:string=''
   password:string =''
+  data:Subscription =new Subscription()
   constructor(private authenService:AuthService,private  router:Router) { }
 
   ngOnInit(): void {
@@ -26,13 +27,20 @@ export class LoginComponent implements OnInit {
           }
            this.authenService.login(doctor,'doctor').subscribe(data =>{
              if(data.status === 'success'){
-                this.authenService.getInfoStoreToken(data.token).subscribe(data=>{
-                  console.log(data)
-                });
-                this.router.navigate([this.authenService.url])
-               this.authenService.url ='';
+               console.log(this.authenService.url)
+               if(this.authenService.url === ''){
+                 this.authenService.url ='/home';
+               }
+               this.data =  this.authenService.getInfoStoreToken(data.token).subscribe(()=>{
+                 this.router.navigate([this.authenService.url])
+                   this.authenService.url ='';
+               }
+               );
              }
           })
         }
+  }
+  ngOnDestroy() {
+     this.data.unsubscribe()
   }
 }

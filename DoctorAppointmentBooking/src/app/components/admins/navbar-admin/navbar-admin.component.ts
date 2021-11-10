@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-navbar-admin',
@@ -7,14 +8,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarAdminComponent implements OnInit {
    isShow:boolean =false;
-  constructor() { }
+   username:string =''
+   nameRole:string=''
+   constructor(private authService:AuthService) { }
 
   ngOnInit(): void {
+     this.initInfoUser();
   }
+
+  initInfoUser(){
+    const token =  localStorage.getItem('access_token');
+     // @ts-ignore
+    this.authService.getInfoStoreToken(token).subscribe(data=>{
+         this.username = `${data.lastName} ${data.firstName}`;
+         this.nameRole =data.nameRole;
+    });
+  }
+
   showMenu(){
-    if(this.isShow)
-      this.isShow = false;
-    else
-      this.isShow =true;
+    this.isShow = !this.isShow;
+  }
+
+  logout(){
+     this.authService.logOut();
   }
 }

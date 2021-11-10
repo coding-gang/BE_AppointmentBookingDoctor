@@ -1,15 +1,13 @@
-import { Component, OnInit ,Input } from '@angular/core';
+import {Component, OnInit, Input, OnChanges, SimpleChanges, DoCheck} from '@angular/core';
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit {
-  authenticated =false;
+ @Input() authenticated!:boolean;
   constructor() { }
-
   ngOnInit(): void {
-
   }
-
 }

@@ -21,11 +21,14 @@ import { ViewAdminComponent } from './admin/view-admin/view-admin.component';
 import { PasswordDirective } from 'src/app/directives/validator/passConfirm.directive';
 import { AddAdminComponent } from './admin/add-admin/add-admin.component';
 import  {AuthGuardService} from "../../services/auth-guard.service";
+import  {AdminGuardService} from "../../services/admin-guard.service";
+import  {AuthDashBoardGuardService} from "../../services/authDashBoard-guard.service";
 
 const routes: Routes =[
 
    {
-     path:'dashboard',component:DashboardComponent,canActivate:[AuthGuardService],
+     path:'dashboard',component:DashboardComponent,
+     canActivate:[AuthDashBoardGuardService],canActivateChild:[AuthGuardService],
      children:[
       {
         path:'doctor',
@@ -50,13 +53,13 @@ const routes: Routes =[
         ]
       },
       {
-        path:'specialities',component:SpecialitiesComponent,
+        path:'specialities',component:SpecialitiesComponent,canActivate:[AdminGuardService],
         data:{
           breadcrumb:"Specialities"
         }
       },
       {
-        path:'admins',
+        path:'admins',canActivate:[AdminGuardService],
         children:[
           {
             path:'new',component: AddAdminComponent,
