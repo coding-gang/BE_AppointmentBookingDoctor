@@ -20,12 +20,12 @@ import { ListAdminComponent } from './admin/list-admin/list-admin.component';
 import { ViewAdminComponent } from './admin/view-admin/view-admin.component';
 import { PasswordDirective } from 'src/app/directives/validator/passConfirm.directive';
 import { AddAdminComponent } from './admin/add-admin/add-admin.component';
+import  {AuthGuardService} from "../../services/auth-guard.service";
 
 const routes: Routes =[
 
    {
-     path:'dashboard',component:DashboardComponent,
-
+     path:'dashboard',component:DashboardComponent,canActivate:[AuthGuardService],
      children:[
       {
         path:'doctor',

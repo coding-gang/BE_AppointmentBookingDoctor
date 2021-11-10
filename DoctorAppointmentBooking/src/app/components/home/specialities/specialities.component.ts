@@ -42,10 +42,7 @@ export class SpecialitiesComponent implements OnInit {
         items: 3
       },
       840: {
-        items: 5
-      },
-      1140: {
-        items: 5
+        items: 4
       }
 
     }
