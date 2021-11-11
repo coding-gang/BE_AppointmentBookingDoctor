@@ -43,14 +43,12 @@
         <div class="form-group">
           <label>Email Address</label>
           <input formControlName="mail" id="mail" type="mail" class="form-control">
-          <!-- <em *ngIf="!validEmailCreateDoctor() &&
-          createDoctorForm.controls.email.errors?.required">
+           <em *ngIf="createDoctorForm.controls.mail.errors?.required">
             Required
           </em>
-          <em *ngIf="!validEmailCreateDoctor() &&
-               createDoctorForm.controls.email.errors?.email">
+          <em *ngIf=" createDoctorForm.controls.mail.errors?.email">
             Email invalid
-          </em> -->
+          </em>
         </div>
         <div class="form-group"  [ngClass]="{'error':!validPhoneCreateDoctor()}">
           <label>Phone number</label>
@@ -98,6 +96,17 @@
               Date format {{createDoctorForm.controls.DOB.errors?.dateVaidator}}
             </em>
           </div>
+        <div class="form-group row">
+          <label class="col-form-label col-md-2">Specialities</label>
+          <div class="col-md-10">
+            <select formControlName="specialityId"  class="form-control">
+              <option [ngValue]="null" disabled>-- Select --</option>
+              <option *ngFor="let item of Specialities" [ngValue]="item.specialityId" >
+                {{item.speciallityName}}
+              </option>
+            </select>
+          </div>
+        </div>
           <span (mouseenter)="mouseover=true" (mouseleave)="mouseover=false">
             <div class="text-right mt-5">
               <button type="submit"  [disabled]="createDoctorForm.invalid" class="btn btn-primary">Submit</button>

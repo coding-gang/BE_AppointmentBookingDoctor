@@ -59,7 +59,7 @@ const routes: Routes =[
         }
       },
       {
-        path:'admins',canActivate:[AdminGuardService],
+        path:'admins',//canActivate:[AdminGuardService],
         children:[
           {
             path:'new',component: AddAdminComponent,

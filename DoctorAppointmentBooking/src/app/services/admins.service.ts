@@ -32,4 +32,7 @@ constructor(private httpClient:HttpClient) {}
   addAdmin(admin:any):Observable<IMessage>{
     return this.httpClient.post<IMessage>(`api/v1/admin/new/`,admin);
   }
+  updatePass(id:any,data:any):Observable<IMessage>{
+   return this.httpClient.put<IMessage>(`api/v1/admin/update-password/${id}`,data);
+  }
 }

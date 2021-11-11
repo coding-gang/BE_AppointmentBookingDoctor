@@ -12,7 +12,6 @@ export  class AuthDashBoardGuardService implements  CanActivate{
       const isActivate =  this.authenService.isExpiredToken();
       if(isActivate) {
         const isAdmin = this.authenService.getNameRole();
-        console.log(isAdmin)
         if (isAdmin === 'admin' || isAdmin === 'doctor') {
           return true;
         }else{

@@ -20,7 +20,6 @@ export class AuthService {
 
   isLogin():boolean{
    const storeToken =  localStorage.getItem("access_token");
-    console.log(storeToken)
    if(storeToken !== null){
      return true;
    }
@@ -30,7 +29,6 @@ export class AuthService {
   }
 
   getInfoStoreToken(token:string):Observable<Iauthen>{
-    console.log(token)
      localStorage.setItem("access_token",token);
     const decodedToken =  this.helper.decodeToken(token);
     const data:Iauthen ={
@@ -47,6 +45,13 @@ export class AuthService {
     // @ts-ignore
     const decodedToken =  this.helper.decodeToken(token);
     return decodedToken.nameRole;
+  }
+
+  getId():number{
+    const token =  localStorage.getItem("access_token");
+    // @ts-ignore
+    const decodedToken =  this.helper.decodeToken(token);
+    return decodedToken.doctorId;
   }
   isExpiredToken():boolean{
     const token = localStorage.getItem("access_token");

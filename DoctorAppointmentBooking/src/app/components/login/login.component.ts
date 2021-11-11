@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit  {
           }
            this.authenService.login(doctor,'doctor').subscribe(data =>{
              if(data.status === 'success'){
-               console.log(this.authenService.url)
                if(this.authenService.url === ''){
                  this.authenService.url ='/home';
                }

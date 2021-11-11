@@ -4,10 +4,10 @@
     <div class="profile-menu">
       <ul class="nav nav-tabs nav-tabs-solid">
         <li class="nav-item">
-          <a class="nav-link" [ngClass]="isActiveAbout ? 'active' : ''" data-toggle="tab"  (click)="activeTab()">About</a>
+          <a class="nav-link" [ngStyle]="{cursor:'pointer'}" [ngClass]="isActiveAbout ? 'active' : ''" data-toggle="tab"  (click)="activeTab()">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [ngClass]="!isActiveAbout ? 'active' : ''" data-toggle="tab" (click)="activeTabPass()"> Password</a>
+          <a class="nav-link" [ngStyle]="{cursor:'pointer'}" [ngClass]="!isActiveAbout ? 'active' : ''" data-toggle="tab" (click)="activeTabPass()"> Password</a>
         </li>
       </ul>
     </div>
@@ -23,7 +23,9 @@
               <div class="card-body">
                 <h5 class="card-title d-flex justify-content-between">
                   <span>Admin Details</span>
-                  <a class="edit-link" data-toggle="modal" (click)="editAdmin()" ><i class="fa fa-edit mr-1"></i>Edit</a>
+                  <ng-template [ngIf]="checkMySelf" >
+                    <a class="edit-link" data-toggle="modal" [ngStyle]="{cursor:'pointer'}"  (click)="editAdmin()" ><i class="fa fa-edit mr-1"></i>Edit</a>
+                  </ng-template>
                 </h5>
                 <div class="row">
                   <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">User Name</p>
@@ -70,27 +72,54 @@
         </div>
 
       </div>
-      <div id="password_tab" class="tab-pane fade "[ngClass]="{'show active':!isActiveAbout}">
+      <div id="password_tab" class="tab-pane fade "[ngClass]="{'show active':!isActiveAbout && checkMySelf}">
 
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Change Password</h5>
             <div class="row">
               <div class="col-md-10 col-lg-6">
-                <form>
-                  <div class="form-group">
+                <form #updatePassFrm ="ngForm" (ngSubmit)="updatePass(updatePassFrm.value)" autocomplete="off" novalidate >
+                  <div class="form-group" [ngClass]="{'error':updatePassFrm.controls.oldPass?.invalid &&
+                  updatePassFrm.controls.oldPass?.touched}">
                     <label>Old Password</label>
-                    <input type="password" class="form-control">
+                    <input (ngModel)="oldPass" id="oldPass" name="oldPass" type="password" class="form-control" required>
+                    <em *ngIf="updatePassFrm.controls.oldPass?.invalid &&
+                    updatePassFrm.controls.oldPass?.touched">
+                      required
+                    </em>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group" [ngClass]="{'error':updatePassFrm.controls.newPass?.invalid &&
+                    updatePassFrm.controls.newPass?.touched}">
                     <label>New Password</label>
-                    <input type="password" class="form-control">
+                    <input name="newPass" (input)="confirmPass.control.updateValueAndValidity()" [(ngModel)]="newPass"
+                           type="password" class="form-control" required >
+                    <em *ngIf="updatePassFrm.controls.newPass?.errors?.required &&
+                      updatePassFrm.controls.newPass?.touched">
+                      required
+                    </em>
+                    <em *ngIf="!updatePassFrm.controls.newPass?.errors?.required
+                     && updatePassFrm.controls.newPass?.touched && updatePassFrm.controls.newPass.errors?.errConfirmPass" >
+                      {{updatePassFrm.controls.newPass.errors?.errConfirmPass}}
+                    </em>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group"  [ngClass]="{'error':confirmPass?.invalid &&
+                    confirmPass?.touched}">
                     <label>Confirm Password</label>
-                    <input type="password" class="form-control">
+                    <input name="confirmPass" confirmPass="newPass" required (ngModel)="confirmPass"
+                           type="password" class="form-control" #confirmPass ="ngModel">
+                    <em *ngIf="confirmPass.errors?.required &&
+                    confirmPass?.touched" >
+                      required
+                    </em>
+                    <em *ngIf="!confirmPass.errors?.required
+                          && confirmPass?.touched && confirmPass.errors?.errConfirmPass" >
+                      {{confirmPass.errors?.errConfirmPass}}
+                    </em>
                   </div>
-                  <button class="btn btn-primary" type="submit">Save Changes</button>
+
+
+                  <button class="btn btn-primary" [disabled]="updatePassFrm.invalid" type="submit">Save Changes</button>
                 </form>
               </div>
             </div>
