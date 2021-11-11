@@ -1,8 +1,8 @@
 const connectDb = require('../utils/connectionDB');
 const encryptPass = require('../utils/encrypt');
-const decryptPass = require('../utils/decrypt')
-const appError =require('../utils/appError')
-
+const decryptPass = require('../utils/decrypt');
+const appError =require('../utils/appError');
+const jwt = require('jsonwebtoken')
 exports.getAll = (req,res,next) =>{
     let sql = "select * from ViewDoctor";
     connectDb.query(sql,(error, results, fields) =>{
@@ -134,3 +134,40 @@ exports.checkExistUserName = (req,res,next) =>{
         }
     })
 }
+
+exports.login= async(req,res)=>{
+                const email = req.body.email;
+                const passClient = req.body.password;
+                const sql ="call getDetailDoctotByEmail_proc(?)";
+            connectDb.query(sql,email,async(err,result)=>{
+                if(err) throw err;
+               if(result.length > 0){
+                   [{doctorId,password,nameRole,firstName,lastName}] =[...result[0]];
+                const decrypt = new decryptPass(passClient,password);
+                const isDoctor =  await decrypt.decryptFunc();
+                const doctor = {
+                    doctorId,
+                    firstName,
+                    lastName,
+                    email,
+                    nameRole
+                    }
+                   if(isDoctor){
+                     const privateKey = process.env.KEY_SECRET;
+                     const audience = process.env.AUDIENCE;
+                     const issuer = process.env.ISSUER;
+                     const token = await jwt.sign(doctor,privateKey,{audience,issuer, expiresIn:"60s" });
+                          res.status(200)
+                              .json({status:"success",message:"Dang nhap thanh cong",token})
+                   }else{
+                     const appErr = new appError(404,`Password khong dung`);
+                     res.status(appErr.statusCode).json(appErr.resError().error);
+                   }
+               }else{
+                 const appErr = new appError(404,`Email khong ton tai: ${email}`);
+                 res.status(appErr.statusCode).json(appErr.resError().error);
+               }
+             })
+        }
+
+

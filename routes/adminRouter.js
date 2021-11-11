@@ -9,6 +9,8 @@ router.route('/admin/:adminId').get(adminController.checkExistAdmin,adminControl
 router.route('/admin/:adminId').put(adminController.checkUpdateAdminValid,adminController.update);
 router.route('/admin').post(adminController.checkUpdateAdminValid,adminController.insert);
 router.route('/admin/:adminId').delete(adminController.checkExistAdmin,adminController.deleteAdmin);
-router.route('/admin/update-password/:doctorId').put(adminController.checkExistPass,adminController.updatePass);
+router.route('/admin/update-password/:adminId').put(adminController.checkExistPass,adminController.updatePass);
+router.route('/admin/login').post(adminController.login);
+
 
 module.exports = router;

@@ -119,7 +119,7 @@ exports.checkExistPass = async (req,res,next) => {
     const newPass = req.body.newPass;
     const oldPass = req.body.oldPass;
     if(oldPass === newPass) {
-        const appErr = new appError(409,"Mật khẩu mới trùng mật cũ");
+        const appErr = new appError(409,"Mật khẩu mới trùng mật khẩu cũ");
     res.status(appErr.statusCode).send(appErr.resError().error);
     }
     else {
@@ -151,27 +151,26 @@ exports.checkExistPass = async (req,res,next) => {
 }
 
 exports.login= async(req,res)=>{
-                const email = req.body.email;
-                const passClient = req.body.password;
-                const sql ="call getDetailDoctotByEmail_proc(?)";
-            connectDb.query(sql,email,async (err,result)=>{
+
+                const userN = req.body.username;
+                const passClient = req.body.pass;
+                const sql ="call getDetailAdminByUsername_proc(?)";
+            connectDb.query(sql,userN,async(err,result)=>{
                 if(err) throw err;
-               if(result.length >0){
-                   [{doctorId,password,nameRole,firstName,lastName}] =[...result[0]];
+               if(result[0].length > 0){
+                   console.log(result[0]);
+                   [{adminId, userName, nameRole,password}] =[...result[0]];
                 const decrypt = new decryptPass(passClient,password);
-                const isDoctor =  await decrypt.decryptFunc();
-                const doctor = {
-                    doctorId,
-                    firstName,
-                    lastName,
-                    email,
-                    nameRole
+
+                const isAdmin =  await decrypt.decryptFunc();
+                const admin = {
+                    adminId, userName, nameRole
                     }
-                   if(isDoctor){
+                   if(isAdmin){
                      const privateKey = process.env.KEY_SECRET;
                      const audience = process.env.AUDIENCE;
                      const issuer = process.env.ISSUER;
-                     const token = await jwt.sign(doctor,privateKey,{audience,issuer, expiresIn:"60s" });
+                     const token = await jwt.sign(admin,privateKey,{audience,issuer, expiresIn:"120s" });
                           res.status(200)
                               .json({status:"success",message:"Dang nhap thanh cong",token})
                    }else{
@@ -184,6 +183,9 @@ exports.login= async(req,res)=>{
                }
              })
         }
+  
+
+
 
 
 
