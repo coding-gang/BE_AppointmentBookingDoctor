@@ -7,6 +7,7 @@ import { IMessage } from 'src/app/interface/Imessage.model';
 import { Router } from '@angular/router';
 import {SpecialitiesService} from "../../../../services/specialities.service";
 import {ISpeciality} from "../../../../interface/ISpecialities";
+import {checkDeactivate} from "../../../../interface/checkDeactivate.model";
 
 @Component({
   selector: 'app-create-doctor',
@@ -15,7 +16,7 @@ import {ISpeciality} from "../../../../interface/ISpecialities";
 })
 
 
-export class CreateDoctorComponent implements OnInit {
+export class CreateDoctorComponent implements OnInit ,checkDeactivate{
   Specialities:ISpeciality[]=[];
   namePage:string = 'New doctor';
   nameComponent:string ="New doctor";
@@ -64,8 +65,7 @@ private roleId!:FormControl;
           specialityId:this.specialities,
         roleId:this.roleId,
         mail:this.email
-      }
-
+      },
       )
   }
   validFirstNameCreateDoctor(){
@@ -97,5 +97,16 @@ private roleId!:FormControl;
        .subscribe((mes:IMessage) =>mes.status === 'success'
                  ? this.router.navigateByUrl('/dashboard/doctor')
                  : this.router.navigateByUrl(this.router.url))
+  }
+
+  checkDeactivate(): boolean {
+   const fName = this.createDoctorForm.getRawValue().firstName;
+   const lName = this.createDoctorForm.getRawValue().lastName;
+   const dob =this.createDoctorForm.getRawValue().DOB;
+   const address =this.createDoctorForm.getRawValue().address;
+   const email =this.createDoctorForm.getRawValue().mail;
+  const phone =this.createDoctorForm.getRawValue().phone;
+    return (phone && fName && lName && dob && address && email !== ''
+            || confirm("Bạn không muốn tạo doctor?"));
   }
 }

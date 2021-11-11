@@ -28,7 +28,8 @@ const routes: Routes =[
 
    {
      path:'dashboard',component:DashboardComponent,
-     canActivate:[AuthDashBoardGuardService],canActivateChild:[AuthGuardService],
+     canActivate:[AuthDashBoardGuardService],
+     canActivateChild:[AuthGuardService],
      children:[
       {
         path:'doctor',
@@ -37,7 +38,8 @@ const routes: Routes =[
             path:'new',component: CreateDoctorComponent,
             data:{
               breadcrumb:"new doctor"
-            }
+            },
+            canDeactivate:[AuthGuardService]
           },
           {
             path:':id',component:ViewDoctorComponent,

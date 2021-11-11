@@ -3,12 +3,13 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { DoctorPopularService } from 'src/app/services/popular.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
-import { fromEvent } from 'rxjs';
+import {fromEvent, Observable, of} from 'rxjs';
 import {ICreateDoctor, IDoctorProfile} from 'src/app/interface/Idoctor/index';
 import {dateValidator,phoneValidator} from "../shared/index";
 import { IMessage } from 'src/app/interface/Imessage.model';
 import { Router } from '@angular/router';
 import { ModalconfirmDoctorComponent } from '../modalconfirm-doctor/modalconfirm-doctor.component';
+
 @Component({
   selector: 'app-view-doctor',
   templateUrl: './view-doctor.component.html',
@@ -29,7 +30,7 @@ lastName!:FormControl;
  spec!:FormControl;
  specialityId!:FormControl
  roleId!:FormControl;
- viewForm!:FormGroup
+ viewForm!:FormGroup;
  localtion:string ="Viet Nam,Dalat"
  avatar:string =''
  isActiveAbout:boolean =true;
@@ -40,33 +41,45 @@ lastName!:FormControl;
   @ViewChild('modalRemove')modalRemove!:ModalconfirmDoctorComponent
   constructor(private doctorService:DoctorPopularService,
              private route:ActivatedRoute,private router:Router) {}
-  ngOnInit(): void {
 
+  ngOnInit(): void {
     const validatorsName =[Validators.required,
       Validators.pattern('[a-zA-Z].*'),
       Validators.maxLength(10)]
-      this.firstName =new FormControl("",validatorsName);
-      this.lastName =new FormControl("",[Validators.required,Validators.pattern('[a-zA-Z].*'),
-                          Validators.maxLength(20)]);
-      this.address =new FormControl("",Validators.required);
-      this.phone =new FormControl("",[Validators.required,
-                        phoneValidator(/^\d+$/)]);
-      this.DOB =new FormControl("",[Validators.required,dateValidator()]);
-      this.gender =new FormControl("",Validators.required)
-      this.specialityId = new FormControl(2);
-        this.roleId = new FormControl(2);
-       this.viewForm =new FormGroup({
-         fistName:this.firstName,
-         lastName:this.lastName,
-         phone :this.phone,
-         dob :this.DOB,
-         gender:this.gender,
-         address:this.address,
-         specialityId:this.specialityId,
-         roleId:this.roleId,
 
-       })
-       this.initDoctorProfile();
+    const doctor=  this.route.paramMap.pipe(
+      map(param => param.get('id')),
+      switchMap(id => this.doctorService.getDoctorById(id))
+    );
+
+    doctor.subscribe(doc =>{
+      this.doctorService.viewDoctorProfile(doc)?.subscribe(
+        item => {
+          this.idDoctor =item.doctorId;
+          this.avatar =item.avatar;
+          this.firstName =new FormControl(item.firstName,validatorsName);
+          this.lastName =new FormControl(item.lastName,[Validators.required,Validators.pattern('[a-zA-Z].*'),
+            Validators.maxLength(20)]);
+          this.address =new FormControl(item.address,Validators.required);
+          this.phone =new FormControl(item.phone,[Validators.required,
+            phoneValidator(/^\d+$/)]);
+          this.DOB =new FormControl(item.DOB,[Validators.required,dateValidator()]);
+          this.gender =new FormControl("",Validators.required)
+          this.specialityId = new FormControl(2);
+          this.roleId = new FormControl(2);
+          this.viewForm =new FormGroup({
+            fistName:this.firstName,
+            lastName:this.lastName,
+            phone :this.phone,
+            dob :this.DOB,
+            gender:this.gender,
+            address:this.address,
+            specialityId:this.specialityId,
+            roleId:this.roleId,
+          })
+        }
+      );
+    })
   }
 
   ngAfterViewInit(){
@@ -101,26 +114,6 @@ lastName!:FormControl;
   }
   activeTabPass(){
     this.isActiveAbout =false
-  }
-
-  initDoctorProfile(){
-    const doctor=  this.route.paramMap.pipe(
-      map(param => param.get('id')),
-      switchMap(id => this.doctorService.getDoctorById(id))
-    );
-     doctor.subscribe(doc =>{
-         this.doctorService.viewDoctorProfile(doc)?.subscribe(
-              item => {
-                this.idDoctor =item.doctorId;
-                this.firstName.setValue(item.firstName);
-                this.lastName.setValue(item.lastName);
-                this.DOB.setValue(item.DOB);
-                this.address.setValue(item.address);
-                this.avatar =item.avatar;
-                this.phone.setValue(item.phone)
-              }
-         );
-    })
   }
 
   editDoctor(){
@@ -169,4 +162,5 @@ lastName!:FormControl;
     console.log(frmUpdatePass)
     this.doctorService.updatePass(this.idDoctor,frmUpdatePass).subscribe();
   }
+
 }

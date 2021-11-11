@@ -8,7 +8,7 @@
           </a>
         </div>
         <div class="col ml-md-n2 profile-user-info">
-          <h4 class="user-name mb-0">{{lastName.value}} {{firstName.value}}</h4>
+          <h4 class="user-name mb-0">{{lastName?.value}} {{firstName?.value}}</h4>
           <!-- <h6 class="text-muted">ryantaylor@admin.com</h6> -->
           <div class="user-Location"><i class="fa fa-map-marker"></i>{{localtion}}</div>
         </div>
@@ -47,20 +47,20 @@
                 </h5>
                 <div class="row">
                   <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Name</p>
-                  <p class="col-sm-10">{{lastName.value}} {{firstName.value}}</p>
+                  <p class="col-sm-10">{{lastName?.value}} {{firstName?.value}}</p>
                 </div>
                 <div class="row">
                   <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Date of Birth</p>
-                  <p class="col-sm-10">{{DOB.value}}</p>
+                  <p class="col-sm-10">{{DOB?.value}}</p>
                 </div>
 
                 <div class="row">
                   <p class="col-sm-2 text-muted text-sm-right mb-0 mb-sm-3">Mobile</p>
-                  <p class="col-sm-10">{{phone.value}}</p>
+                  <p class="col-sm-10">{{phone?.value}}</p>
                 </div>
                 <div class="row">
                   <p class="col-sm-2 text-muted text-sm-right mb-0">Address</p>
-                  <p class="col-sm-10 mb-0">{{address.value}}</p>
+                  <p class="col-sm-10 mb-0">{{address?.value}}</p>
                 </div>
               </div>
             </div>
@@ -79,7 +79,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <form [formGroup]="viewForm" (ngSubmit)="saveChange(viewForm.value)">
+                    <form [formGroup]="viewForm" (ngSubmit)="saveChange(viewForm?.value)">
                       <div class="row form-row">
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
@@ -137,7 +137,7 @@
                           </div>
                         </div>
                       </div>
-                      <button type="submit" [disabled]="viewForm.invalid" class="btn btn-primary btn-block">Save Changes</button>
+                      <button type="submit" [disabled]="viewForm?.invalid" class="btn btn-primary btn-block">Save Changes</button>
                     </form>
                   </div>
                 </div>

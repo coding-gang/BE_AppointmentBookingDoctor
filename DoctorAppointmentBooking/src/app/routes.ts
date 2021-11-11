@@ -4,6 +4,7 @@ import { HomesComponent } from './components/home/homes-component/homes-componen
 import { BookingComponent } from './components/booking/booking.component';
 import { DoctorComponent } from './components/doctor/doctor.component';
 import {LoginComponent} from "./components/login/login.component";
+import {AuthDashBoardGuardService} from "./services/authDashBoard-guard.service";
 
 
 export const appRoutesHome:Routes = [
@@ -11,7 +12,10 @@ export const appRoutesHome:Routes = [
     path:'login',component:LoginComponent
   },
   {
-    path:'dashboard',loadChildren: './admins/admins.modules#AdminsModule'
+    path:'dashboard',
+    //'./admins/admins.modules#AdminsModule',
+    loadChildren: () => import('./components/admins/admins.module').then(m => m.AdminsModule),
+    canLoad:[AuthDashBoardGuardService]
   },
   {
       path:'home',component:HomesComponent,
