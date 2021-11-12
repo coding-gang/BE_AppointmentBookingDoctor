@@ -32,7 +32,7 @@ const routes: Routes =[
      canActivateChild:[AuthGuardService],
      children:[
       {
-        path:'doctor',
+        path:'doctor',  canActivateChild:[AuthDashBoardGuardService],
         children:[
           {
             path:'new',component: CreateDoctorComponent,
@@ -52,16 +52,17 @@ const routes: Routes =[
             data:{breadcrumb:"list doctor"},
             resolve:{Doctors:DoctorListResolver}
           }
-        ]
+        ],
       },
       {
         path:'specialities',component:SpecialitiesComponent,canActivate:[AdminGuardService],
         data:{
           breadcrumb:"Specialities"
-        }
+        },
+        canActivateChild:[AuthDashBoardGuardService]
       },
       {
-        path:'admins',//canActivate:[AdminGuardService],
+        path:'admins',  canActivateChild:[AuthDashBoardGuardService],//canActivate:[AdminGuardService],
         children:[
           {
             path:'new',component: AddAdminComponent,

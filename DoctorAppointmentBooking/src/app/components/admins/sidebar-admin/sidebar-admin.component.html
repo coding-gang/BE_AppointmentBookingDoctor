@@ -8,21 +8,28 @@
 <li class="active">
   <a href="index.html"><i class="fe fe-home"></i> <span>Dashboard</span></a>
 </li>
-<li>
-  <a href="appointment-list.html"><i class="fe fe-layout"></i> <span>Appointments</span></a>
-</li>
-<li>
-  <a [routerLink]="['/dashboard/specialities']"><i class="fe fe-users"></i> <span>Specialities</span></a>
-</li>
-<li>
-  <a [routerLink] ="['dashboard/doctor']"><i class="fe fe-user-plus"></i> <span>Doctors</span></a>
-</li>
-<li>
-  <a href="patient-list.html"><i class="fe fe-user"></i> <span>Patients</span></a>
-</li>
-<li>
-  <a [routerLink] ="['dashboard/admins']"><i class="fe fe-star-o"></i> <span>Admins</span></a>
-</li>
+   <ng-template *ngIf="authAdmin === 'admin';then admin ;else doctor"></ng-template>
+  <ng-template #admin>
+    <li>
+      <a [routerLink]="['/dashboard/specialities']"><i class="fe fe-users"></i> <span>Specialities</span></a>
+    </li>
+    <li>
+      <a [routerLink] ="['dashboard/doctor']"><i class="fe fe-user-plus"></i> <span>Doctors</span></a>
+    </li>
+
+    <li>
+      <a [routerLink] ="['dashboard/admins']"><i class="fe fe-star-o"></i> <span>Admins</span></a>
+    </li>
+  </ng-template>
+  <ng-template #doctor>
+    <li>
+      <a href="appointment-list.html"><i class="fe fe-layout"></i> <span>Appointments</span></a>
+    </li>
+    <li>
+      <a href="patient-list.html"><i class="fe fe-user"></i> <span>Patients</span></a>
+    </li>
+  </ng-template>
+
 </ul>
 </div>
   </div>

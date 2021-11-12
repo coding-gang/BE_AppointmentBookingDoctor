@@ -4,30 +4,29 @@ import {AuthService} from "./services/auth.service";
 @Component({
   selector: 'app-root',
   template: `
-   <ng-container *ngIf="isAmin ==='dashboard';then dashboard  else notAdmin"></ng-container>
-   <ng-template #notAdmin>
-     <ng-contaner *ngIf="isAmin === 'home';then client else login"></ng-contaner>
-   </ng-template>
-  <ng-template #client>
-            <app-header [authenticated]="authenticated">
-             <a loginSignup class="nav-link header-login" [routerLink]="['/login']">login / Signup </a>
-              <a logout class="nav-link header-login" [ngStyle]="{ cursor: 'pointer'}" (click)="logout()">logout</a>
-              </app-header>
-             <router-outlet></router-outlet>
 
-             <router-outlet></router-outlet>
-             <app-footer></app-footer>
-  </ng-template>
+     <ng-container *ngIf="isAmin === 'login' ;else container ">
+     <app-login></app-login>
+     </ng-container>
 
-  <ng-template #dashboard>
-        <app-navbar-admin></app-navbar-admin>
-        <app-sidebar-admin></app-sidebar-admin>
+     <ng-template #container >
+       <ng-container *ngIf="isAmin === 'dashboard' ;else home">
+         <app-navbar-admin></app-navbar-admin>
+         <app-sidebar-admin></app-sidebar-admin>
          <router-outlet></router-outlet>
-  </ng-template>
-  <ng-template #login>
-    <app-login></app-login>
-  </ng-template>
+       </ng-container>
+     </ng-template>
 
+     <ng-template #home>
+         <app-header [authenticated]="authenticated">
+           <a loginSignup class="nav-link header-login" [routerLink]="['/login']">login / Signup </a>
+           <a logout class="nav-link header-login" [ngStyle]="{ cursor: 'pointer'}" (click)="logout()">logout</a>
+         </app-header>
+         <router-outlet></router-outlet>
+
+         <router-outlet></router-outlet>
+         <app-footer></app-footer>
+       </ng-template>
 
   <ngx-spinner
   bdColor="rgba(51,51,51,0.8)"

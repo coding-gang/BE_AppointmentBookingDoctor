@@ -19,13 +19,14 @@ export class LoginComponent implements OnInit  {
   }
     // @ts-ignore
   login(frmLogin:any){
-        const isDoctorlogin = frmLogin.nameOrEmail.includes('@');
+        const isDoctorlogin = frmLogin.nameOrEmail;
         if(isDoctorlogin){
-          const doctor={
-             email:frmLogin.nameOrEmail,
+          const data={
+            nameOrEmail:frmLogin.nameOrEmail,
              password:frmLogin.password
           }
-           this.authenService.login(doctor,'doctor').subscribe(data =>{
+          const pathRouter = data.nameOrEmail.includes('@') ? 'doctor' : 'admin';
+           this.authenService.login(data,pathRouter).subscribe(data =>{
              if(data.status === 'success'){
                if(this.authenService.url === ''){
                  this.authenService.url ='/home';

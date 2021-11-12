@@ -16,7 +16,7 @@ import {Observable, of} from "rxjs";
 @Injectable({
   providedIn:'root'
 })
-export class AuthDashBoardGuardService implements CanLoad ,CanActivate {
+export class AuthDashBoardGuardService implements CanLoad ,CanActivate,CanActivateChild {
   constructor(private authenService: AuthService,
               private router: Router) {
   }
@@ -69,4 +69,10 @@ export class AuthDashBoardGuardService implements CanLoad ,CanActivate {
       return false;
     }
   }
+
+  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+      const isAdmin = this.authenService.getNameRole();
+       if(isAdmin === 'admin') return true;
+       else this.router.navigate(['/dashboard']); return false
+    }
 }
