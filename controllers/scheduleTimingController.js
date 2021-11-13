@@ -32,17 +32,28 @@ exports.checkExistTiming = (req,res,next) =>{
 
     const sql = "select checkExistTiming(?,?,?,?) as result";
 
-    console.log(req.body);
     ({dayAdd,startBegin,endTime,doctorId} ={...req.body});
     const params = [dayAdd,startBegin,endTime,doctorId];
     connectDb.query(sql,params,(err,rs)=>{
          [{result}] = [...rs]
         console.log(rs);
         if(err) throw err;
-            if(result ===1 ) next();
+            if(result === 1 ) next();
         else{
-             const err =  new appError(409,"khoảng thời gian này đã tồn tại!");
-            res.status(err.statusCode).json(err.resError().error);
+           switch(result){
+               case 2:{
+                    const err =  new appError(409,"thời gian bắt đầu chưa phù hợp!");
+                     res.status(err.statusCode).json(err.resError().error);
+                }
+                case 3:{
+                    const err =  new appError(409,"thời gian kết thúc chưa phù hợp!");
+                     res.status(err.statusCode).json(err.resError().error);
+                }
+               default:{
+                    const err =  new appError(409,"Khoảng thời gian này không phù hợp!");
+                     res.status(err.statusCode).json(err.resError().error);
+                }
+            }
         }
     })
 }
