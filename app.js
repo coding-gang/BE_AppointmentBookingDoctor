@@ -7,7 +7,7 @@ const passport =require('passport');
 const cors = require('cors');
 const specialitieRouter = require('./routes/specialitiesRouters');
 const adminRouter = require('./routes/adminRouter');
-
+const scheduleTiming = require('./routes/scheduleTimingRouters')
 app.use(cors());
 require('./passport')(passport)
 app.use(passport.initialize())
@@ -41,5 +41,5 @@ app.use('/api/v1',doctorRouter);
 app.use('/api/v1',doctorRouter);
 app.use('/api/v1',specialitieRouter);
 app.use('/api/v1',adminRouter);
-
+app.use('/api/v1',scheduleTiming)
 module.exports =app;

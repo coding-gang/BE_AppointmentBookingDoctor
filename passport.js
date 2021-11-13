@@ -9,9 +9,8 @@ opts.audience = process.env.AUDIENCE;
 
 
 module.exports = function jwtPassport(passport){
-    console.log(opts);
+  
     passport.use(new JwtStrategy(opts,(jwt_payLoad,done)=>{
-        console.log(jwt_payLoad)
             const test ={message:"ok"}
             return done(null,test)
     
