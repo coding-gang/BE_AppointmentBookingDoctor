@@ -1,4 +1,4 @@
-import { Component, OnInit ,Input,Output} from '@angular/core';
+import {Component, OnInit, Input, Output, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-doctor',
@@ -6,7 +6,6 @@ import { Component, OnInit ,Input,Output} from '@angular/core';
   styleUrls: ['./doctor.component.css']
 })
 export class DoctorComponent implements OnInit {
-
    @Input() name:string ='';
   constructor() {}
 

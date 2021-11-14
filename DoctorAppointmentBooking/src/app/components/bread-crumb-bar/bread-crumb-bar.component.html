@@ -1,22 +1,18 @@
 
-  <div class="breadcrumb-bar">
+<nav class="navbar navbar-expand-lg header-nav">
+</nav>
+<div class="breadcrumb-bar">
     <div class="container-fluid">
       <div class="row align-items-center">
         <div class="col-md-12 col-12">
           <nav aria-label="breadcrumb" class="page-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a [routerLink]="['/home']">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">{{name}}</li>
+              <li class="breadcrumb-item"><a [routerLink]="['/home']">{{name}}</a></li>
             </ol>
           </nav>
-          <!-- <ng-container [ngTemplateOutlet]="nameDoctor" [ngTemplateOutletContext]="{name:name,color:'breadcrumb-title'}"></ng-container> -->
-          <!-- <ng-template *ngTemplateOutlet="nameDoctor, context:{name:name,color:'breadcrumb-title'}"></ng-template> -->
-             <ng-container #barContainer></ng-container>
-          <ng-template #nameDoctor let-nameLink ="name" let-colorLinkName ="color">
-            <h2 [ngClass]="colorLinkName">{{ nameLink | uppercase}}</h2>
-          </ng-template>
-
         </div>
       </div>
     </div>
   </div>
+
+<ng-content select="[underBread]"></ng-content>

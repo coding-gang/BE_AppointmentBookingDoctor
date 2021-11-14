@@ -1,26 +1,25 @@
-import { Component, OnInit,Input,ViewChild ,ViewContainerRef,TemplateRef, AfterViewInit } from '@angular/core';
-
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  DoCheck,
+  Input, OnChanges, SimpleChanges,
+} from '@angular/core';
+import {ActivatedRoute, Event as NavigationEvent, NavigationStart, Router} from "@angular/router";
+import {IBreadCrumb} from "./bread-crumb.model";
+import {BreadCrumbsService} from "../../services/breadCrumb.service";
+import {global} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'app-bread-crumb-bar',
   templateUrl: './bread-crumb-bar.component.html'
-
 })
-export class BreadCrumbBarComponent implements OnInit,AfterViewInit {
-  @Input() name:string ='';
-  @ViewChild('barContainer',{read:ViewContainerRef ,static:true})
- public barContainerView!:ViewContainerRef;
-  @ViewChild('nameDoctor',{static:true})
-  public templateNameDoctor!:TemplateRef<any>;
+export class BreadCrumbBarComponent implements OnInit {
+  name :string ='Home'
+  event$:any
+ @Input() breadCrumbs:IBreadCrumb[]=[]
   constructor() {
    }
 
-  ngOnInit(): void {
-    this.barContainerView.createEmbeddedView(this.templateNameDoctor,
-      {name:this.name,color:'breadcrumb-title'});
-  }
-  ngAfterViewInit():void{
-
-  }
-
+  ngOnInit(): void {}
 }

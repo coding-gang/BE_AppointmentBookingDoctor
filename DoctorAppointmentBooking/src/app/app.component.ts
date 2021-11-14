@@ -1,32 +1,9 @@
-import {AfterViewInit, ChangeDetectorRef, Component, DoCheck, OnInit, Output} from '@angular/core';
-import { Router,NavigationStart, Event as NavigationEvent } from '@angular/router';
-import {AuthService} from "./services/auth.service";
+import { Component, OnInit} from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
 
-     <ng-container *ngIf="isAmin === 'login' ;else container ">
-     <app-login></app-login>
-     </ng-container>
-
-     <ng-template #container >
-       <ng-container *ngIf="isAmin === 'dashboard' ;else home">
-         <app-navbar-admin></app-navbar-admin>
-         <app-sidebar-admin></app-sidebar-admin>
-         <router-outlet></router-outlet>
-       </ng-container>
-     </ng-template>
-
-     <ng-template #home>
-         <app-header [authenticated]="authenticated">
-           <a loginSignup class="nav-link header-login" [routerLink]="['/login']">login / Signup </a>
-           <a logout class="nav-link header-login" [ngStyle]="{ cursor: 'pointer'}" (click)="logout()">logout</a>
-         </app-header>
-         <router-outlet></router-outlet>
-
-         <router-outlet></router-outlet>
-         <app-footer></app-footer>
-       </ng-template>
+       <router-outlet></router-outlet>
 
   <ngx-spinner
   bdColor="rgba(51,51,51,0.8)"
@@ -35,41 +12,13 @@ import {AuthService} from "./services/auth.service";
   type="ball-scale-ripple-multiple">
   <p style="font-size: 20px; color: white">Loading...</p>
 </ngx-spinner>
-              `
+  `
 })
-export class AppComponent implements OnInit,DoCheck {
-  event$:any
-  isAmin:string =''
-  authenticated:boolean=false
-  constructor(private router: Router,private auth:AuthService) {
+export class AppComponent implements OnInit {
+  constructor(){
   }
-
   ngOnInit(){
-    this.isAdminRouteOutlet();
-    this.isAuthenticated();
-  }
- ngDoCheck() {
-   this.isAuthenticated();
   }
 
-  isAdminRouteOutlet(){
-    this.event$ =this.router.events
-    .subscribe(
-      (event: NavigationEvent) => {
-        if(event instanceof NavigationStart) {
-           this.isAmin =event.url.split('/')[1];
-        }
-      });
-  }
-  isAuthenticated(){
-    if(this.auth.Authenticated()){
-      this.authenticated =true
-    } else{
-      this.authenticated =false
-    }
-  }
-  logout(){
-      this.auth.logOut();
-      this.authenticated =false;
-  }
+
 }

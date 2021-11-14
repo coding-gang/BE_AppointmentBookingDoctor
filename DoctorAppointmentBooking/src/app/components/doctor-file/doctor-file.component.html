@@ -1,10 +1,9 @@
+<!--<nav class="navbar navbar-expand-lg header-nav">-->
+<!--</nav>-->
 
-   <ng-container *ngIf="isBar; else NoBar;">
-    <app-bread-crumb-bar [name]="name"></app-bread-crumb-bar>
-   </ng-container>
-
-   <ng-template #NoBar>
-   </ng-template>
+<!-- <ng-container #breadCrumb>-->
+<!-- </ng-container>-->
+<!--<app-bread-crumb-bar></app-bread-crumb-bar>-->
   <div class="content">
     <div class="container">
       <div class="card">
@@ -67,7 +66,7 @@
                 </a>
               </div>
               <div class="clinic-booking">
-                <a class="apt-btn" href="booking.html">Book Appointment</a>
+                <a class="apt-btn" [routerLink]="['/doctor-profile/9/booking']">Book Appointment</a>
               </div>
             </div>
           </div>

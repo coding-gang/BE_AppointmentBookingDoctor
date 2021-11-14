@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {Subject, Subscription} from "rxjs";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -13,9 +13,10 @@ export class LoginComponent implements OnInit  {
   nameOrEmail:string=''
   password:string =''
   data:Subscription =new Subscription()
-  constructor(private authenService:AuthService,private  router:Router) { }
+  constructor(private authenService:AuthService,private router:Router) { }
 
   ngOnInit(): void {
+
   }
     // @ts-ignore
   login(frmLogin:any){

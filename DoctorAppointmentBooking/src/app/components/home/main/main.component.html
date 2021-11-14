@@ -1,0 +1,8 @@
+
+<app-header [authenticated]="authenticated">
+  <a loginSignup class="nav-link header-login" [routerLink]="['/login']">login / Signup </a>
+  <a logout class="nav-link header-login" [ngStyle]="{ cursor: 'pointer'}" (click)="logout()">logout</a>
+</app-header>
+<router-outlet></router-outlet>
+<app-footer></app-footer>
+

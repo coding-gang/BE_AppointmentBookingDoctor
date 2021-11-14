@@ -4,8 +4,13 @@ import { HomesComponent } from './components/home/homes-component/homes-componen
 import { BookingComponent } from './components/booking/booking.component';
 import { DoctorComponent } from './components/doctor/doctor.component';
 import {LoginComponent} from "./components/login/login.component";
+import {MainComponent} from "./components/home/main/main.component";
+import {BreadCrumbBarComponent} from "./components/bread-crumb-bar/bread-crumb-bar.component";
+import {DoctorDetailComponent} from "./components/doctor-detail/doctor-detail.component";
+import {BookingDoctorComponent} from "./components/booking-doctor/booking-doctor.component";
 
 export const appRoutesHome:Routes = [
+
   {
     path:'login',component:LoginComponent
   },
@@ -15,21 +20,26 @@ export const appRoutesHome:Routes = [
     loadChildren: () => import('./components/admins/admins.module').then(m => m.AdminsModule)
   },
   {
-      path:'home',component:HomesComponent,
-  },
-  {
-    path:'doctor-profile',component:DoctorComponent
+    path:'', component:MainComponent,
+    children:[
+      {
+        path:'home',component:HomesComponent,
+      },
+      {
+        path:'doctor-profile',component:DoctorDetailComponent
+      },
 
-  },
-  {
-    path:'doctor-profile/:id',component:DoctorFileComponent,
-  },
-  {
-    path:'booking/:id',component:BookingComponent
-  },
-  {
-    path:'',redirectTo:'home',pathMatch:'full'
-  },
-  { path: '**', redirectTo: 'home'}
+      {
+        path:'doctor-profile/:id',component:DoctorDetailComponent
+      },
+      {
+        path:'doctor-profile/:id/booking',component:BookingDoctorComponent
+      },
+      {
+        path:'',redirectTo:'home',pathMatch:'full'
+      }
+    ]
+  }
+  // { path: '**', redirectTo: 'home'}
 
 ]

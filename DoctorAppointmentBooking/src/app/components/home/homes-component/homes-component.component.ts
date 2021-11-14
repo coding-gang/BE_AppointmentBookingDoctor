@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-homes-component',
@@ -10,11 +11,26 @@ import { Component, OnInit } from '@angular/core';
   `
 })
 export class HomesComponent implements OnInit {
-
-  constructor() { }
+  authenticated:boolean=false
+  constructor(  private auth:AuthService) { }
 
   ngOnInit(): void {
+
+  }
+  isAuthenticated(){
+    if(this.auth.Authenticated()){
+      this.authenticated =true
+    } else{
+      this.authenticated =false
+    }
+  }
+
+  logout(){
+    this.auth.logOut();
+    this.authenticated =false;
   }
 
 }
+
+
 

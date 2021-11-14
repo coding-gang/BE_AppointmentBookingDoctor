@@ -1,5 +1,5 @@
 import { NgModule ,CUSTOM_ELEMENTS_SCHEMA,} from '@angular/core';
-import {APP_BASE_HREF} from '@angular/common';
+import {APP_BASE_HREF, CommonModule} from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -43,7 +43,9 @@ import {FormsModule} from "@angular/forms";
 import  {AuthGuardService} from "./services/auth-guard.service";
 import {AdminGuardService} from "./services/admin-guard.service";
 import  {AuthDashBoardGuardService} from "./services/authDashBoard-guard.service";
-
+import { MainComponent } from './components/home/main/main.component';
+import { DoctorDetailComponent } from './components/doctor-detail/doctor-detail.component';
+import { BookingDoctorComponent } from './components/booking-doctor/booking-doctor.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +63,10 @@ import  {AuthDashBoardGuardService} from "./services/authDashBoard-guard.service
     BreadCrumbBarComponent,
     DoctorComponent,
     EventHoverDirective,
-    LoginComponent
+    LoginComponent,
+    MainComponent,
+    DoctorDetailComponent,
+    BookingDoctorComponent
   ],
   imports: [
     BrowserModule,
@@ -89,13 +94,13 @@ import  {AuthDashBoardGuardService} from "./services/authDashBoard-guard.service
   providers:[
     SpecialitiesService,
     DoctorPopularService,
-    BreadCrumbsService,
     DoctorListResolver,
     AdminService,
     AuthService,
     AuthGuardService,
     AdminGuardService,
     AuthDashBoardGuardService,
+    BreadCrumbsService,
     {
       provide: APP_BASE_HREF,
       useValue:'/'
