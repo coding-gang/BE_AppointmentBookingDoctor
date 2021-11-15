@@ -1,0 +1,33 @@
+
+<div #slotRef [id]="id" class="tab-pane fade" [class]="checkActive() ? 'show active' : ''">
+  <ng-container *ngIf="timings.length <=0 ; else Available">
+    <ng-container>
+      <h4 class="card-title d-flex justify-content-between">
+        <span>Time Slots</span>
+        <a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> Add Slot</a>
+      </h4>
+      <p class="text-muted mb-0">Not Available</p>
+    </ng-container>
+
+  </ng-container>
+
+  <ng-template #Available>
+
+    <h4 class="card-title d-flex justify-content-between">
+      <span>Time Slots</span>
+      <a class="edit-link" data-toggle="modal" href="#edit_time_slot"><i class="fa fa-edit mr-1"></i>Edit</a>
+    </h4>
+    <div class="doc-times">
+
+      <div *ngFor="let item of timings" class="doc-slot-list">
+        {{item.atBegin | myTimePipe}} - {{item.atEnd | myTimePipe }}
+        <a href="javascript:void(0)" class="delete_schedule">
+          <i class="fa fa-times"></i>
+        </a>
+      </div>
+    </div>
+
+  </ng-template>
+
+</div>
+

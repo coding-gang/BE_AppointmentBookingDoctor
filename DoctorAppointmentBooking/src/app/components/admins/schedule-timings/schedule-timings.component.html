@@ -1,0 +1,65 @@
+<app-admin [namePage]="namePage" [nameComponent]="nameComponent" >
+    <div compo class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="profile-box">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card schedule-widget mb-0">
+
+                    <!-- Schedule Header -->
+                    <div class="schedule-header">
+
+                      <!-- Schedule Nav -->
+                      <div class="schedule-nav">
+                        <ul class="nav nav-tabs nav-justified">
+                          <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" style="cursor: pointer"
+                               id="slot_sunday" (click)="activeSlot($event.target)">Sunday</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab"  style="cursor: pointer"
+                               id="slot_monday" (click)="activeSlot($event.target)">Monday</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab"  style="cursor: pointer"
+                               id="slot_tuesday" (click)="activeSlot($event.target)">Tuesday</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab"  style="cursor: pointer"
+                               id="slot_wednesday" (click)="activeSlot($event.target)">Wednesday</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab"  style="cursor: pointer"
+                               id="slot_thursday" (click)="activeSlot($event.target)">Thursday</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab"  style="cursor: pointer"
+                               id="slot_friday" (click)="activeSlot($event.target)">Friday</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab"  style="cursor: pointer"
+                               id="slot_saturday" (click)="activeSlot($event.target)">Saturday</a>
+                          </li>
+                        </ul>
+                      </div>
+
+                    </div>
+                    <div class="tab-content schedule-cont">
+                      <ng-container *ngIf="active">
+                        <app-schedule-slot [timings]="timings" [id]="slotName" [active]="active"></app-schedule-slot>
+                      </ng-container>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+</app-admin>

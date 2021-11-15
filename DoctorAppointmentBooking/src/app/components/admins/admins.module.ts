@@ -23,6 +23,9 @@ import { AddAdminComponent } from './admin/add-admin/add-admin.component';
 import  {AuthGuardService} from "../../services/auth-guard.service";
 import  {AdminGuardService} from "../../services/admin-guard.service";
 import  {AuthDashBoardGuardService} from "../../services/authDashBoard-guard.service";
+import { ScheduleTimingsComponent } from './schedule-timings/schedule-timings.component';
+import { ScheduleSlotComponent } from './schedule-timings/schedule-slot/schedule-slot.component';
+import {MyTimePipe} from "../../common/my-time-pipe";
 
 const routes: Routes =[
 
@@ -61,6 +64,13 @@ const routes: Routes =[
         },
         canActivateChild:[AuthDashBoardGuardService]
       },
+       {
+         path:'scheduleTimings',component:ScheduleTimingsComponent,
+         data:{
+           breadcrumb:"scheduleTimings"
+         },
+         canActivateChild:[AuthDashBoardGuardService]
+       },
       {
         path:'admins',  canActivateChild:[AuthDashBoardGuardService],//canActivate:[AdminGuardService],
         children:[
@@ -109,7 +119,10 @@ const routes: Routes =[
     ListAdminComponent,
     ViewAdminComponent,
     PasswordDirective,
-    AddAdminComponent
+    AddAdminComponent,
+    ScheduleTimingsComponent,
+    ScheduleSlotComponent,
+    MyTimePipe
   ],
   imports: [
     CommonModule,
@@ -132,7 +145,8 @@ const routes: Routes =[
     ListAdminComponent,
     ViewAdminComponent,
     PasswordDirective,
-    AddAdminComponent
+    AddAdminComponent,
+    ScheduleTimingsComponent
   ],
 })
 export class AdminsModule { }

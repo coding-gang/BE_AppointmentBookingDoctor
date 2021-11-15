@@ -22,7 +22,6 @@ export class AuthDashBoardGuardService implements CanLoad ,CanActivate,CanActiva
   }
   canLoad(route: Route, segments: UrlSegment[]):Observable<boolean> {
     const isLogin = this.authenService.isLogin();
-    console.log("check")
     if(isLogin){
       const isActivate =  this.authenService.isExpiredToken();
       if(isActivate) {
