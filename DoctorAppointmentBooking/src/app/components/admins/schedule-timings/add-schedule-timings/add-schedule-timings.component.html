@@ -1,0 +1,32 @@
+<div #modalchild class="modal fade custom-modal" [ngClass]="isOpenModal ? 'show' : ''" id="add_time_slot"
+     style="padding-right: 12px;" [ngStyle]="{'display': isOpenModal ? 'block': 'none'}">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Time Slots</h5>
+        <button type="button" (click)="closeModal()"  class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #formAdd ="ngForm" (ngSubmit)="addSchedule(formAdd.value)">
+          <div class="hours-info">
+            <div class="row form-row hours-cont">
+              <div class="col-12 col-md-10">
+                <div class="row form-row">
+                  <app-begin-end-timings [BeginTimings]="BeginTimings" [EndTimings]="EndTimings"></app-begin-end-timings>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="add-more mb-3">
+            <a href="javascript:void(0);" class="add-hours"><i class="fa fa-plus-circle"></i> Add More</a>
+          </div>
+          <div class="submit-section text-center">
+            <button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,6 +10,9 @@ import {
   OnDestroy
 } from '@angular/core';
 import {ScheduleTimingModel} from "../../../../interface/IScheduleTimings/ScheduleTiming.model";
+import {IMessage} from "../../../../interface/Imessage.model";
+import {AddSpecialityComponent} from "../../specialities/add-speciality/add-speciality.component";
+import {AddScheduleTimingsComponent} from "../add-schedule-timings/add-schedule-timings.component";
 
 @Component({
   selector: 'app-schedule-slot',
@@ -21,6 +24,7 @@ export class ScheduleSlotComponent implements OnInit,AfterViewInit ,OnChanges,On
   @Input() timings:ScheduleTimingModel[]=[]
   @Input() id:any
   @ViewChild('slotRef')slotRef!:ElementRef
+  @ViewChild('modalAdd')modalAdd!:AddScheduleTimingsComponent
   idSlot:any;
   constructor() { }
 
@@ -38,5 +42,12 @@ export class ScheduleSlotComponent implements OnInit,AfterViewInit ,OnChanges,On
   }
   ngOnDestroy() {
     this.active =false;
+  }
+
+  eventFromModal($event:IMessage){
+    console.log($event)
+  }
+  openModal(){
+     this.modalAdd.openModal();
   }
 }

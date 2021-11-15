@@ -26,6 +26,8 @@ import  {AuthDashBoardGuardService} from "../../services/authDashBoard-guard.ser
 import { ScheduleTimingsComponent } from './schedule-timings/schedule-timings.component';
 import { ScheduleSlotComponent } from './schedule-timings/schedule-slot/schedule-slot.component';
 import {MyTimePipe} from "../../common/my-time-pipe";
+import { AddScheduleTimingsComponent } from './schedule-timings/add-schedule-timings/add-schedule-timings.component';
+import { BeginEndTimingsComponent } from './schedule-timings/begin-end-timings/begin-end-timings.component';
 
 const routes: Routes =[
 
@@ -122,7 +124,9 @@ const routes: Routes =[
     AddAdminComponent,
     ScheduleTimingsComponent,
     ScheduleSlotComponent,
-    MyTimePipe
+    MyTimePipe,
+    AddScheduleTimingsComponent,
+    BeginEndTimingsComponent
   ],
   imports: [
     CommonModule,
