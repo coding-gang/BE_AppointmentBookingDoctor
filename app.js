@@ -1,6 +1,5 @@
 const express = require('express');
 const morgan = require('morgan');
-const rateLimit =require('express-rate-limit'); 
 const app = express();
 const doctorRouter = require('./routes/doctorRoutes');
 const passport =require('passport');

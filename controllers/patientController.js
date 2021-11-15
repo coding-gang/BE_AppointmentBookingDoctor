@@ -23,22 +23,21 @@ exports.getById = (req,res)=>{
         res.status(200).json({doctors});
     })
 }
-
 exports.Add = async (req,res)=>{
-       const sql = "call Add_Doctor_Proc(?,?,?,?,?,?,?,?,?,?)";
-       const doctor =  req.body;
-       doctor.DOB = doctor.DOB.split("/").reverse().join("-");
-       console.log(doctor);
-       doctor.gender = doctor.gender ===1 ? true : false;
+       const sql = "call Add_Patient_Proc(?,?,?,?,?,?,?)";
+       const patient =  req.body;
+       console.log(patient);
+    //    patient.gender = patient.gender ===1 ? true : false;
        const params = [];
-       const encrypt = new encryptPass(doctor.password);
+       const encrypt = new encryptPass(patient.password);
         const hash = await encrypt.encryptFunc();
-        doctor.password = hash;
-       Object.values(doctor).forEach(el => params.push(el));
-       connectDb.query(sql,params,(error,results,fields)=>{
+        patient.password = hash;
+       Object.values(patient).forEach(el => params.push(el));
+       console.log(params);
+       connectDb.query(sql,params,(error,results)=>{
         if (error) throw error;
-       const doctor =results[0][0];
-        res.status(201).json({status:'success',doctor});
+       const dataPatient =results[0][0];
+        res.status(201).json({status:'success',dataPatient});
        })    
 }
 
@@ -121,9 +120,9 @@ exports.checkExistPass = async (req,res,next) => {
 
 
 exports.checkExistUserName = (req,res,next) =>{
-    const mail = req.body.mail;
+    const mail = req.body.username;
     console.log(mail)
-    const sql = "select isExist_UsernameFromDoctor_Func(?) as isExist";
+    const sql = "select isExist_UsernameFromPatient_Func(?) as isExist";
     connectDb.query(sql,mail,(err, result) =>{
         if(err) throw err;
         ({isExist,...rest} = result[0]);
