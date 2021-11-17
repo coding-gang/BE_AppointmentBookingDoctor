@@ -2,7 +2,8 @@ const connectDb = require('../utils/connectionDB');
 const encryptPass = require('../utils/encrypt');
 const decryptPass = require('../utils/decrypt');
 const appError =require('../utils/appError');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+
 exports.getAll = (req,res) =>{
     let sql = "select * from patientView";
     connectDb.query(sql,(error, results) =>{
@@ -42,32 +43,29 @@ exports.Add = async (req,res)=>{
 }
 
  exports.update = (req,res)=>{
-    const id =req.params.doctorId
+    const id =req.params.patientId;
     const params = [id];
-    let doctor={};
-    doctor =req.body;
-    doctor.dob = doctor.dob.split("/").reverse().join("-");
-    doctor.gender = doctor.gender === 1 ? true : false;
-    console.log(doctor);
-    Object.values(doctor).forEach(val => params.push(val));
-    let sql ="call Update_Doctor_Proc(?,?,?,?,?,?,?,?,?)";
-    connectDb.query(sql,params,(error, results, fields) =>{
+  const  patient =req.body;
+    Object.values(patient).forEach(val => params.push(val));
+    let sql ="call Update_Patient_Proc(?,?,?,?,?)";
+    connectDb.query(sql,params,(error, result) =>{
         if (error) throw error;
-        const message =results[0][0].result;
-         console.log(message)
-        res.status(200).json({status:'success',message:message});
+        const patientUpdated = result[0][0];
+        console.log(result);
+        res.status(200).json({status:'success',message:"Cập nhật dữ liệu thành công", patientUpdated});
     })
 }
 
-exports.delete = (req,res)=>{
-    const id =req.params.doctorId;
-     let sql =  "call Del_Doctor_Proc(?)";
-     connectDb.query(sql,id,(error, results, fields) =>{
-        if (error) throw error;
-        const message =results[0][0].result;
-        res.status(200).json({status:'success',message:message});
+exports.delete = (req,res) =>{
+    const param = req.params.patientId;
+    console.log(param);
+    const sql = "call Del_Patient_Proc(?)";
+    connectDb.query(sql,param,(error)=>{
+        if(error) throw error;
+        res.status(200).json({status:"success",message:"Xoá dữ liệu thành công"});
     })
 }
+
 
 exports.updatePass = async (req,res) => {
     const id = req.params.doctorId;
@@ -105,9 +103,7 @@ exports.checkExistPass = async (req,res,next) => {
     }  
 
     }
-    
 }
-   
    const decryptFromDB = (id) =>{
        return new Promise((resolve,reject)=>{
         const sql = "select getPassWord_Func(?) as result";
@@ -117,7 +113,6 @@ exports.checkExistPass = async (req,res,next) => {
         })
    })
 }
-
 
 exports.checkExistUserName = (req,res,next) =>{
     const mail = req.body.username;
@@ -166,7 +161,20 @@ exports.login= async(req,res)=>{
                  const appErr = new appError(404,`Email khong ton tai: ${email}`);
                  res.status(appErr.statusCode).json(appErr.resError().error);
                }
-             })
+            })
+}
+
+
+exports.checkExistPatient = (req, res, next)  =>{
+    const param = req.params.patientId;
+    const sql = "select isExist_AppointmentFromPatient_Func(?) as isExistPatient";
+    connectDb.query(sql,param,(error,result)=>{
+        if(error) throw error;
+        [{isExistPatient}] = [...result]
+        if(isExistPatient===0) next();
+        else{
+             const err =  new appError(409,"Không thể xoá bệnh nhân này!");
+            res.status(err.statusCode).json(err.resError().error);
         }
-
-
+    })
+}

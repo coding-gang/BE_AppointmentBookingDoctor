@@ -54,9 +54,7 @@ exports.Add = async (req,res)=>{
     let sql ="call Update_Doctor_Proc(?,?,?,?,?,?,?,?,?)";
     connectDb.query(sql,params,(error, results, fields) =>{
         if (error) throw error;
-        const message =results[0][0].result;
-         console.log(message)
-        res.status(200).json({status:'success',message:message});
+        res.status(200).json({status:'success',message:"Cập nhật dữ liệu thành công"});
     })
 }
 
