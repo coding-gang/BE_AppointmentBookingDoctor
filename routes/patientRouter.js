@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const patientController = require('../controllers/patientController');
 router.route('/patients').get(patientController.getAll);
-// router.route('/doctor/:doctorId').get(doctorController.getById);
+router.route('/patient/:patientId').get(patientController.getById);
 router.route('/patient').post(patientController.checkExistUserName, patientController.Add);
 router.route('/patient/:patientId').put(patientController.update)
 .delete(patientController.checkExistPatient,patientController.delete);

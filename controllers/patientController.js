@@ -14,14 +14,14 @@ exports.getAll = (req,res) =>{
 }
 
 exports.getById = (req,res)=>{
-    console.log(req.query);
-    const id =req.params.doctorId;
-     let sql="call getDetailDoctotById_proc(?)";
-     connectDb.query(sql,id,(error, results, fields) =>{
+
+    const id =req.params.patientId;
+     let sql="select * from patientView where patientId=(?)";
+     connectDb.query(sql,id,(error, results) =>{
         if (error) throw error;
-        const doctors =results[0];   
-        console.log(doctors)    
-        res.status(200).json({doctors});
+        console.log(results) 
+        const patient =results[0];   
+        res.status(200).json({patient});
     })
 }
 exports.Add = async (req,res)=>{

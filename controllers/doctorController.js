@@ -2,7 +2,7 @@ const connectDb = require('../utils/connectionDB');
 const encryptPass = require('../utils/encrypt');
 const decryptPass = require('../utils/decrypt');
 const appError =require('../utils/appError');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 exports.getAll = (req,res,next) =>{
     let sql = "select * from ViewDoctor";
     connectDb.query(sql,(error, results, fields) =>{
