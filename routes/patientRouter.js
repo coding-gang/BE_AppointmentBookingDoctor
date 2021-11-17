@@ -6,7 +6,7 @@ router.route('/patients').get(patientController.getAll);
 router.route('/patient').post(patientController.checkExistUserName, patientController.Add);
 router.route('/patient/:patientId').put(patientController.update)
 .delete(patientController.checkExistPatient,patientController.delete);
-// router.route('/doctor/update-password/:doctorId').put(doctorController.checkExistPass,doctorController.updatePass);
-// router.route('/doctor/login').post(doctorController.login);
+router.route('/patient/update-password/:patientId').put(patientController.checkExistPass,patientController.updatePass);
+router.route('/patient/login').post(patientController.login);
 
 module.exports = router;

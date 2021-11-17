@@ -38,7 +38,7 @@ exports.Add = async (req,res)=>{
        connectDb.query(sql,params,(error,results)=>{
         if (error) throw error;
        const dataPatient =results[0][0];
-        res.status(201).json({status:'success',dataPatient});
+        res.status(201).json({status:'success',messafe:"Thêm bệnh nhân thành công!",dataPatient});
        })    
 }
 
@@ -68,12 +68,12 @@ exports.delete = (req,res) =>{
 
 
 exports.updatePass = async (req,res) => {
-    const id = req.params.doctorId;
+    const id = req.params.patientId;
     const newpass = req.body.newPass;
     
     const encrypt = new encryptPass(newpass);
     const newPassEncrypth= await encrypt.encryptFunc();
-    const sql = "call Update_Password_Doctor_Proc(?,?)";
+    const sql = "call Update_Password_Patient_Proc(?,?)";
     connectDb.query(sql,[newPassEncrypth,id],(error)=>{
         if(error) throw error;
         res.status(200).json({status:"success",message:"Cập nhật mật khẩu thành công"});
@@ -81,7 +81,7 @@ exports.updatePass = async (req,res) => {
 }
 
 exports.checkExistPass = async (req,res,next) => {
-    const id = req.params.doctorId;
+    const id = req.params.patientId;
     const newPass = req.body.newPass;
     const oldPass = req.body.oldPass;
     if(oldPass === newPass) {
@@ -106,7 +106,7 @@ exports.checkExistPass = async (req,res,next) => {
 }
    const decryptFromDB = (id) =>{
        return new Promise((resolve,reject)=>{
-        const sql = "select getPassWord_Func(?) as result";
+        const sql = "select getPassWord_Patient_Func(?) as result";
    connectDb.query(sql,id,(err,rs)=>{
     if(err) throw err; 
            resolve(rs[0].result);
@@ -130,35 +130,32 @@ exports.checkExistUserName = (req,res,next) =>{
 }
 
 exports.login= async(req,res)=>{
-                const email = req.body.email;
-                const passClient = req.body.password;
-                const sql ="call getDetailDoctotByEmail_proc(?)";
-            connectDb.query(sql,email,async(err,result)=>{
+                const username = req.body.username;
+                const passClient = req.body.pass;
+                const sql ="call getDetailPatientByUsername_proc(?)";
+            connectDb.query(sql,username,async(err,result)=>{
                 if(err) throw err;
-               if(result.length > 0){
-                   [{doctorId,password,nameRole,firstName,lastName}] =[...result[0]];
+                console.log(result);
+               if(result[0].length > 0){
+                   [{patientId, userName, firstname,lastname,nameRole, password}] =[...result[0]];
                 const decrypt = new decryptPass(passClient,password);
-                const isDoctor =  await decrypt.decryptFunc();
-                const doctor = {
-                    doctorId,
-                    firstName,
-                    lastName,
-                    email,
-                    nameRole
+                const isPatient =  await decrypt.decryptFunc();
+                const patient = {
+                  patientId, userName, firstname,lastname,nameRole, password
                     }
-                   if(isDoctor){
+                   if(isPatient){
                      const privateKey = process.env.KEY_SECRET;
                      const audience = process.env.AUDIENCE;
                      const issuer = process.env.ISSUER;
-                     const token = await jwt.sign(doctor,privateKey,{audience,issuer, expiresIn:"60s" });
+                     const token = await jwt.sign(patient,privateKey,{audience,issuer, expiresIn:"60s" });
                           res.status(200)
-                              .json({status:"success",message:"Dang nhap thanh cong",token})
+                              .json({status:"success",message:"Đăng nhập thành công",token})
                    }else{
-                     const appErr = new appError(404,`Password khong dung`);
+                     const appErr = new appError(404,`Password không đúng`);
                      res.status(appErr.statusCode).json(appErr.resError().error);
                    }
                }else{
-                 const appErr = new appError(404,`Email khong ton tai: ${email}`);
+                 const appErr = new appError(404,`Tên người dùng: ${username} không tồn tại`);
                  res.status(appErr.statusCode).json(appErr.resError().error);
                }
             })
