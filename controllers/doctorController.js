@@ -1,5 +1,6 @@
 const connectDb = require('../utils/connectionDB');
 const encryptPass = require('../utils/encrypt');
+
 const decryptPass = require('../utils/decrypt')
 const appError =require('../utils/appError');
 const jwt = require('jsonwebtoken');
@@ -39,6 +40,7 @@ exports.Add = async (req,res)=>{
        connectDb.query(sql,params,(error,results,fields)=>{
         if (error) throw error;
        const doctor =results[0][0];
+
         res.status(201).json({status:'success',message:"Them doctor thanh cong",doctor});
        })    
 }
@@ -55,9 +57,7 @@ exports.Add = async (req,res)=>{
     let sql ="call Update_Doctor_Proc(?,?,?,?,?,?,?,?,?)";
     connectDb.query(sql,params,(error, results, fields) =>{
         if (error) throw error;
-        const message =results[0][0].result;
-         console.log(message)
-        res.status(200).json({status:'success',message:message});
+        res.status(200).json({status:'success',message:"Cập nhật dữ liệu thành công"});
     })
 }
 
@@ -89,19 +89,25 @@ exports.checkExistPass = async (req,res,next) => {
     const oldPass = req.body.oldPass;
     if(oldPass === newPass) {
         const appErr = new appError(409,"Mật khẩu mới trùng mật cũ");
-    res.status(appErr.statusCode).json(appErr.resError().error);
-    }else{
-        const passDB = await decryptFromDB(id);
-        const compareSync = new decryptPass(oldPass,passDB);
-         const isPassword = await compareSync.decryptFunc();
-        if(isPassword){
-            next();
-        }
-       else{
-            const appErr = new appError(409,"Nhập sai mật khẩu");
-            res.status(appErr.statusCode).json(appErr.resError().error);
-        }  
+    res.status(appErr.statusCode).send(appErr.resError().error);
     }
+    else {
+        const passDB = await decryptFromDB(id);
+      console.log(passDB.length);
+    const compareSync = new decryptPass(oldPass,passDB);
+    console.log(compareSync.encryptText,compareSync.hash);
+     const isPassword = await compareSync.decryptFunc();
+   
+    if(isPassword){
+        next();
+    }else{
+        const appErr = new appError(409,"Nhập sai mật khẩu");
+        res.status(appErr.statusCode).send(appErr.resError().error);
+    }  
+
+    }
+    
+
 }
    
    const decryptFromDB = (id) =>{
@@ -114,8 +120,10 @@ exports.checkExistPass = async (req,res,next) => {
    })
 }
 
+
 exports.checkExistUserName = (req,res,next) =>{
     const mail = req.body.mail;
+
     const sql = "select isExist_UsernameFromDoctor_Func(?) as isExist";
     connectDb.query(sql,mail,(err, result) =>{
         if(err) throw err;
@@ -123,7 +131,8 @@ exports.checkExistUserName = (req,res,next) =>{
         if(isExist === 0) next();
         else {
              const appErr = new appError(409,`Đã tồn tại người dùng: ${mail}`);
-            res.status(appErr.statusCode).json(appErr.resError().error);
+            res.status(appErr.statusCode).send(appErr.resError().error);
+
         }
     })
 }

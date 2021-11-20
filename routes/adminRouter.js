@@ -11,4 +11,5 @@ router.route('/admin/new').post(adminController.checkUpdateAdminValid,adminContr
 router.route('/admin/:adminId').delete(adminController.checkExistAdmin,adminController.deleteAdmin);
 router.route('/admin/update-password/:adminId').put(adminController.checkExistPass,adminController.updatePass);
 router.route('/admin/login').post(adminController.login);
+
 module.exports = router;

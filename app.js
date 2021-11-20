@@ -1,16 +1,18 @@
 const express = require('express');
 const morgan = require('morgan');
-const rateLimit =require('express-rate-limit'); 
 const app = express();
 const doctorRouter = require('./routes/doctorRoutes');
+const passport =require('passport');
 const cors = require('cors');
 const specialitieRouter = require('./routes/specialitiesRouters');
 const adminRouter = require('./routes/adminRouter');
-const scheduleTiming = require('./routes/scheduleTimingRouters');
-const passport =require('passport');
-require('./passport')(passport)
+const scheduleTiming = require('./routes/scheduleTimingRouters')
+const patientRouter = require('./routes/patientRouter');
 app.use(cors());
+require('./passport')(passport)
 app.use(passport.initialize())
+
+
 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
@@ -33,12 +35,12 @@ app.use(express.urlencoded({
 //app.use('/api',limit);
 
 //Router
-app.use('/api/v1',doctorRouter);
-
 
 //Router
 app.use('/api/v1',doctorRouter);
 app.use('/api/v1',specialitieRouter);
 app.use('/api/v1',adminRouter);
-app.use('/api/v1',scheduleTiming)
+app.use('/api/v1',scheduleTiming);
+app.use('/api/v1',patientRouter);
+
 module.exports =app;

@@ -3,7 +3,6 @@ const express = require("express");
 const router = express.Router();
 
 const scheduleTiming = require('../controllers/scheduleTimingController');
-
   router.route('/schedules').get(scheduleTiming.getAll);
   router.route('/schedule/:id')
         .get(scheduleTiming.getbyId)

@@ -1,8 +1,6 @@
 const connectDb = require('../utils/connectionDB');
 const appError = require('../utils/appError');
 
-
-
 exports.getAll =(req,res)=>{
     const sql ='select * from scheduleTimings';
     connectDb.query(sql,(err,scheduleTimings) =>{
@@ -144,9 +142,7 @@ exports.checkTiming = (req,res,next) =>{
 }
 
 exports.checkExistTiming = (req,res,next) =>{
-
   const sql = "select checkExistTiming(?,?,?,?) as result";
-
   ({dayAdd,startBegin,endTime,doctorId} ={...req.body});
   const params = [dayAdd,startBegin,endTime,doctorId];
   connectDb.query(sql,params,(err,rs)=>{
