@@ -82,7 +82,6 @@ exports.checkUpdateAdminValid= (req,res,next) => {
         if(result[0].isExistUserName === 0) next();
         else{
             const err =  new appError(409,"Kiểm ta lại dữ liệu!");
-
             res.status(err.statusCode).json(err.resError().error);
         }
     })
