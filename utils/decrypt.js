@@ -10,7 +10,6 @@ const bcrypt = require('bcrypt');
             if(err) throw err;
             return result;
         })
-      
         return textDecrypt;
     }
 }

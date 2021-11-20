@@ -39,7 +39,6 @@ exports.update = (req,res) => {
 
       connectDb.query(sql,params,(error,result)=>{
           if(error) throw error;
-
           res.status(200).json({status:'success',message:"Cập nhật thành công"});
       })
 }
@@ -60,6 +59,7 @@ exports.insert = async (req,res) =>{
    })
 
 }
+
 
 exports.deleteAdmin = (req,res) =>{
     const param = req.params.adminId;
@@ -82,6 +82,7 @@ exports.checkUpdateAdminValid= (req,res,next) => {
         if(result[0].isExistUserName === 0) next();
         else{
             const err =  new appError(409,"Kiểm ta lại dữ liệu!");
+
             res.status(err.statusCode).json(err.resError().error);
         }
     })
@@ -102,7 +103,7 @@ exports.checkExistAdmin = (req, res, next)  =>{
 }
 
 exports.updatePass = async (req,res) => {
-    const id = req.params.doctorId;
+    const id = req.params.adminId;
     const newpass = req.body.newPass;
     
     const encrypt = new encryptPass(newpass);
@@ -121,6 +122,7 @@ exports.checkExistPass = async (req,res,next) => {
     if(oldPass === newPass) {
         const appErr = new appError(409,"Mật khẩu mới trùng mật khẩu cũ");
     res.status(appErr.statusCode).send(appErr.resError().error);
+
     }
     else {
         const passDB = await decryptFromDB(id);
@@ -133,60 +135,49 @@ exports.checkExistPass = async (req,res,next) => {
         next();
     }else{
         const appErr = new appError(409,"Nhập sai mật khẩu");
-        res.status(appErr.statusCode).send(appErr.resError().error);
+        res.status(appErr.statusCode).json(appErr.resError().error);
     }  
-
     }
     
 }
-   
-   const decryptFromDB = (id) =>{
-       return new Promise((resolve,reject)=>{
-        const sql = "select getPassWord_Admin_Func(?) as result";
-   connectDb.query(sql,id,(err,rs)=>{
-    if(err) throw err; 
-           resolve(rs[0].result);
-        })
-   })
+
+const decryptFromDB = (id) =>{
+    return new Promise((resolve,reject)=>{
+     const sql = "select getPassWord_Admin_Func(?) as result";
+connectDb.query(sql,id,(err,rs)=>{
+ if(err) throw err; 
+        resolve(rs[0].result);
+     })
+})
 }
 
 exports.login= async(req,res)=>{
-
-                const userN = req.body.username;
-                const passClient = req.body.pass;
-                const sql ="call getDetailAdminByUsername_proc(?)";
-            connectDb.query(sql,userN,async(err,result)=>{
-                if(err) throw err;
-               if(result[0].length > 0){
-                   console.log(result[0]);
-                   [{adminId, userName, nameRole,password}] =[...result[0]];
-                const decrypt = new decryptPass(passClient,password);
-
-                const isAdmin =  await decrypt.decryptFunc();
-                const admin = {
-                    adminId, userName, nameRole
-                    }
-                   if(isAdmin){
-                     const privateKey = process.env.KEY_SECRET;
-                     const audience = process.env.AUDIENCE;
-                     const issuer = process.env.ISSUER;
-                     const token = await jwt.sign(admin,privateKey,{audience,issuer, expiresIn:"120s" });
-                          res.status(200)
-                              .json({status:"success",message:"Dang nhap thanh cong",token})
-                   }else{
-                     const appErr = new appError(404,`Password khong dung`);
-                     res.status(appErr.statusCode).json(appErr.resError().error);
-                   }
-               }else{
-                 const appErr = new appError(404,`Email khong ton tai: ${email}`);
-                 res.status(appErr.statusCode).json(appErr.resError().error);
-               }
-             })
-        }
-  
-
-
-
-
-
-
+             const userN = req.body.nameOrEmail;
+             const passClient = req.body.password;
+             const sql ="call getDetailAdminByUsername_proc(?)";
+         connectDb.query(sql,userN,async(err,result)=>{
+             if(err) throw err;
+            if(result[0].length > 0){
+                [{adminId, userName, nameRole,password}] =[...result[0]];
+             const decrypt = new decryptPass(passClient,password);
+             const isAdmin =  await decrypt.decryptFunc();
+             const admin = {
+                 adminId, userName, nameRole
+                 }
+                if(isAdmin){
+                  const privateKey = process.env.KEY_SECRET;
+                  const audience = process.env.AUDIENCE;
+                  const issuer = process.env.ISSUER;
+                  const token = await jwt.sign(admin,privateKey,{audience,issuer, expiresIn:"120s" });
+                       res.status(200)
+                           .json({status:"success",message:"Chào mừng bạn quay lại!",token})
+                }else{
+                  const appErr = new appError(404,`Password không đúng`);
+                  res.status(appErr.statusCode).json(appErr.resError().error);
+                }
+            }else{
+              const appErr = new appError(404,`Username không tồn tại: ${userN}`);
+              res.status(appErr.statusCode).json(appErr.resError().error);
+            }
+          })
+     }

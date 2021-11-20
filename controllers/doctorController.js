@@ -1,8 +1,10 @@
 const connectDb = require('../utils/connectionDB');
 const encryptPass = require('../utils/encrypt');
-const decryptPass = require('../utils/decrypt');
+
+const decryptPass = require('../utils/decrypt')
 const appError =require('../utils/appError');
 const jwt = require('jsonwebtoken');
+//require('dotenv').config();
 exports.getAll = (req,res,next) =>{
     let sql = "select * from ViewDoctor";
     connectDb.query(sql,(error, results, fields) =>{
@@ -38,7 +40,8 @@ exports.Add = async (req,res)=>{
        connectDb.query(sql,params,(error,results,fields)=>{
         if (error) throw error;
        const doctor =results[0][0];
-        res.status(201).json({status:'success',doctor});
+
+        res.status(201).json({status:'success',message:"Them doctor thanh cong",doctor});
        })    
 }
 
@@ -71,7 +74,6 @@ exports.delete = (req,res)=>{
 exports.updatePass = async (req,res) => {
     const id = req.params.doctorId;
     const newpass = req.body.newPass;
-    
     const encrypt = new encryptPass(newpass);
     const newPassEncrypth= await encrypt.encryptFunc();
     const sql = "call Update_Password_Doctor_Proc(?,?)";
@@ -105,6 +107,7 @@ exports.checkExistPass = async (req,res,next) => {
 
     }
     
+
 }
    
    const decryptFromDB = (id) =>{
@@ -120,7 +123,7 @@ exports.checkExistPass = async (req,res,next) => {
 
 exports.checkExistUserName = (req,res,next) =>{
     const mail = req.body.mail;
-    console.log(mail)
+
     const sql = "select isExist_UsernameFromDoctor_Func(?) as isExist";
     connectDb.query(sql,mail,(err, result) =>{
         if(err) throw err;
@@ -129,17 +132,18 @@ exports.checkExistUserName = (req,res,next) =>{
         else {
              const appErr = new appError(409,`Đã tồn tại người dùng: ${mail}`);
             res.status(appErr.statusCode).send(appErr.resError().error);
+
         }
     })
 }
 
 exports.login= async(req,res)=>{
-                const email = req.body.email;
+                const email = req.body.nameOrEmail;
                 const passClient = req.body.password;
                 const sql ="call getDetailDoctotByEmail_proc(?)";
-            connectDb.query(sql,email,async(err,result)=>{
+            connectDb.query(sql,email,async (err,result)=>{
                 if(err) throw err;
-               if(result.length > 0){
+               if(result[0].length >0){
                    [{doctorId,password,nameRole,firstName,lastName}] =[...result[0]];
                 const decrypt = new decryptPass(passClient,password);
                 const isDoctor =  await decrypt.decryptFunc();
@@ -154,18 +158,19 @@ exports.login= async(req,res)=>{
                      const privateKey = process.env.KEY_SECRET;
                      const audience = process.env.AUDIENCE;
                      const issuer = process.env.ISSUER;
-                     const token = await jwt.sign(doctor,privateKey,{audience,issuer, expiresIn:"60s" });
+                     const token = await jwt.sign(doctor,privateKey,{audience,issuer, expiresIn:"1h" });
                           res.status(200)
-                              .json({status:"success",message:"Dang nhap thanh cong",token})
+                              .json({status:"success",message:"Chào mừng bạn quay lại!",token})
                    }else{
-                     const appErr = new appError(404,`Password khong dung`);
+                     const appErr = new appError(404,`Password không đúng`);
                      res.status(appErr.statusCode).json(appErr.resError().error);
                    }
                }else{
-                 const appErr = new appError(404,`Email khong ton tai: ${email}`);
+                 const appErr = new appError(404,`Email không tồn tại: ${email}`);
                  res.status(appErr.statusCode).json(appErr.resError().error);
                }
              })
         }
-
-
+    exports.getSheduleTimings =(req,res)=>{
+         res.status(200).json({status:"success",message:"ok"})
+    }

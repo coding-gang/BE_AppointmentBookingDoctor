@@ -13,6 +13,7 @@ require('./passport')(passport)
 app.use(passport.initialize())
 
 
+
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
   }
@@ -41,4 +42,5 @@ app.use('/api/v1',specialitieRouter);
 app.use('/api/v1',adminRouter);
 app.use('/api/v1',scheduleTiming);
 app.use('/api/v1',patientRouter);
+
 module.exports =app;
