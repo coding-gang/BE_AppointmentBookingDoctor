@@ -7,6 +7,7 @@ const cors = require('cors');
 const specialitieRouter = require('./routes/specialitiesRouters');
 const adminRouter = require('./routes/adminRouter');
 const scheduleTiming = require('./routes/scheduleTimingRouters');
+const patientRouter = require('./routes/patientRouter');
 const passport =require('passport');
 require('./passport')(passport)
 app.use(cors());
@@ -40,5 +41,6 @@ app.use('/api/v1',doctorRouter);
 app.use('/api/v1',doctorRouter);
 app.use('/api/v1',specialitieRouter);
 app.use('/api/v1',adminRouter);
-app.use('/api/v1',scheduleTiming)
+app.use('/api/v1',scheduleTiming);
+app.use('/api/v1',patientRouter);
 module.exports =app;

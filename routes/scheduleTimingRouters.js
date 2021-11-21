@@ -10,5 +10,6 @@ const scheduleTiming = require('../controllers/scheduleTimingController');
         .post(scheduleTiming.checkTiming,scheduleTiming.checkExistTiming ,scheduleTiming.Add)
         .put(scheduleTiming.checkTiming,scheduleTiming.checkExistTiming,scheduleTiming.update)
         .delete(scheduleTiming.delete);
-    router.route('/schedule/:doctorId/get/:id').get(scheduleTiming.getScheduleById);
+  router.route('/schedule/:doctorId/get/:id').get(scheduleTiming.getScheduleById);
+  router.route('/scheduleWeek/:id').get(scheduleTiming.getScheduleInWeekByIdDoctor)
 module.exports = router;

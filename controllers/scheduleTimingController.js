@@ -11,61 +11,77 @@ exports.getAll =(req,res)=>{
          res.status(200).json({status:'success',message:'ok',scheduleTimings})
     })
 }
-
+//select * from scheduleTimings where doctorId =(?)
 exports.getbyId =(req,res)=>{
     const id = req.params.id;
-    const sql ='select * from scheduleTimings where doctorId =(?)';
+    const sql ='call getScheduleTimingsInWeekByDoctorId(?)';
     connectDb.query(sql,id,(err,scheduleTimings) =>{
         if(err) throw err;
-        const dataTimingsByDate = {
-            Sun:[],
-            Monday : [],
-            Thuesday :[],
-            Wenday :[],
-            Thursday :[],
-            Friday :[],
-            Sat :[]
-       }
-       scheduleTimings.forEach(val =>{
-         const dates = new Date(val.bookDate).getDay();
-         switch(dates){
-           case 0:
-             let sun ={... val};
-             dataTimingsByDate.sun.push(sun)
-             break;
-           case 1:
-             let monday ={... val};
-             dataTimingsByDate.Monday.push(monday)
-             break;
-           case 2:
-             let thuesday ={... val};
-           dataTimingsByDate.Thuesday.push(thuesday)
-             break;
-           case 3:
-             let wenday = {... val};
-             dataTimingsByDate.Wenday.push(wenday)
-             break;
-           case 4:
-             let thu ={... val};
-             dataTimingsByDate.Thursday.push(thu)
-             break;
-           case 5:
-             let friday = {... val};
-             dataTimingsByDate.Friday.push(friday)
-             break;
-           case 6:
-             let sat ={... val};
-             dataTimingsByDate.Sat.push(sat);
-             break;
-           case 7:
-             dataTimingsByDate.empty= [];
-             break;
-         }
-       })
-     
+       const dataTimingsByDate = InitScheduleDate(scheduleTimings[0]);
          res.status(200).json({status:'success',message:'ok',scheduleTimings:dataTimingsByDate})
     })
 }
+
+exports.getScheduleInWeekByIdDoctor =(req,res)=>{
+  const id = req.params.id;
+  const sql ='call getScheduleTimingsInWeekByDoctorId(?)';
+  connectDb.query(sql,id,(err,scheduleTimings) =>{
+      if(err) throw err;
+      console.log(scheduleTimings);
+     const dataTimingsByDate = InitScheduleDate(scheduleTimings[0]);
+       res.status(200).json({status:'success',message:'ok',scheduleTimings:dataTimingsByDate})
+  })
+}
+
+function InitScheduleDate(scheduleTimings){
+  const dataTimingsByDate = {
+    Sun:[],
+    Monday : [],
+    Thuesday :[],
+    Wenday :[],
+    Thursday :[],
+    Friday :[],
+    Sat :[]
+}
+scheduleTimings.forEach(val =>{
+ const dates = new Date(val.bookDate).getDay();
+ switch(dates){
+   case 0:
+     let sun ={... val};
+     dataTimingsByDate.sun.push(sun)
+     break;
+   case 1:
+     let monday ={... val};
+     dataTimingsByDate.Monday.push(monday)
+     break;
+   case 2:
+     let thuesday ={... val};
+   dataTimingsByDate.Thuesday.push(thuesday)
+     break;
+   case 3:
+     let wenday = {... val};
+     dataTimingsByDate.Wenday.push(wenday)
+     break;
+   case 4:
+     let thu ={... val};
+     dataTimingsByDate.Thursday.push(thu)
+     break;
+   case 5:
+     let friday = {... val};
+     dataTimingsByDate.Friday.push(friday)
+     break;
+   case 6:
+     let sat ={... val};
+     dataTimingsByDate.Sat.push(sat);
+     break;
+   case 7:
+     dataTimingsByDate.empty= [];
+     break;
+ }
+})
+     return dataTimingsByDate;
+}
+
 
 exports.getScheduleById = (req,res)=>{
   const id = req.params.id;
