@@ -11,7 +11,6 @@ exports.getAll =(req,res)=>{
          res.status(200).json({status:'success',message:'ok',scheduleTimings})
     })
 }
-//select * from scheduleTimings where doctorId =(?)
 exports.getbyId =(req,res)=>{
     const id = req.params.id;
     const sql ='call getScheduleTimingsInWeekByDoctorId(?)';
