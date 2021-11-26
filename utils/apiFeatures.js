@@ -1,6 +1,5 @@
 
 class APIFeatures {
-
     constructor(query,querytString) {
       this.query = query;
       this.querytString = querytString;
@@ -30,16 +29,15 @@ class APIFeatures {
            if(Object.entries(this.querytString.fields_speciallity).length > 3) {
             const fields = this.querytString.fields_speciallity.split(',');
             let tmpSpec = [];
+            console.log(fields);
               fields.forEach(el=>{    
                   const dataFilter = this.query.filter((item) => {
-              return  item.speciallityName.toLowerCase() === el.toLowerCase()
+              return  item.speciallityName.toLowerCase() == el.toLowerCase()
               })
                dataFilter.forEach(item => tmpSpec.push(item))
               })
-             this.query = [...tmpSpec];
-
+             this.query = tmpSpec;
            }
-           
        }
        return this;
     }
@@ -50,18 +48,7 @@ class APIFeatures {
     }
     return this;
 }
-   
-  
-    // paginations() {
-    //   // page =2;limit =3
-    //   const page = this.querytString.page * 1 || 1;
-    //   const limit = this.querytString.limit * 1 || 100;
-    //   const skip = (page - 1) * limit;
-  
-    //   this.query = this.query.skip(skip).limit(limit);
-  
-    //   return this;
-    // }
+
   }
   
   module.exports = APIFeatures;

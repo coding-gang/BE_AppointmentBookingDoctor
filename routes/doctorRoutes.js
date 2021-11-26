@@ -3,7 +3,7 @@ const passport =require('passport');
 const router = express.Router();
 const doctorController = require('../controllers/doctorController');
 
-router.route('/doctors').get(doctorController.getAllWithQuery,doctorController.getAll);
+router.route('/doctors').get(doctorController.viewDoctorPagination,doctorController.getAllWithQuery,doctorController.getAll);
 router.route('/doctor/:doctorId').get(doctorController.getById);
 router.route('/doctor').post(doctorController.checkExistUserName, doctorController.Add);
 router.route('/doctor/:doctorId').put(doctorController.update);

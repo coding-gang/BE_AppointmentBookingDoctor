@@ -170,15 +170,43 @@ exports.login= async(req,res)=>{
        
         if(Object.keys(req.query).length !== 0){
             const sql = "select * from ViewDoctor";
+            let total =0;
             connectDb.query(sql,(error, results, fields) =>{
                 if (error) throw error;
                   const doctors =results;
                   const fieldsDoctors = new APIFeatures(doctors,req.query);
                  const doctorField =  fieldsDoctors.sort().fields().limitFields();
-                  res.status(200).json({status:"success",doctors:doctorField.query});
+                 total = doctorField.query.length;
+                 console.log(total);
+                  res.status(200).json({status:"success",doctors:doctorField.query,total});
             })
         }else{
             next();
         }
-       
       };
+
+    exports.viewDoctorPagination = (req,res,next)=>{
+        if(Object.keys(req.query).length !== 0){
+            if(req.query.offset && req.query.limit){
+                const offset =  req.query.offset;
+                const limit = req.query.limit;
+                let sqlLimit = "select * from ViewDoctor limit ?,?";
+            connectDb.query(sqlLimit,[+offset,+limit],(err,doctors)=>{
+                let sql = "select count(*) as total from ViewDoctor";
+            connectDb.query(sql,(error, results, fields) =>{
+            if (error) throw error;
+          
+             const total =results[0].total
+             const fieldsDoctors = new APIFeatures(doctors,req.query);
+             const doctorField =  fieldsDoctors.sort().fields()
+             res.status(200).json({status:"success",doctors:doctorField.query,total});  
+        })  
+        })     
+            }else{
+                next();
+            }
+                   
+        }else{
+            next();
+        }
+    }
