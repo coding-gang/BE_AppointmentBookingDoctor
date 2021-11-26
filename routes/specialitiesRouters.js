@@ -4,7 +4,7 @@ const router = express.Router();
 
 const specialitieController = require('../controllers/specialityController');
 
-router.route('/specialities').get(specialitieController.getAll);
+router.route('/specialities').get(specialitieController.getAllWithField,specialitieController.getAll);
 router.route('/speciality/:specialityId').put(specialitieController.isExistNameSpec, specialitieController.update);
 router.route('/speciality/:specialityId').delete(specialitieController.isExistSpecialities , specialitieController.delete);
 router.route('/speciality/:specialityId').get(specialitieController.getById);

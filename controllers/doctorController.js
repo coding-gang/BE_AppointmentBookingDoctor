@@ -3,8 +3,8 @@ const encryptPass = require('../utils/encrypt');
 const decryptPass = require('../utils/decrypt')
 const appError =require('../utils/appError');
 const jwt = require('jsonwebtoken');
-//require('dotenv').config();
-exports.getAll = (req,res,next) =>{
+const APIFeatures = require('../utils/apiFeatures');
+exports.getAll = async (req,res,next) =>{
     let sql = "select * from ViewDoctor";
     connectDb.query(sql,(error, results, fields) =>{
     if (error) throw error;
@@ -14,7 +14,6 @@ exports.getAll = (req,res,next) =>{
 }
 
 exports.getById = (req,res)=>{
-    console.log(req.query);
     const id =req.params.doctorId;
      let sql="call getDetailDoctotById_proc(?)";
      connectDb.query(sql,id,(error, results, fields) =>{
@@ -165,3 +164,21 @@ exports.login= async(req,res)=>{
     exports.getSheduleTimings =(req,res)=>{
          res.status(200).json({status:"success",message:"ok"})
     }
+
+
+    exports.getAllWithQuery =  (req, res, next) => {
+       
+        if(Object.keys(req.query).length !== 0){
+            const sql = "select * from ViewDoctor";
+            connectDb.query(sql,(error, results, fields) =>{
+                if (error) throw error;
+                  const doctors =results;
+                  const fieldsDoctors = new APIFeatures(doctors,req.query);
+                 const doctorField =  fieldsDoctors.sort().fields().limitFields();
+                  res.status(200).json({status:"success",doctors:doctorField});
+            })
+        }else{
+            next();
+        }
+       
+      };

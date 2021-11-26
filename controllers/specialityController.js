@@ -1,23 +1,38 @@
 const connectDb = require('../utils/connectionDB');
 const appError = require('../utils/appError');
+const APIFeatures =require('../utils/apiFeatures');
 exports.getById = (req, res) => {
     const specialityId=   req.params.specialityId;
     const sql = "select * from specialities where specialityId=(?)";
     connectDb.query(sql,specialityId,(error,result)=>{
         if(error) throw error;
-        console.log(result);
         res.status(200).json({specialities:result});
     })
 }
 
 exports.getAll = (req,res) =>{
     let sql = "select * from specialities";
-    console.log(sql);
     connectDb.query(sql,(error, results, fields) =>{
     if (error) throw error;
     const specialities =results;
     res.status(200).json({status:"success",specialities:specialities});
 })}
+
+exports.getAllWithField = (req,res)=>{
+    if(Object.keys(req.query).length !== 0){
+        const sql = "select * from specialities";
+        connectDb.query(sql,(error, results, fields) =>{
+            if (error) throw error;
+              const specialities =results;
+              const fieldsSpecialities = new APIFeatures(specialities,req.query);
+             const SpecField =  fieldsSpecialities.sort().fields().limitFields();
+              res.status(200).json({status:"success",specialities:SpecField});
+        })
+    }else{
+        next();
+    }
+}
+
 
 exports.update = (req,res) =>{
     const specialityId = req.params.specialityId;
