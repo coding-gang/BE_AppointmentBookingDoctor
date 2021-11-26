@@ -18,7 +18,7 @@ exports.getAll = (req,res) =>{
     res.status(200).json({status:"success",specialities:specialities});
 })}
 
-exports.getAllWithField = (req,res)=>{
+exports.getAllWithField = (req,res,next)=>{
     if(Object.keys(req.query).length !== 0){
         const sql = "select * from specialities";
         connectDb.query(sql,(error, results, fields) =>{

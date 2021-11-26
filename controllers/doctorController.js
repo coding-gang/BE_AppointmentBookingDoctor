@@ -175,7 +175,7 @@ exports.login= async(req,res)=>{
                   const doctors =results;
                   const fieldsDoctors = new APIFeatures(doctors,req.query);
                  const doctorField =  fieldsDoctors.sort().fields().limitFields();
-                  res.status(200).json({status:"success",doctors:doctorField});
+                  res.status(200).json({status:"success",doctors:doctorField.query});
             })
         }else{
             next();

@@ -26,7 +26,8 @@ class APIFeatures {
     return this;
 }
     fields(){
-        if (this.querytString.fields_speciallity) {
+        if (this.querytString.fields_speciallity){
+           if(Object.entries(this.querytString.fields_speciallity).length > 3) {
             const fields = this.querytString.fields_speciallity.split(',');
             let tmpSpec = [];
               fields.forEach(el=>{    
@@ -36,6 +37,9 @@ class APIFeatures {
                dataFilter.forEach(item => tmpSpec.push(item))
               })
              this.query = [...tmpSpec];
+
+           }
+           
        }
        return this;
     }
