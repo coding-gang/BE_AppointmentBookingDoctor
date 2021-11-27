@@ -47,7 +47,13 @@ class APIFeatures {
            this.query =  this.query.slice(0,this.querytString.fieldsLimit)
     }
     return this;
-}
+    }
+     
+    search(){
+        if(this.querytString.search){
+          
+        }
+    }
 
   }
   

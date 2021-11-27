@@ -166,32 +166,67 @@ exports.login= async(req,res)=>{
     }
 
 
-    exports.getAllWithQuery =  (req, res, next) => {
-       
+    exports.getAllWithQuery = async (req, res, next) => {
+        let result ={};
         if(Object.keys(req.query).length !== 0){
-            const sql = "select * from ViewDoctor";
-            let total =0;
-            connectDb.query(sql,(error, results, fields) =>{
-                if (error) throw error;
-                  const doctors =results;
-                  const fieldsDoctors = new APIFeatures(doctors,req.query);
-                 const doctorField =  fieldsDoctors.sort().fields().limitFields();
-                 total = doctorField.query.length;
-                 console.log(total);
-                  res.status(200).json({status:"success",doctors:doctorField.query,total});
-            })
+             if(req.query.name){
+                 let name = req.query.name;
+                const sql = `select * from ViewDoctor `+ 
+                             `where lastName like '%${name}%' or firstName like '%${name}%' `+
+                             `or speciallityName like '%${name}%' `;
+
+             result = await queryDoctors(sql,req.query);
+         
+             }else{
+                const sql = "select * from ViewDoctor";
+                result = await queryDoctors(sql,req.query);
+             }
+       res.status(200).json({status:"success",doctors:result.doctors,total:result.total});
         }else{
             next();
         }
       };
 
+      const queryDoctors = (sql,query) =>{
+
+          return new Promise((resolve,reject) =>{
+            let total =0;
+            connectDb.query(sql,(error, results, fields) =>{
+                if (error) return reject(error);
+                  const doctors =results;
+                  const fieldsDoctors = new APIFeatures(doctors,query);
+                  console.log(this.query.limitFields);
+                  const doctorField =  fieldsDoctors.sort().fields().limitFields();
+                  total = doctorField.query.length;
+                  const resultPromise = {
+                    doctors:doctorField.query,
+                    total:total
+                  }
+                  resolve(resultPromise);
+               
+            })
+          })
+      }
+
     exports.viewDoctorPagination = (req,res,next)=>{
         if(Object.keys(req.query).length !== 0){
+            let sqlLimit;
             if(req.query.offset && req.query.limit){
                 const offset =  req.query.offset;
                 const limit = req.query.limit;
-                let sqlLimit = "select * from ViewDoctor limit ?,?";
-            connectDb.query(sqlLimit,[+offset,+limit],(err,doctors)=>{
+                if(req.query.name){
+                    let name = req.query.name;
+                    console.log(name);
+                    sqlLimit = `select * from ViewDoctor `+ 
+                                `where lastName like '%${name}%' or firstName like '%${name}%' `+
+                                `or speciallityName like '%${name}%' limit ${offset},${limit}`;
+     
+                }else{
+                    sqlLimit = `select * from ViewDoctor limit ${offset},${limit}`;
+                }
+               
+            connectDb.query(sqlLimit,(err,doctors)=>{
+                console.log(doctors);
                 let sql = "select count(*) as total from ViewDoctor";
             connectDb.query(sql,(error, results, fields) =>{
             if (error) throw error;
