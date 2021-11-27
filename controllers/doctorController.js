@@ -195,7 +195,6 @@ exports.login= async(req,res)=>{
                 if (error) return reject(error);
                   const doctors =results;
                   const fieldsDoctors = new APIFeatures(doctors,query);
-                  console.log(this.query.limitFields);
                   const doctorField =  fieldsDoctors.sort().fields().limitFields();
                   total = doctorField.query.length;
                   const resultPromise = {
